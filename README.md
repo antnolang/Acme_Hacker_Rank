@@ -1,0 +1,2 @@
+# Design and Testing II: Acme Hacker-Rank
+This repository contains the project corresponding to the third deliverable of the subject Design and Testing II of the degree in Computer Engineering - Software Engineering at the University of Seville.

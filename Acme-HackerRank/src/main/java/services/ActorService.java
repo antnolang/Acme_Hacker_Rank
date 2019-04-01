@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ActorRepository;
-import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
@@ -122,19 +121,6 @@ public class ActorService {
 
 		principalId = LoginService.getPrincipal().getId();
 		return principalId == actor.getUserAccount().getId();
-	}
-
-	protected UserAccount createUserAccount(final String role) {
-		UserAccount userAccount;
-		Authority authority;
-
-		authority = new Authority();
-		authority.setAuthority(role);
-
-		userAccount = new UserAccount();
-		userAccount.addAuthority(authority);
-
-		return userAccount;
 	}
 
 	public void changeBan(final Actor actor) {

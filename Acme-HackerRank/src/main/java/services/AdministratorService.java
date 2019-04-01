@@ -50,7 +50,7 @@ public class AdministratorService {
 		Administrator result;
 
 		result = new Administrator();
-		result.setUserAccount(this.actorService.createUserAccount(Authority.ADMIN));
+		result.setUserAccount(this.userAccountService.createUserAccount(Authority.ADMIN));
 
 		return result;
 

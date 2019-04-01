@@ -48,6 +48,19 @@ public class UserAccountService {
 		return result;
 	}
 
+	public UserAccount createUserAccount(final String role) {
+		UserAccount userAccount;
+		Authority authority;
+
+		authority = new Authority();
+		authority.setAuthority(role);
+
+		userAccount = new UserAccount();
+		userAccount.addAuthority(authority);
+
+		return userAccount;
+	}
+
 	public UserAccount findByActor(final Actor actor) {
 		Assert.notNull(actor);
 

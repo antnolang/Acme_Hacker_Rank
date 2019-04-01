@@ -1480,9 +1480,6 @@
 
 	<bean id="finder2" class="domain.Finder">
 		<property name="keyword" value="" />
-		<property name="deadline" value="" />
-		<property name="minimumSalary" value="" />
-		<property name="maximumDeadline" value="" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
 		<property name="hacker" ref="hacker2" />
 		<property name="positions">
@@ -1511,11 +1508,8 @@
 
 	<bean id="finder4" class="domain.Finder">
 		<property name="keyword" value="position4" />
-		<property name="deadline" value="" />
-		<property name="minimumSalary" value="" />
-		<property name="maximumDeadline" value="" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
-		<property name="hacker" ref="hacker2" />
+		<property name="hacker" ref="hacker4" />
 		<property name="positions">
 			<list>
 				<ref bean="position4" />
@@ -1525,9 +1519,6 @@
 
 	<bean id="finder5" class="domain.Finder">
 		<property name="keyword" value="position3" />
-		<property name="deadline" value="" />
-		<property name="minimumSalary" value="" />
-		<property name="maximumDeadline" value="" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
 		<property name="hacker" ref="hacker5" />
 		<property name="positions">
@@ -1539,9 +1530,6 @@
 
 	<bean id="finder6" class="domain.Finder">
 		<property name="keyword" value="company2" />
-		<property name="deadline" value="" />
-		<property name="minimumSalary" value="" />
-		<property name="maximumDeadline" value="" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
 		<property name="hacker" ref="hacker6" />
 		<property name="positions">
@@ -1568,9 +1556,6 @@
 
 	<bean id="finder8" class="domain.Finder">
 		<property name="keyword" value="Company" />
-		<property name="deadline" value="" />
-		<property name="minimumSalary" value="" />
-		<property name="maximumDeadline" value="" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
 		<property name="hacker" ref="hacker8" />
 		<property name="positions">

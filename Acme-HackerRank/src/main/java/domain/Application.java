@@ -66,7 +66,7 @@ public class Application extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "^PENDING|SUBMITTED|ACCEPTED|REJECTED|$")
+	@Pattern(regexp = "^PENDING|SUBMITTED|ACCEPTED|REJECTED$")
 	public String getStatus() {
 		return this.status;
 	}

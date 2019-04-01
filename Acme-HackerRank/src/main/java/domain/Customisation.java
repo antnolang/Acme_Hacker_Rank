@@ -4,8 +4,6 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -28,19 +26,12 @@ public class Customisation extends DomainEntity {
 
 	private String	name;
 	private String	banner;
-	private String	spanishWelcomeMessage;
-	private String	englishWelcomeMessage;
+	private String	welcomeMessageEn;
+	private String	welcomeMessageEs;
 	private String	countryCode;
-	private String	languages;
 	private int		timeCachedResults;
 	private int		maxNumberResults;
-	private String	priorities;
 	private String	spamWords;
-	private String	positiveWords;
-	private String	negativeWords;
-	private int		rowLimit;
-	private int		columnLimit;
-	private double	thresholdScore;
 
 
 	@NotBlank
@@ -66,22 +57,22 @@ public class Customisation extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-	public String getSpanishWelcomeMessage() {
-		return this.spanishWelcomeMessage;
+	public String getWelcomeMessageEn() {
+		return this.welcomeMessageEn;
 	}
 
-	public void setSpanishWelcomeMessage(final String spanishWelcomeMessage) {
-		this.spanishWelcomeMessage = spanishWelcomeMessage;
+	public void setWelcomeMessageEn(final String welcomeMessageEn) {
+		this.welcomeMessageEn = welcomeMessageEn;
 	}
 
 	@NotBlank
 	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-	public String getEnglishWelcomeMessage() {
-		return this.englishWelcomeMessage;
+	public String getWelcomeMessageEs() {
+		return this.welcomeMessageEs;
 	}
 
-	public void setEnglishWelcomeMessage(final String englishWelcomeMessage) {
-		this.englishWelcomeMessage = englishWelcomeMessage;
+	public void setWelcomeMessageEs(final String welcomeMessageEs) {
+		this.welcomeMessageEs = welcomeMessageEs;
 	}
 
 	@NotBlank
@@ -92,16 +83,6 @@ public class Customisation extends DomainEntity {
 
 	public void setCountryCode(final String countryCode) {
 		this.countryCode = countryCode;
-	}
-
-	@NotBlank
-	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-	public String getLanguages() {
-		return this.languages;
-	}
-
-	public void setLanguages(final String languages) {
-		this.languages = languages;
 	}
 
 	@Range(min = 1, max = 24)
@@ -124,70 +105,12 @@ public class Customisation extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-	public String getPriorities() {
-		return this.priorities;
-	}
-
-	public void setPriorities(final String priorities) {
-		this.priorities = priorities;
-	}
-
-	@NotBlank
-	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getSpamWords() {
 		return this.spamWords;
 	}
 
 	public void setSpamWords(final String spamWords) {
 		this.spamWords = spamWords;
-	}
-
-	@NotBlank
-	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-	public String getPositiveWords() {
-		return this.positiveWords;
-	}
-
-	public void setPositiveWords(final String positiveWords) {
-		this.positiveWords = positiveWords;
-	}
-
-	@NotBlank
-	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-	public String getNegativeWords() {
-		return this.negativeWords;
-	}
-
-	public void setNegativeWords(final String negativeWords) {
-		this.negativeWords = negativeWords;
-	}
-
-	@Min(1)
-	public int getRowLimit() {
-		return this.rowLimit;
-	}
-
-	public void setRowLimit(final int rowLimit) {
-		this.rowLimit = rowLimit;
-	}
-
-	@Min(1)
-	public int getColumnLimit() {
-		return this.columnLimit;
-	}
-
-	public void setColumnLimit(final int columnLimit) {
-		this.columnLimit = columnLimit;
-	}
-
-	@Range(min = -1, max = 0)
-	@Digits(integer = 3, fraction = 2)
-	public double getThresholdScore() {
-		return this.thresholdScore;
-	}
-
-	public void setThresholdScore(final double thresholdScore) {
-		this.thresholdScore = thresholdScore;
 	}
 
 }

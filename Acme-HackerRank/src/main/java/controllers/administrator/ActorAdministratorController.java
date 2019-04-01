@@ -72,22 +72,6 @@ public class ActorAdministratorController extends ActorAbstractController {
 		return result;
 	}
 
-	// Score
-
-	@RequestMapping(value = "/computeScore", method = RequestMethod.POST, params = "compute")
-	public ModelAndView computeScore() {
-		ModelAndView result;
-
-		try {
-			this.actorService.scoreProcess();
-			result = new ModelAndView("redirect:list.do");
-		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/error.do");
-		}
-
-		return result;
-	}
-
 	// Spammers
 
 	@RequestMapping(value = "/spammersProcess", method = RequestMethod.POST, params = "spammers")

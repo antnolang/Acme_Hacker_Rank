@@ -98,16 +98,13 @@ public class MessageAdministratorController extends AbstractController {
 	protected ModelAndView broadcastModelAndView(final Message broadcast, final String messageCode) {
 		ModelAndView result;
 		Customisation customisation;
-		String priorities_str;
-		List<String> priorities;
+		final String priorities_str;
+		final List<String> priorities;
 
 		customisation = this.customisationService.find();
-		priorities_str = customisation.getPriorities();
-		priorities = this.utilityService.ListByString(priorities_str);
 
 		result = new ModelAndView("message/send");
 		result.addObject("message", broadcast);
-		result.addObject("priorities", priorities);
 		result.addObject("isBroadcastMessage", true);
 		result.addObject("actionURI", "message/administrator/broadcast.do");
 		result.addObject("messageCode", messageCode);

@@ -4,13 +4,12 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.Valid;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
@@ -32,16 +31,16 @@ public abstract class Actor extends DomainEntity {
 
 	// Attributes
 
-	private String	name;
-	private String	middleName;
-	private String	surname;
-	private String	fullname;
-	private String	photo;
-	private String	email;
-	private String	phoneNumber;
-	private String	address;
-	private Boolean	isSpammer;
-	private Double	score;
+	private String		name;
+	private String		surname;
+	private String		fullname;
+	private int			VATnumber;
+	private CreditCard	creditCard;
+	private String		photo;
+	private String		email;
+	private String		phoneNumber;
+	private String		address;
+	private Boolean		isSpammer;
 
 
 	@NotBlank
@@ -52,15 +51,6 @@ public abstract class Actor extends DomainEntity {
 
 	public void setName(final String name) {
 		this.name = name;
-	}
-
-	@Pattern(regexp = "[a-zA-Z]*")
-	public String getMiddleName() {
-		return this.middleName;
-	}
-
-	public void setMiddleName(final String middleName) {
-		this.middleName = middleName;
 	}
 
 	@NotBlank
@@ -76,16 +66,32 @@ public abstract class Actor extends DomainEntity {
 	@Transient
 	public String getFullname() {
 
-		if (this.middleName != null)
-			this.fullname = this.name + " " + this.middleName + " " + this.surname;
-		else
-			this.fullname = this.name + " " + this.surname;
+		this.fullname = this.name + " " + this.surname;
 
 		return this.fullname;
 	}
 
 	public void setFullname(final String fullname) {
 		this.fullname = fullname;
+	}
+
+	@Range(min = 1, max = 100)
+	public int getVATnumber() {
+		return this.VATnumber;
+	}
+
+	public void setVATnumber(final int vATnumber) {
+		this.VATnumber = vATnumber;
+	}
+
+	@Valid
+	@NotNull
+	public CreditCard getCreditCard() {
+		return this.creditCard;
+	}
+
+	public void setCreditCard(final CreditCard creditCard) {
+		this.creditCard = creditCard;
 	}
 
 	@URL
@@ -99,6 +105,8 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@NotBlank
+	@Column(unique = true)
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getEmail() {
 		return this.email;
 	}
@@ -131,16 +139,6 @@ public abstract class Actor extends DomainEntity {
 
 	public void setIsSpammer(final Boolean isSpammer) {
 		this.isSpammer = isSpammer;
-	}
-
-	@Digits(integer = 3, fraction = 2)
-	@Range(min = -1, max = 1)
-	public Double getScore() {
-		return this.score;
-	}
-
-	public void setScore(final Double score) {
-		this.score = score;
 	}
 
 

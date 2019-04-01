@@ -62,12 +62,8 @@ public class CustomisationServiceTest extends AbstractTest {
 		customisation.setName("Acme Testing");
 		customisation.setBanner("https://tinyurl.com/acme-handy-worker-logo");
 		customisation.setCountryCode("+34");
-		customisation.setEnglishWelcomeMessage("Hello world");
-		customisation.setSpanishWelcomeMessage("Hola mundo");
-		customisation.setLanguages(languages);
 		customisation.setMaxNumberResults(20);
 		customisation.setTimeCachedResults(10);
-		customisation.setPriorities(priorities);
 
 		saved = this.customisationService.save(customisation);
 

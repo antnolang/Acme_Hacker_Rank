@@ -17,7 +17,6 @@ import org.springframework.validation.Validator;
 
 import repositories.MessageRepository;
 import domain.Actor;
-import domain.Box;
 import domain.Customisation;
 import domain.Message;
 import forms.MessageForm;
@@ -31,8 +30,6 @@ public class MessageService {
 	private MessageRepository		messageRepository;
 
 	// Supporting services ----------------------------------
-	@Autowired
-	private BoxService				boxService;
 
 	@Autowired
 	private ActorService			actorService;
@@ -65,20 +62,6 @@ public class MessageService {
 
 		Assert.notNull(result);
 		this.checkSenderOrRecipient(result);
-
-		return result;
-	}
-
-	public Message findOneToMove(final int messageId, final int originBoxId) {
-		Message result;
-		Box origin;
-
-		result = this.messageRepository.findOne(messageId);
-		origin = this.boxService.findOne(originBoxId);
-
-		Assert.notNull(result);
-		this.checkSenderOrRecipient(result);
-		this.boxService.checkByPrincipal(origin);
 
 		return result;
 	}
@@ -118,84 +101,28 @@ public class MessageService {
 		Assert.notNull(message);
 		Assert.isTrue(message.getId() == 0);
 		this.checkByPrincipal(message);
-		this.checkPriority(message);
 
 		Message result;
-		Box inBoxRecipient, outBoxSender, spamBoxRecipient;
 		boolean isSpam;
 
 		result = this.messageRepository.save(message);
-
-		outBoxSender = this.boxService.findOutBoxFromActor(result.getSender().getId());
-
-		this.boxService.addMessage(outBoxSender, result);
 
 		isSpam = this.messageIsSpam(result);
 
 		if (isSpam) {
 			result.setIsSpam(true);
 			for (final Actor recipient : result.getRecipients()) {
-				spamBoxRecipient = this.boxService.findSpamBoxFromActor(recipient.getId());
 
-				this.boxService.addMessage(spamBoxRecipient, result);
 			}
 		} else
 			for (final Actor recipient : result.getRecipients()) {
-				inBoxRecipient = this.boxService.findInBoxFromActor(recipient.getId());
 
-				this.boxService.addMessage(inBoxRecipient, result);
 			}
 
 		return result;
 	}
 
-	public void delete(final Message message, final Box box) {
-		Assert.notNull(message);
-		Assert.notNull(box);
-		Assert.isTrue(box.getId() != 0 && this.messageRepository.exists(message.getId()));
-		Assert.isTrue(box.getMessages().contains(message));
-		this.checkSenderOrRecipient(message);
-		this.boxService.checkByPrincipal(box);
-
-		Actor principal;
-		final Box trashBox;
-		List<Box> boxes;
-		Integer numberBoxesWithMessage;
-
-		principal = this.actorService.findPrincipal();
-		trashBox = this.boxService.findTrashBoxFromActor(principal.getId());
-
-		if (trashBox.equals(box)) {
-			boxes = new ArrayList<Box>(this.boxService.findBoxesFromActorThatContaintsAMessage(principal.getId(), message.getId()));
-			for (final Box b : boxes)
-				this.boxService.removeMessage(b, message);
-
-			this.boxService.removeMessage(trashBox, message);
-
-		} else {
-			this.boxService.removeMessage(box, message);
-			this.boxService.addMessage(trashBox, message);
-		}
-
-		numberBoxesWithMessage = this.boxService.numberOfBoxesThatContaintAMessage(message.getId());
-		if (numberBoxesWithMessage == 0)
-			this.messageRepository.delete(message);
-	}
-
 	// Other business methods -------------------------------
-	public void moveMessage(final Message message, final Box origin, final Box destination) {
-		Assert.notNull(message);
-		Assert.notNull(origin);
-		Assert.notNull(destination);
-		Assert.isTrue(origin.getId() != 0 && destination.getId() != 0 && this.messageRepository.exists(message.getId()));
-		Assert.isTrue(origin.getMessages().contains(message) && !destination.getMessages().contains(message));
-		this.checkSenderOrRecipient(message);
-		this.boxService.checkByPrincipal(origin);
-		this.boxService.checkByPrincipal(destination);
-
-		this.boxService.addMessage(destination, message);
-		this.boxService.removeMessage(origin, message);
-	}
 
 	public Integer validateDestinationBox(final MessageForm messageForm, final String language, final BindingResult binding) {
 		Integer result;
@@ -220,7 +147,6 @@ public class MessageService {
 		boolean isSpam;
 		Actor principal;
 		Collection<Actor> recipients;
-		Box outBoxSender, notificationBoxRecipient, spamBoxRecipient;
 
 		principal = this.actorService.findPrincipal();
 
@@ -231,24 +157,16 @@ public class MessageService {
 
 		result = this.messageRepository.save(message);
 
-		outBoxSender = this.boxService.findOutBoxFromActor(result.getSender().getId());
-
-		this.boxService.addMessage(outBoxSender, result);
-
 		recipients = result.getRecipients();
 		isSpam = this.messageIsSpam(result);
 		if (isSpam) {
 			result.setIsSpam(true);
 			for (final Actor a : recipients) {
-				spamBoxRecipient = this.boxService.findSpamBoxFromActor(a.getId());
 
-				this.boxService.addMessage(spamBoxRecipient, result);
 			}
 		} else
 			for (final Actor a : recipients) {
-				notificationBoxRecipient = this.boxService.findNotificationBoxFromActor(a.getId());
 
-				this.boxService.addMessage(notificationBoxRecipient, result);
 			}
 
 		return result;
@@ -266,7 +184,6 @@ public class MessageService {
 		result = this.create();
 		result.setSubject(message.getSubject());
 		result.setBody(message.getBody());
-		result.setPriority(message.getPriority());
 		result.setTags(message.getTags());
 
 		recipients = new ArrayList<>();
@@ -283,7 +200,6 @@ public class MessageService {
 	public Message breachNotification() {
 		Message message, result;
 		List<Actor> recipients;
-		Box notificationBox, outBox;
 		Actor principal;
 		String subject, body;
 
@@ -296,20 +212,14 @@ public class MessageService {
 		message = this.create();
 		message.setSubject(subject);
 		message.setBody(body);
-		message.setPriority("HIGH");
 		message.setRecipients(recipients);
 
 		result = this.messageRepository.save(message);
 
 		principal = this.actorService.findPrincipal();
 
-		outBox = this.boxService.findOutBoxFromActor(principal.getId());
-		this.boxService.addMessage(outBox, result);
-
 		for (final Actor a : recipients) {
-			notificationBox = this.boxService.findNotificationBoxFromActor(a.getId());
 
-			this.boxService.addMessage(notificationBox, result);
 		}
 
 		return result;
@@ -382,11 +292,4 @@ public class MessageService {
 		return result;
 	}
 
-	private void checkPriority(final Message message) {
-		Customisation customisation;
-
-		customisation = this.customisationService.find();
-
-		Assert.isTrue(customisation.getPriorities().contains(message.getPriority()));
-	}
 }

@@ -39,11 +39,7 @@ public class CustomisationAdministratorController extends AbstractController {
 
 		result = new ModelAndView("customisation/display");
 		result.addObject("customisation", customisation);
-		result.addObject("languages", this.utilityService.ListByString(customisation.getLanguages()));
-		result.addObject("priorities", this.utilityService.ListByString(customisation.getPriorities()));
 		result.addObject("spamWords", this.utilityService.ListByString(customisation.getSpamWords()));
-		result.addObject("positiveWords", this.utilityService.ListByString(customisation.getPositiveWords()));
-		result.addObject("negativeWords", this.utilityService.ListByString(customisation.getNegativeWords()));
 
 		return result;
 	}

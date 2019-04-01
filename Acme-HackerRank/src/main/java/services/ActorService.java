@@ -1,9 +1,7 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -16,8 +14,6 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
-import domain.Administrator;
-import domain.Message;
 
 @Service
 @Transactional
@@ -26,24 +22,15 @@ public class ActorService {
 	// Managed repository --------------------------
 
 	@Autowired
-	private ActorRepository			actorRepository;
+	private ActorRepository	actorRepository;
 
 	// Other supporting services -------------------
 
 	@Autowired
-	private UtilityService			utilityService;
+	private UtilityService	utilityService;
 
 	@Autowired
-	private BoxService				boxService;
-
-	@Autowired
-	private CustomisationService	customisationService;
-
-	@Autowired
-	private MessageService			messageService;
-
-	@Autowired
-	private AdministratorService	administratorService;
+	private MessageService	messageService;
 
 
 	// Constructors -------------------------------
@@ -70,9 +57,6 @@ public class ActorService {
 		if (actor.getPhoto() != null)
 			result.setPhoto(actor.getPhoto().trim());
 		result.setPhoneNumber(this.utilityService.getValidPhone(actor.getPhoneNumber()));
-
-		if (!isUpdating)
-			this.boxService.createSystemBoxes(result);
 
 		return result;
 
@@ -193,87 +177,6 @@ public class ActorService {
 		else
 			this.markAsSpammer(actor, false);
 
-	}
-
-	public void scoreProcess() {
-		Collection<Actor> all;
-		Administrator system;
-
-		all = this.actorRepository.findSenders();
-		system = this.administratorService.findSystem();
-		all.remove(system);
-
-		for (final Actor a : all)
-			this.launchScoreProcess(a);
-	}
-
-	protected void launchScoreProcess(final Actor actor) {
-		Assert.notNull(actor);
-		Assert.isTrue(actor.getId() != 0);
-
-		final Double score;
-		final Integer p, n;
-		final Double maximo;
-		Collection<Message> messagesSent;
-		List<Integer> ls;
-
-		messagesSent = this.messageService.findMessagesSentByActor(actor.getId());
-		ls = new ArrayList<>(this.positiveNegativeWordNumbers(messagesSent));
-		p = ls.get(0);
-		n = ls.get(1);
-
-		maximo = this.max(p, n);
-
-		if (maximo != 0)
-			score = (p - n) / maximo;
-		else
-			score = 0.0;
-
-		Assert.isTrue(score >= -1.00 && score <= 1.00);
-
-		actor.setScore(Math.round(score * 100d) / 100d);
-	}
-	private List<Integer> positiveNegativeWordNumbers(final Collection<Message> messagesSent) {
-		Assert.isTrue(messagesSent != null);
-
-		final List<Integer> results = new ArrayList<Integer>();
-		String body, positiveWords_str, negativeWords_str;
-		Integer positive = 0, negative = 0;
-		String[] words = {};
-
-		positiveWords_str = this.customisationService.find().getPositiveWords();
-		negativeWords_str = this.customisationService.find().getNegativeWords();
-
-		final List<String> positive_ls = new ArrayList<>(this.utilityService.ListByString(positiveWords_str));
-		final List<String> negative_ls = new ArrayList<>(this.utilityService.ListByString(negativeWords_str));
-
-		for (final Message m : messagesSent) {
-			body = m.getBody().toLowerCase();
-			words = body.split(" ");
-
-			for (final String word : words)
-				if (positive_ls.contains(word))
-					positive++;
-				else if (negative_ls.contains(word))
-					negative++;
-		}
-
-		results.add(positive);
-		results.add(negative);
-
-		return results;
-
-	}
-
-	private Double max(final Integer n, final Integer p) {
-		Double result;
-
-		if (n >= p)
-			result = n * 1.0;
-		else
-			result = p * 1.0;
-
-		return result;
 	}
 
 	public boolean existEmail(final String email) {

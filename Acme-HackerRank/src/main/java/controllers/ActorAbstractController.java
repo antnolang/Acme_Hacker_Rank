@@ -58,7 +58,6 @@ public class ActorAbstractController extends AbstractController {
 		}
 
 		result.addObject("actor", actor);
-		result.addObject("thresholdScore", this.customisationService.find().getThresholdScore());
 
 		return result;
 	}

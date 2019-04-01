@@ -39,14 +39,12 @@ public class AdministratorServiceTest extends AbstractTest {
 		Assert.notNull(admin.getUserAccount());
 		Assert.isNull(admin.getAddress());
 		Assert.isNull(admin.getEmail());
-		Assert.isNull(admin.getMiddleName());
 		Assert.isNull(admin.getName());
 		Assert.isNull(admin.getPhoneNumber());
 		Assert.isNull(admin.getPhoto());
 		Assert.isNull(admin.getSurname());
 
 		Assert.isTrue(admin.getIsSpammer() == false);
-		Assert.isNull(admin.getScore());
 	}
 
 	@Test

@@ -37,7 +37,6 @@ public class Message extends DomainEntity {
 	private Date	sentMoment;
 	private String	subject;
 	private String	body;
-	private String	priority;
 	private String	tags;
 	private boolean	isSpam;
 
@@ -73,16 +72,6 @@ public class Message extends DomainEntity {
 
 	public void setBody(final String body) {
 		this.body = body;
-	}
-
-	@NotBlank
-	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
-	public String getPriority() {
-		return this.priority;
-	}
-
-	public void setPriority(final String priority) {
-		this.priority = priority;
 	}
 
 	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)

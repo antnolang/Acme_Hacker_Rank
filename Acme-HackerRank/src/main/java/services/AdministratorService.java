@@ -125,11 +125,9 @@ public class AdministratorService {
 			result.setSurname(registrationForm.getSurname());
 			result.setEmail(registrationForm.getEmail());
 			result.setPhoneNumber(registrationForm.getPhoneNumber());
-			result.setMiddleName(registrationForm.getMiddleName());
 			result.setPhoto(registrationForm.getPhoto());
 			result.setAddress(registrationForm.getAddress());
 			result.setIsSpammer(registrationForm.getIsSpammer());
-			result.setScore(registrationForm.getScore());
 
 			userAccount = result.getUserAccount();
 			userAccount.setUsername(registrationForm.getUsername());
@@ -144,11 +142,9 @@ public class AdministratorService {
 			result.setSurname(registrationForm.getSurname());
 			result.setEmail(registrationForm.getEmail());
 			result.setPhoneNumber(registrationForm.getPhoneNumber());
-			result.setMiddleName(registrationForm.getMiddleName());
 			result.setPhoto(registrationForm.getPhoto());
 			result.setAddress(registrationForm.getAddress());
 			result.setIsSpammer(administratorStored.getIsSpammer());
-			result.setScore(administratorStored.getScore());
 			result.setId(administratorStored.getId());
 			result.setVersion(administratorStored.getVersion());
 
@@ -283,7 +279,6 @@ public class AdministratorService {
 		registrationForm = new RegistrationForm();
 
 		registrationForm.setName(administrator.getName());
-		registrationForm.setMiddleName(administrator.getMiddleName());
 		registrationForm.setSurname(administrator.getSurname());
 		registrationForm.setEmail(administrator.getEmail());
 		registrationForm.setId(administrator.getId());

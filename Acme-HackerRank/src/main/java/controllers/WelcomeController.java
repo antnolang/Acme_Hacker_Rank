@@ -49,9 +49,9 @@ public class WelcomeController extends AbstractController {
 		customisation = this.customisationService.find();
 
 		if (locale.getLanguage().equals(new Locale("es").getLanguage()))
-			welcome_message = customisation.getSpanishWelcomeMessage();
+			welcome_message = customisation.getWelcomeMessageEs();
 		else
-			welcome_message = customisation.getEnglishWelcomeMessage();
+			welcome_message = customisation.getWelcomeMessageEn();
 
 		system_name = customisation.getName();
 
@@ -65,7 +65,6 @@ public class WelcomeController extends AbstractController {
 
 		return result;
 	}
-
 	@RequestMapping(value = "/terms")
 	public ModelAndView terms() {
 		ModelAndView result;

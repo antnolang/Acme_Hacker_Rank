@@ -181,7 +181,7 @@
 		<property name="userAccount" ref="userAccount1" />
 	</bean>
 
-	<bean id="administrator2" class="domain.Administrator">
+	<bean id="system" class="domain.Administrator">
 		<property name="name" value="System" />
 		<property name="surname" value="Reina" />
 		<property name="VATnumber" value="97" />
@@ -1465,7 +1465,7 @@
 
 	<!-- Finder -->
 	<bean id="finder1" class="domain.Finder">
-		<property name="keyword" value="" />
+		<property name="keyword" value="estoEsUnaPruebaParaQueNoMeDevuelvaNada" />
 		<property name="deadline" value="2020/10/05" />
 		<property name="minimumSalary" value="965.24" />
 		<property name="maximumDeadline" value="2022/10/05" />
@@ -1480,14 +1480,17 @@
 
 	<bean id="finder2" class="domain.Finder">
 		<property name="keyword" value="" />
-		<property name="deadline" value="2020/10/05" />
-		<property name="minimumSalary" value="965.24" />
-		<property name="maximumDeadline" value="2022/10/05" />
+		<property name="deadline" value="" />
+		<property name="minimumSalary" value="" />
+		<property name="maximumDeadline" value="" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
 		<property name="hacker" ref="hacker2" />
 		<property name="positions">
 			<list>
-				<null></null>
+				<ref bean="position1" />
+				<ref bean="position2" />
+				<ref bean="position3" />
+				<ref bean="position4" />
 			</list>
 		</property>
 	</bean>
@@ -1495,7 +1498,7 @@
 	<bean id="finder3" class="domain.Finder">
 		<property name="keyword" value="" />
 		<property name="deadline" value="2020/10/05" />
-		<property name="minimumSalary" value="965.24" />
+		<property name="minimumSalary" value="7965.24" />
 		<property name="maximumDeadline" value="2022/10/05" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
 		<property name="hacker" ref="hacker3" />
@@ -1507,49 +1510,50 @@
 	</bean>
 
 	<bean id="finder4" class="domain.Finder">
-		<property name="keyword" value="" />
-		<property name="deadline" value="2020/10/05" />
-		<property name="minimumSalary" value="965.24" />
-		<property name="maximumDeadline" value="2022/10/05" />
+		<property name="keyword" value="position4" />
+		<property name="deadline" value="" />
+		<property name="minimumSalary" value="" />
+		<property name="maximumDeadline" value="" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
-		<property name="hacker" ref="hacker4" />
+		<property name="hacker" ref="hacker2" />
 		<property name="positions">
 			<list>
-				<null></null>
+				<ref bean="position4" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="finder5" class="domain.Finder">
-		<property name="keyword" value="" />
-		<property name="deadline" value="2020/10/05" />
-		<property name="minimumSalary" value="965.24" />
-		<property name="maximumDeadline" value="2022/10/05" />
+		<property name="keyword" value="position3" />
+		<property name="deadline" value="" />
+		<property name="minimumSalary" value="" />
+		<property name="maximumDeadline" value="" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
 		<property name="hacker" ref="hacker5" />
 		<property name="positions">
 			<list>
-				<null></null>
+				<ref bean="position3" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="finder6" class="domain.Finder">
-		<property name="keyword" value="" />
-		<property name="deadline" value="2020/10/05" />
-		<property name="minimumSalary" value="965.24" />
-		<property name="maximumDeadline" value="2022/10/05" />
+		<property name="keyword" value="company2" />
+		<property name="deadline" value="" />
+		<property name="minimumSalary" value="" />
+		<property name="maximumDeadline" value="" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
 		<property name="hacker" ref="hacker6" />
 		<property name="positions">
 			<list>
-				<null></null>
+				<ref bean="position2" />
+				<ref bean="position3" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="finder7" class="domain.Finder">
-		<property name="keyword" value="" />
+		<property name="keyword" value="NoQuieroNada" />
 		<property name="deadline" value="2020/10/05" />
 		<property name="minimumSalary" value="965.24" />
 		<property name="maximumDeadline" value="2022/10/05" />
@@ -1563,15 +1567,18 @@
 	</bean>
 
 	<bean id="finder8" class="domain.Finder">
-		<property name="keyword" value="" />
-		<property name="deadline" value="2020/10/05" />
-		<property name="minimumSalary" value="965.24" />
-		<property name="maximumDeadline" value="2022/10/05" />
+		<property name="keyword" value="Company" />
+		<property name="deadline" value="" />
+		<property name="minimumSalary" value="" />
+		<property name="maximumDeadline" value="" />
 		<property name="updatedMoment" value="2019/01/01 10:10" />
 		<property name="hacker" ref="hacker8" />
 		<property name="positions">
 			<list>
-				<null></null>
+				<ref bean="position1" />
+				<ref bean="position2" />
+				<ref bean="position3" />
+				<ref bean="position4" />
 			</list>
 		</property>
 	</bean>
@@ -1679,6 +1686,111 @@
 		<property name="phoneNumber" value="63015521" />
 		<property name="address" value="Calle Hacker 8" />
 		<property name="userAccount" ref="userAccount13" />
+	</bean>
+	
+	<!-- Message -->
+	<bean id="message1" class="domain.Message">
+		<property name="sentMoment" value="2017/05/09 10:17" />
+		<property name="subject" value="Thank you" />
+		<property name="body" value="Thanks for your reply" />
+		<property name="tags" value="notification" />
+		<property name="isSpam" value="false" />
+		<property name="sender" ref="hacker1" />
+		<property name="recipients">
+			<list>
+				<ref bean="hacker2" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="message3" class="domain.Message">
+		<property name="sentMoment" value="2017/05/09 10:17" />
+		<property name="subject" value="Thank you" />
+		<property name="body" value="Thanks for your reply" />
+		<property name="tags" value="problem" />
+		<property name="isSpam" value="false" />
+		<property name="sender" ref="administrator1" />
+		<property name="recipients">
+			<list>
+				<ref bean="hacker1" />
+				<ref bean="hacker2" />
+				<ref bean="hacker3" />
+				<ref bean="hacker4" />
+				<ref bean="hacker5" />
+				<ref bean="hacker6" />
+				<ref bean="hacker8" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="message4" class="domain.Message">
+		<property name="sentMoment" value="2017/05/09 10:17" />
+		<property name="subject" value="Thank you" />
+		<property name="body" value="Thanks for your reply" />
+		<property name="tags" value="position" />
+		<property name="isSpam" value="false" />
+		<property name="sender" ref="system" />
+		<property name="recipients">
+			<list>
+				<ref bean="company1" />
+				<ref bean="company2" />
+				<ref bean="company3" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="message5" class="domain.Message">
+		<property name="sentMoment" value="2017/05/09 10:17" />
+		<property name="subject" value="Thank you" />
+		<property name="body" value="Thanks for your reply" />
+		<property name="tags" value="answer" />
+		<property name="isSpam" value="false" />
+		<property name="sender" ref="hacker8" />
+		<property name="recipients">
+			<list>
+				<ref bean="hacker3" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="message6" class="domain.Message">
+		<property name="sentMoment" value="2017/05/09 10:17" />
+		<property name="subject" value="Thank you" />
+		<property name="body" value="Thanks for your reply" />
+		<property name="tags" value="curriculum" />
+		<property name="isSpam" value="false" />
+		<property name="sender" ref="company1" />
+		<property name="recipients">
+			<list>
+				<ref bean="hacker1" />
+				<ref bean="hacker2" />
+				<ref bean="hacker3" />
+				<ref bean="hacker4" />
+				<ref bean="hacker5" />
+				<ref bean="hacker6" />
+				<ref bean="hacker8" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="message7" class="domain.Message">
+		<property name="sentMoment" value="2017/05/09 10:17" />
+		<property name="subject" value="Thank you" />
+		<property name="body" value="Thanks for your reply" />
+		<property name="tags" value="position" />
+		<property name="isSpam" value="false" />
+		<property name="sender" ref="system" />
+		<property name="recipients">
+			<list>
+				<ref bean="company1" />
+				<ref bean="company2" />
+				<ref bean="company3" />
+				<ref bean="hacker1" />
+				<ref bean="hacker2" />
+				<ref bean="hacker3" />
+				<ref bean="hacker4" />
+			</list>
+		</property>
 	</bean>
 
 	<!-- Miscellaneous Data -->

@@ -54,7 +54,6 @@ public class Application extends DomainEntity {
 	}
 
 	@Past
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getSubmittedMoment() {

@@ -205,7 +205,7 @@
 		<property name="email" value="company1@gmail.com" />
 		<property name="phoneNumber" value="63015521" />
 		<property name="address" value="Calle Company 1" />
-		<property name="commercialName" value="Commercial Name Company 1" />
+		<property name="commercialName" value="One Commercial Name" />
 		<property name="userAccount" ref="userAccount3" />
 	</bean>
 
@@ -219,7 +219,7 @@
 		<property name="email" value="company2@gmail.com" />
 		<property name="phoneNumber" value="63015521" />
 		<property name="address" value="Calle Company 2" />
-		<property name="commercialName" value="Commercial Name Company 2" />
+		<property name="commercialName" value="Two Commercial Name" />
 		<property name="userAccount" ref="userAccount4" />
 	</bean>
 
@@ -233,7 +233,7 @@
 		<property name="email" value="company3@gmail.com" />
 		<property name="phoneNumber" value="63015521" />
 		<property name="address" value="Calle Company 3" />
-		<property name="commercialName" value="Commercial Name Company 3" />
+		<property name="commercialName" value="Three Commercial Name" />
 		<property name="userAccount" ref="userAccount5" />
 	</bean>
 
@@ -268,7 +268,7 @@
 	<bean id="creditCard4" class="domain.CreditCard">
 		<property name="holder" value="holder4" />
 		<property name="make" value="VISA" />
-		<property name="number" value="4698134836204970" />
+		<property name="number" value="4916210851536995" />
 		<property name="expirationMonth" value="02" />
 		<property name="expirationYear" value="21" />
 		<property name="cvvCode" value="147" />
@@ -277,7 +277,7 @@
 	<bean id="creditCard5" class="domain.CreditCard">
 		<property name="holder" value="holder5" />
 		<property name="make" value="MCARD" />
-		<property name="number" value="4241698979306612" />
+		<property name="number" value="4539294619605521" />
 		<property name="expirationMonth" value="01" />
 		<property name="expirationYear" value="20" />
 		<property name="cvvCode" value="258" />
@@ -286,7 +286,7 @@
 	<bean id="creditCard6" class="domain.CreditCard">
 		<property name="holder" value="holder6" />
 		<property name="make" value="MCARD" />
-		<property name="number" value="4241698979306645" />
+		<property name="number" value="4024007150182987" />
 		<property name="expirationMonth" value="02" />
 		<property name="expirationYear" value="22" />
 		<property name="cvvCode" value="258" />
@@ -295,7 +295,7 @@
 	<bean id="creditCard7" class="domain.CreditCard">
 		<property name="holder" value="holder7" />
 		<property name="make" value="MCARD" />
-		<property name="number" value="4241698979306678" />
+		<property name="number" value="4556001181801737" />
 		<property name="expirationMonth" value="02" />
 		<property name="expirationYear" value="21" />
 		<property name="cvvCode" value="254" />
@@ -304,7 +304,7 @@
 	<bean id="creditCard8" class="domain.CreditCard">
 		<property name="holder" value="holder8" />
 		<property name="make" value="MCARD" />
-		<property name="number" value="4241698979344696" />
+		<property name="number" value="4485923119929700" />
 		<property name="expirationMonth" value="03" />
 		<property name="expirationYear" value="22" />
 		<property name="cvvCode" value="218" />
@@ -313,7 +313,7 @@
 	<bean id="creditCard9" class="domain.CreditCard">
 		<property name="holder" value="holder9" />
 		<property name="make" value="MCARD" />
-		<property name="number" value="42416981493066714" />
+		<property name="number" value="5265265673659825" />
 		<property name="expirationMonth" value="04" />
 		<property name="expirationYear" value="21" />
 		<property name="cvvCode" value="250" />
@@ -322,7 +322,7 @@
 	<bean id="creditCard10" class="domain.CreditCard">
 		<property name="holder" value="holder10" />
 		<property name="make" value="MCARD" />
-		<property name="number" value="7541698979344624" />
+		<property name="number" value="5466799096597995" />
 		<property name="expirationMonth" value="03" />
 		<property name="expirationYear" value="22" />
 		<property name="cvvCode" value="118" />
@@ -331,7 +331,7 @@
 	<bean id="creditCard11" class="domain.CreditCard">
 		<property name="holder" value="holder11" />
 		<property name="make" value="MCARD" />
-		<property name="number" value="1441698149306677" />
+		<property name="number" value="5386393115853022" />
 		<property name="expirationMonth" value="04" />
 		<property name="expirationYear" value="21" />
 		<property name="cvvCode" value="950" />
@@ -340,7 +340,7 @@
 	<bean id="creditCard12" class="domain.CreditCard">
 		<property name="holder" value="holder12" />
 		<property name="make" value="MCARD" />
-		<property name="number" value="4741698979343653" />
+		<property name="number" value="5283115543844354" />
 		<property name="expirationMonth" value="03" />
 		<property name="expirationYear" value="22" />
 		<property name="cvvCode" value="124" />
@@ -349,7 +349,7 @@
 	<bean id="creditCard13" class="domain.CreditCard">
 		<property name="holder" value="holder13" />
 		<property name="make" value="MCARD" />
-		<property name="number" value="2641698149386674" />
+		<property name="number" value="5311247326144102" />
 		<property name="expirationMonth" value="04" />
 		<property name="expirationYear" value="21" />
 		<property name="cvvCode" value="180" />
@@ -595,4 +595,40 @@
 		<property name="linkProfile" value="http://www.twitter.com/nick1" />
 		<property name="actor" ref="administrator1" />
 	</bean>
+	
+	<!-- Position -->
+	<bean id="position1" class="domain.Position">
+		<property name="ticker" value="ONEC-4562" />
+		<property name="title" value="Position 1 - Company 1" />
+		<property name="description" value="Esta es la position 1 del company 1" />
+		<property name="deadline" value="2019/12/05" />
+		<property name="profile" value="Economy" />
+		<property name="skills" value="Number" />
+		<property name="technologies" value="Android" />
+		<property name="salary" value="1586.23" />
+		<property name="isFinalMode" value="true" />
+		<property name="isCancelled" value="false" />
+		<property name="company" ref="company1" />
+	</bean>
+
+	
+	<!-- Problem -->
+	<bean id="problem11" class="domain.Problem">
+		<property name="title" value="Problem 1 - Position 1 - Company 1" />
+		<property name="statement" value="Esta es el problema 1 de la position 1 de la company 1" />
+		<property name="hint" value="Propongo que el hacker esté cualificado" />
+		<property name="attachments" value="" />
+		<property name="isFinalMode" value="true" />
+		<property name="position" ref="position1" />
+	</bean>
+	
+	<bean id="problem12" class="domain.Problem">
+		<property name="title" value="Problem 2 - Position 1 - Company 1" />
+		<property name="statement" value="Esta es el problema 2 de la position 1 de la company 1" />
+		<property name="hint" value="Que el hacker viva en Sevilla" />
+		<property name="attachments" value="" />
+		<property name="isFinalMode" value="true" />
+		<property name="position" ref="position1" />
+	</bean>
+	
 </beans>

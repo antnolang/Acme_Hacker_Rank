@@ -20,19 +20,12 @@
 	
 	<acme:textbox code="customisation.systemName" path="name" />
 	<acme:textbox code="customisation.banner" path="banner" />
-	<acme:textbox code="customisation.englishWelcomeMessage" path="englishWelcomeMessage" />
-	<acme:textbox code="customisation.spanishWelcomeMessage" path="spanishWelcomeMessage" />
-	<acme:textbox code="customisation.rowLimit" path="rowLimit" />
-	<acme:textbox code="customisation.columnLimit" path="columnLimit" />
+	<acme:textbox code="customisation.englishWelcomeMessage" path="welcomeMessageEn" />
+	<acme:textbox code="customisation.spanishWelcomeMessage" path="welcomeMessageEs" />
 	<acme:textbox code="customisation.countryCode" path="countryCode" />
 	<acme:textbox code="customisation.timeCached" path="timeCachedResults" />
 	<acme:textbox code="customisation.maxResults" path="maxNumberResults" />
-	<acme:textbox code="customisation.priorities" path="priorities" />
-	<acme:textbox code="customisation.positiveWords" path="positiveWords" />
-	<acme:textbox code="customisation.negativeWords" path="negativeWords" />
 	<acme:textbox code="customisation.spamWords" path="spamWords" />
-	<acme:textbox code="customisation.languages" path="languages" />
-	<acme:textbox code="customisation.threshold" path="thresholdScore" />
 	<br />
 	
 	<acme:submit name="save" code="customisation.save" />

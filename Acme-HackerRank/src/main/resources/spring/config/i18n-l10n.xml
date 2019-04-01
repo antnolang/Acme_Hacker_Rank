@@ -25,10 +25,21 @@
 		
 		<value>/views/actor/messages</value>
 		<value>/views/administrator/messages</value>
-		<value>/views/box/messages</value>
+		<value>/views/answer/messages</value>
+		<value>/views/application/messages</value>
+		<value>/views/company/messages</value>
+		<value>/views/curriculum/messages</value>
 		<value>/views/customisation/messages</value>
 		<value>/views/dashboard/messages</value>
+		<value>/views/educationData/messages</value>
+		<value>/views/finder/messages</value>
+		<value>/views/hacker/messages</value>
 		<value>/views/message/messages</value>
+		<value>/views/miscellaneousData/messages</value>
+		<value>/views/personalData/messages</value>
+		<value>/views/position/messages</value>
+		<value>/views/positionData/messages</value>
+		<value>/views/problem/messages</value>
 		<value>/views/socialProfile/messages</value>
 	</util:list>
 

@@ -12,5 +12,4 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 
 	@Query("select c from Company c where c.userAccount.id = ?1")
 	Company findCompanyByUserAccount(int userAccountId);
-
 }

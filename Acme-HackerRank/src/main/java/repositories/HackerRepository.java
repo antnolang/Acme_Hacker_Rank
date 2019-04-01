@@ -12,5 +12,4 @@ public interface HackerRepository extends JpaRepository<Hacker, Integer> {
 
 	@Query("select h from Hacker h where h.userAccount.id = ?1")
 	Hacker findHackerByUserAccount(int userAccountId);
-
 }

@@ -21,12 +21,12 @@
 
 <p>
 	<strong> <spring:message code="customisation.englishWelcomeMessage" />: </strong>
-	<jstl:out value="${customisation.englishWelcomeMessage}" />
+	<jstl:out value="${customisation.welcomeMessageEn}" />
 </p>
 
 <p>
 	<strong> <spring:message code="customisation.spanishWelcomeMessage" />: </strong>
-	<jstl:out value="${customisation.spanishWelcomeMessage}" />
+	<jstl:out value="${customisation.welcomeMessageEs}" />
 </p>
 
 <p>
@@ -43,43 +43,6 @@
 	<strong> <spring:message code="customisation.maxResults" />: </strong>
 	<jstl:out value="${customisation.maxNumberResults}" />
 </p>
-
-<p>
-	<strong> <spring:message code="customisation.rowLimit" />: </strong>
-	<jstl:out value="${customisation.rowLimit}" />
-</p>
-
-<p>
-	<strong> <spring:message code="customisation.columnLimit" />: </strong>
-	<jstl:out value="${customisation.columnLimit}" />
-</p>
-
-<p>
-	<strong> <spring:message code="customisation.threshold" />: </strong>
-	<jstl:out value="${customisation.thresholdScore}" />
-</p>
-
-<p> <strong> <spring:message code="customisation.priorities" />: </strong> </p>	
-<ul>
-	<jstl:forEach var="row" items="${priorities}">
-		<li> <jstl:out value="${row}" /> </li>
-	</jstl:forEach>
-</ul>
-
-<p> <strong> <spring:message code="customisation.languages" />: </strong> </p>
-<ul>
-	<jstl:forEach var="row" items="${languages}">
-		<li> <jstl:out value="${row}" /> </li>
-	</jstl:forEach>
-</ul>
-
-<display:table name="positiveWords" id="row" requestURI="customisation/administrator/display.do" pagesize="5" class="displaytag">
-	<display:column value="${row}" titleKey="customisation.positiveWords"/>
-</display:table>
-
-<display:table name="negativeWords" id="row" requestURI="customisation/administrator/display.do" pagesize="5" class="displaytag">
-	<display:column value="${row}" titleKey="customisation.negativeWords"/>
-</display:table>
 
 <display:table name="spamWords" id="row" requestURI="customisation/administrator/display.do" pagesize="5" class="displaytag">
 	<display:column value="${row}" titleKey="customisation.spamWords"/>

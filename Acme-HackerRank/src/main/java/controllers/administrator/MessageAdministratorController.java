@@ -1,8 +1,6 @@
 
 package controllers.administrator;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -10,11 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CustomisationService;
 import services.MessageService;
-import services.UtilityService;
 import controllers.AbstractController;
-import domain.Customisation;
 import domain.Message;
 
 @Controller
@@ -22,13 +17,7 @@ import domain.Message;
 public class MessageAdministratorController extends AbstractController {
 
 	@Autowired
-	private MessageService			messageService;
-
-	@Autowired
-	private CustomisationService	customisationService;
-
-	@Autowired
-	private UtilityService			utilityService;
+	private MessageService	messageService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -63,7 +52,7 @@ public class MessageAdministratorController extends AbstractController {
 		else
 			try {
 				this.messageService.sendBroadcast(broadcastRec);
-				result = new ModelAndView("redirect:/box/administrator,brotherhood,chapter,member,sponsor/list.do");
+				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				result = this.broadcastModelAndView(broadcastRec, "message.commit.error");
 			}
@@ -97,11 +86,6 @@ public class MessageAdministratorController extends AbstractController {
 
 	protected ModelAndView broadcastModelAndView(final Message broadcast, final String messageCode) {
 		ModelAndView result;
-		Customisation customisation;
-		final String priorities_str;
-		final List<String> priorities;
-
-		customisation = this.customisationService.find();
 
 		result = new ModelAndView("message/send");
 		result.addObject("message", broadcast);

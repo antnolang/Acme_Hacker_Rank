@@ -4,7 +4,6 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
@@ -68,7 +67,7 @@ public class CreditCard {
 	}
 
 	@NotBlank
-	@Digits(integer = 2, fraction = 0)
+	@Pattern(regexp = "\\d{2}")
 	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getExpirationYear() {
 		return this.expirationYear;

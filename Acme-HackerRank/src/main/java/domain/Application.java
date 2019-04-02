@@ -54,7 +54,6 @@ public class Application extends DomainEntity {
 	}
 
 	@Past
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getSubmittedMoment() {
@@ -66,7 +65,7 @@ public class Application extends DomainEntity {
 	}
 
 	@NotBlank
-	@Pattern(regexp = "^PENDING|SUBMITTED|ACCEPTED|REJECTED|$")
+	@Pattern(regexp = "^PENDING|SUBMITTED|ACCEPTED|REJECTED$")
 	public String getStatus() {
 		return this.status;
 	}

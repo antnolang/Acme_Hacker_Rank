@@ -40,7 +40,7 @@ public class Position extends DomainEntity {
 	private String	profile;
 	private String	skills;
 	private String	technologies;
-	private Double	salary;
+	private double	salary;
 	private boolean	finalMode;
 	private boolean	isCancelled;
 
@@ -117,14 +117,13 @@ public class Position extends DomainEntity {
 		this.technologies = technologies;
 	}
 
-	@NotNull
 	@Min(0)
 	@Digits(integer = 9, fraction = 2)
-	public Double getSalary() {
+	public double getSalary() {
 		return this.salary;
 	}
 
-	public void setSalary(final Double salary) {
+	public void setSalary(final double salary) {
 		this.salary = salary;
 	}
 

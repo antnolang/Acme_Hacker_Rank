@@ -32,7 +32,7 @@ public class EducationData extends DomainEntity {
 
 	private String	degree;
 	private String	institution;
-	private Double	mark;
+	private double	mark;
 	private Date	startDate;
 	private Date	endDate;
 
@@ -57,14 +57,13 @@ public class EducationData extends DomainEntity {
 		this.institution = institution;
 	}
 
-	@NotNull
 	@Digits(integer = 5, fraction = 2)
 	@Range(min = 0, max = 100)
-	public Double getMark() {
+	public double getMark() {
 		return this.mark;
 	}
 
-	public void setMark(final Double mark) {
+	public void setMark(final double mark) {
 		this.mark = mark;
 	}
 

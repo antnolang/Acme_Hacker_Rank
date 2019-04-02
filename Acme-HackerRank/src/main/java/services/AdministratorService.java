@@ -130,6 +130,7 @@ public class AdministratorService {
 
 			result.setName(registrationForm.getName());
 			result.setSurname(registrationForm.getSurname());
+			result.setVATnumber(registrationForm.getVATnumber());
 			result.setEmail(registrationForm.getEmail());
 			result.setPhoneNumber(registrationForm.getPhoneNumber());
 			result.setPhoto(registrationForm.getPhoto());
@@ -157,6 +158,7 @@ public class AdministratorService {
 			result.setName(registrationForm.getName());
 			result.setSurname(registrationForm.getSurname());
 			result.setEmail(registrationForm.getEmail());
+			result.setVATnumber(registrationForm.getVATnumber());
 			result.setPhoneNumber(registrationForm.getPhoneNumber());
 			result.setPhoto(registrationForm.getPhoto());
 			result.setAddress(registrationForm.getAddress());
@@ -215,25 +217,21 @@ public class AdministratorService {
 
 		this.utilityService.validateEmailAdministrator(administrator.getEmail(), binding);
 		if (username.trim().equals(""))
-			binding.rejectValue("username", "actor.username.blank", "Must entry a username.");
+			binding.rejectValue("userAccount.username", "actor.username.blank", "Must entry a username.");
 		if (password.trim().equals("") && confirmPassword.trim().equals("")) {
-			binding.rejectValue("password", "password.empty", "Must entry a password");
-			binding.rejectValue("confirmPassword", "confirmPassword.empty", "Must entry a confirm password");
+			binding.rejectValue("userAccount.password", "password.empty", "Must entry a password");
+			binding.rejectValue("userAccount.confirmPassword", "confirmPassword.empty", "Must entry a confirm password");
 		}
 		if (!password.equals(confirmPassword))
-			binding.rejectValue("confirmPassword", "user.missmatch.password", "Does not match with password");
+			binding.rejectValue("userAccount.confirmPassword", "user.missmatch.password", "Does not match with password");
 		if (checkBox == false)
 			binding.rejectValue("checkBoxAccepted", "actor.checkBox.agree", "Must agree terms and conditions");
 		if (checkBoxData == false)
 			binding.rejectValue("checkBoxDataProcessesAccepted", "actor.checkBoxData.agree", "Must agree data processes");
 		if (this.userAccountService.existUsername(username))
-			binding.rejectValue("username", "actor.username.used", "Username already in use");
+			binding.rejectValue("userAccount.username", "actor.username.used", "Username already in use");
 		if (this.actorService.existEmail(administrator.getEmail()))
 			binding.rejectValue("email", "actor.email.used", "Email already in use");
-		if (password.length() < 5 || password.length() > 32)
-			binding.rejectValue("password", "actor.password.size", "Password must have between 5 and 32 characters");
-		if (username.length() < 5 || username.length() > 32)
-			binding.rejectValue("username", "actor.username.size", "Username must have between 5 and 32 characters.");
 
 	}
 
@@ -244,6 +242,7 @@ public class AdministratorService {
 
 		registrationForm.setName(administrator.getName());
 		registrationForm.setSurname(administrator.getSurname());
+		registrationForm.setVATnumber(administrator.getVATnumber());
 		registrationForm.setEmail(administrator.getEmail());
 		registrationForm.setId(administrator.getId());
 		registrationForm.setPhoto(administrator.getPhoto());

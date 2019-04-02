@@ -43,6 +43,10 @@
 		
 		<br />
 		
+		<acme:textbox code="actor.VATnumber.requested" path="VATnumber"/>
+		
+		<br />
+		
 		<acme:textbox code="actor.photo" path="photo"/>
 		
 		<br />

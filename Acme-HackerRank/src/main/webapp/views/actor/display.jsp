@@ -19,6 +19,7 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
 
@@ -33,7 +34,7 @@
 	<p> <strong> <spring:message code="actor.email" /> : </strong>  <jstl:out value="${actor.email}" /></p>
 
 
-	<jstl:if test="${actor.photo != null }">
+	<jstl:if test="${!empty actor.photo }">
 		<p>
 			<strong> <spring:message code="actor.photo" /> :
 			</strong> <img alt="Photo" src="<jstl:out value="${actor.photo}" />"
@@ -42,7 +43,7 @@
 
 	</jstl:if>
 
-	<jstl:if test="${actor.phoneNumber != null }">
+	<jstl:if test="${!empty actor.phoneNumber }">
 		<p>
 			<strong> <spring:message code="actor.phoneNumber" /> :
 			</strong>
@@ -50,7 +51,7 @@
 		</p>
 	</jstl:if>
 
-	<jstl:if test="${actor.address != null }">
+	<jstl:if test="${!empty actor.address }">
 		<p>
 			<strong> <spring:message code="actor.address" /> :
 			</strong>
@@ -60,18 +61,18 @@
 
 	<security:authorize access="hasRole('ADMIN')">
 
-		
-		<p>
-			<strong> <spring:message code="actor.isSpammer" /> :
-			</strong>
-			<jstl:if test="${actor.isSpammer != null }">
-				<jstl:out value="${actor.isSpammer}" />
-			</jstl:if>
-			<jstl:if test="${actor.isSpammer == null }">
-				<jstl:out value="N/A" />
-			</jstl:if>
-		</p>
-
+		<jstl:if test="${isAuthorized == false }">
+			<p>
+				<strong> <spring:message code="actor.isSpammer" /> :
+				</strong>
+				<jstl:if test="${actor.isSpammer != null }">
+					<jstl:out value="${actor.isSpammer}" />
+				</jstl:if>
+				<jstl:if test="${actor.isSpammer == null }">
+					<jstl:out value="N/A" />
+				</jstl:if>
+			</p>
+		</jstl:if>
 
 		<jstl:if
 			test="${actor.isSpammer == true}">
@@ -110,6 +111,38 @@
 	</fieldset>
 </jstl:if>
 
+<jstl:if test="${isAuthorized == true}">
+<fieldset>
+	<legend><spring:message code="creditCard.legend"/></legend>
+	
+	<p>
+		<strong><spring:message code="creditCard.holder"/> </strong>
+		<jstl:out value="${actor.creditCard.holder}"/>
+	</p>
+	
+	<p>
+		<strong><spring:message code="creditCard.make"/> </strong>
+		<jstl:out value="${actor.creditCard.make}"/>
+	</p>
+	
+	<p>
+		<jstl:set var="length" value="${fn:length(actor.creditCard.number)}"/>
+		<strong><spring:message code="creditCard.number"/> </strong>
+		<jstl:out value="****${fn:substring(actor.creditCard.number, length - 4, length)}"/>
+	</p>
+	
+	<p>
+		<strong><spring:message code="creditCard.expirationMonth"/> </strong>
+		<jstl:out value="${actor.creditCard.expirationMonth}"/>
+	</p>
+	
+	<p>
+		<strong><spring:message code="creditCard.expirationYear"/> </strong>
+		<jstl:out value="${actor.creditCard.expirationYear}"/>
+	</p>
+
+</fieldset>
+</jstl:if>
 
 <fieldset>
 	<legend><spring:message code="userAccount.legend"/></legend>

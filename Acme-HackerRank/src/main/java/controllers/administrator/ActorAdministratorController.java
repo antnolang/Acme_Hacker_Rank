@@ -119,7 +119,10 @@ public class ActorAdministratorController extends ActorAbstractController {
 				this.administratorService.save(administrator);
 				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable oops) {
-				result = this.createModelAndView(registrationForm, "actor.registration.error");
+				if (oops.getMessage().equals("Expired credit card"))
+					result = this.createModelAndView(registrationForm, "expired.creditCard");
+				else
+					result = this.createModelAndView(registrationForm, "actor.registration.error");
 				result.addObject("rol", "Administrator");
 			}
 

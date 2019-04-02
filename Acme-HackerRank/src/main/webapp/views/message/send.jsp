@@ -24,21 +24,20 @@
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	
-	<acme:textbox path="subject" code="message.display.subject" />
-	<acme:textarea path="body" code="message.display.body" />
-	<acme:selectPrime path="priority" code="message.display.priority" items="${priorities}" />
+	<acme:textbox path="subject" code="message.subject" />
+	<acme:textarea path="body" code="message.body" />
 	
 	<jstl:if test="${!isBroadcastMessage}">
-		<acme:selectMandatory path="recipients" code="message.display.recipients" items="${actors}" itemLabel="fullname" multiple="true" />
+		<acme:selectMandatory path="recipients" code="message.recipients" items="${actors}" itemLabel="fullname" multiple="true" />
 	</jstl:if>
 	<jstl:if test="${isBroadcastMessage}">
 		<form:hidden path="recipients" />
 	</jstl:if>
 
-	<acme:textarea path="tags" code="message.display.tags" />	
+	<acme:textarea path="tags" code="message.tags" />	
  	<br />
 	
 	<!-- Buttons -->
 	<acme:submit name="send" code="message.button.send" />
-	<acme:cancel url="box/administrator,brotherhood,member/list.do" code="message.button.cancel" />
+	<acme:cancel url="message/administrator,company,hacker/list.do" code="message.button.cancel" />
 </form:form>

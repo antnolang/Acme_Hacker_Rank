@@ -16,7 +16,7 @@ import domain.Customisation;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+	"classpath:spring/junit.xml"
 })
 @Transactional
 public class CustomisationServiceTest extends AbstractTest {
@@ -86,7 +86,7 @@ public class CustomisationServiceTest extends AbstractTest {
 			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
 			 * B: The business rule that is intended to be broken: invalid data in Customisation::name.
 			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
-			 * D: Analysis of data coverage: Customisation::name is null => 1/31 -> 3.33%.
+			 * D: Analysis of data coverage: Customisation::name is null => 1/31 -> 3.22%.
 			 */
 			{
 				null, "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
@@ -95,10 +95,230 @@ public class CustomisationServiceTest extends AbstractTest {
 			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
 			 * B: The business rule that is intended to be broken: invalid data in Customisation::name.
 			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
-			 * D: Analysis of data coverage: Customisation::name is empty string => 1/31 -> 3.33%.
+			 * D: Analysis of data coverage: Customisation::name is empty string => 1/31 -> 3.22%.
 			 */
 			{
 				"", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::name.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::name is a malicious script => 1/31 -> 3.22%.
+			 */
+			{
+				"<script> Alert('Hacked'); </script>", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::banner.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::banner is null => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", null, "Hello world!!", "Hola mundo!!", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::banner.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::banner is empty string => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "", "Hello world!!", "Hola mundo!!", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::banner.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::banner is a malicious script => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "<script> Alert('Hacked'); </script>", "Hello world!!", "Hola mundo!!", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::welcomeMessageEn.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::welcomeMessageEn is null => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", null, "Hola mundo!!", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::welcomeMessageEn.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::welcomeMessageEn is empty string => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "", "Hola mundo!!", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::welcomeMessageEn.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::welcomeMessageEn is a malicious script => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "<script> Alert('Hacked'); </script>", "Hola mundo!!", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::welcomeMessageEs.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::welcomeMessageEs is null => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world", null, "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::welcomeMessageEs.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::welcomeMessageEs is a empty string => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world", "", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::welcomeMessageEs.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::welcomeMessageEs is a malicious script => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "<script> Alert('Hacked'); </script>", "+43", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::countryCode.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::countryCode is null => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", null, 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::countryCode.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::countryCode is a empty string => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::countryCode.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::countryCode is an invalid pattern => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "-f4hy3", 20, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::timeCachedResults.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::timeCachedResults out of range: 0 => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+22", 0, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::timeCachedResults.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::timeCachedResuts out of range: 25 => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 25, 50, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::maxNumberResults.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::maxNumberResults out of range: 0 => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 12, 0, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::maxNumberResults.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::maxNumberResuts out of range: 101 => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 12, 101, "gilipollas,tonto,subnormal", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::spamWords.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::spamWords is null => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 20, 50, null, ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::spamWords.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::spamWords is a empty string => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 12, 50, "", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * B: The business rule that is intended to be broken: invalid data in Customisation::spamWords.
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Customisation::spamWords: is a malicious script => 1/31 -> 3.22%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 12, 50, "<script> Alert('Hacked'); </script>", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Every attribute has a valid value => 31/31 -> 100.00%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 1, 1, "gilipollas,tonto,subnormal", null
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Every attribute has a valid value => 1/31 -> 100.00%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 2, 2, "gilipollas,tonto,subnormal", null
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Every attribute has a valid value => 1/31 -> 100.00%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 12, 50, "gilipollas,tonto,subnormal", null
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Every attribute has a valid value => 1/31 -> 100.00%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 23, 99, "gilipollas,tonto,subnormal", null
+			},
+			/*
+			 * A: Requirement tested: level C: requirement 14 (The system must be easy to customise at run time)
+			 * C: Analysis of sentence coverage: 4/5 -> 80.00% executed code lines.
+			 * D: Analysis of data coverage: Every attribute has a valid value => 1/31 -> 100.00%.
+			 */
+			{
+				"Acme Retro", "https://i.imgur.com/7b8lu4b.png", "Hello world!!", "Hola mundo!!", "+23", 24, 100, "gilipollas,tonto,subnormal", null
 			}
 		};
 

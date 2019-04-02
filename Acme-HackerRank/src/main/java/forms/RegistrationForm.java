@@ -1,26 +1,23 @@
 
 package forms;
 
-import security.UserAccount;
 
 public class RegistrationForm {
 
-	private int			id;
-	private String		name;
-	private String		middleName;
-	private String		surname;
-	private String		fullname;
-	private String		photo;
-	private String		email;
-	private String		phoneNumber;
-	private String		address;
-	private Boolean		isSpammer;
-	private Double		score;
-	private UserAccount	userAccount;
-	private String		username;
-	private String		password;
-	private String		confirmPassword;
-	private boolean		checkBoxAccepted;
+	private int				id;
+	private String			name;
+	private String			surname;
+	private String			fullname;
+	private int				VATnumber;
+	private CreditCardForm	creditCard;
+	private String			photo;
+	private String			email;
+	private String			phoneNumber;
+	private String			address;
+	private Boolean			isSpammer;
+	private UserAccountForm	userAccount;
+	private boolean			checkBoxAccepted;
+	private boolean			checkBoxDataProcessesAccepted;
 
 
 	public int getId() {
@@ -37,14 +34,6 @@ public class RegistrationForm {
 
 	public void setName(final String name) {
 		this.name = name;
-	}
-
-	public String getMiddleName() {
-		return this.middleName;
-	}
-
-	public void setMiddleName(final String middleName) {
-		this.middleName = middleName;
 	}
 
 	public String getSurname() {
@@ -103,30 +92,6 @@ public class RegistrationForm {
 		this.isSpammer = isSpammer;
 	}
 
-	public Double getScore() {
-		return this.score;
-	}
-
-	public void setScore(final Double score) {
-		this.score = score;
-	}
-
-	public UserAccount getUserAccount() {
-		return this.userAccount;
-	}
-
-	public void setUserAccount(final UserAccount userAccount) {
-		this.userAccount = userAccount;
-	}
-
-	public String getConfirmPassword() {
-		return this.confirmPassword;
-	}
-
-	public void setConfirmPassword(final String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-
 	public boolean getCheckBoxAccepted() {
 		return this.checkBoxAccepted;
 	}
@@ -135,20 +100,36 @@ public class RegistrationForm {
 		this.checkBoxAccepted = checkBoxAccepted;
 	}
 
-	public String getUsername() {
-		return this.username;
+	public int getVATnumber() {
+		return this.VATnumber;
 	}
 
-	public void setUsername(final String username) {
-		this.username = username;
+	public void setVATnumber(final int vATnumber) {
+		this.VATnumber = vATnumber;
 	}
 
-	public String getPassword() {
-		return this.password;
+	public CreditCardForm getCreditCard() {
+		return this.creditCard;
 	}
 
-	public void setPassword(final String password) {
-		this.password = password;
+	public void setCreditCard(final CreditCardForm creditCard) {
+		this.creditCard = creditCard;
+	}
+
+	public UserAccountForm getUserAccount() {
+		return this.userAccount;
+	}
+
+	public void setUserAccount(final UserAccountForm userAccount) {
+		this.userAccount = userAccount;
+	}
+
+	public boolean isCheckBoxDataProcessesAccepted() {
+		return this.checkBoxDataProcessesAccepted;
+	}
+
+	public void setCheckBoxDataProcessesAccepted(final boolean checkBoxDataProcessesAccepted) {
+		this.checkBoxDataProcessesAccepted = checkBoxDataProcessesAccepted;
 	}
 
 }

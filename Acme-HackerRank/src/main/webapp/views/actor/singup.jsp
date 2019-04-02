@@ -16,11 +16,11 @@
 	<form:hidden path="id"/>
 	
 	<jstl:choose>
-		<jstl:when test="${rol == 'Brotherhood'}">
-			<h2><spring:message code="header.brotherhood"/></h2>
+		<jstl:when test="${rol == 'Company'}">
+			<h2><spring:message code="header.company"/></h2>
 		</jstl:when>
-		<jstl:when test="${rol == 'Member'}">
-			<h2><spring:message code="header.member"/></h2>
+		<jstl:when test="${rol == 'Hacker'}">
+			<h2><spring:message code="header.hacker"/></h2>
 		</jstl:when>
 		<jstl:when test="${rol == 'Administrator'}">
 			<h2><spring:message code="header.administrator"/></h2>
@@ -38,9 +38,6 @@
 	
 		<br />
 		
-		<acme:textbox code="actor.middlename" path="middleName"/>
-		
-		<br />
 		
 		<acme:textbox code="actor.surname.requested" path="surname"/>
 		
@@ -62,48 +59,49 @@
 		
 		<br /> 
 		 
-		<jstl:if test="${rol == 'Brotherhood'}">
+		<jstl:if test="${rol == 'Company'}">
 		
-			<acme:textbox code="actor.brotherhood.title.requested" path="title"/>
+			<acme:textbox code="actor.company.commercialName" path="commercialName"/>
 			<br /> 
-			
-			<acme:textbox code="actor.brotherhood.establishmentDate.requested" path="establishmentDate" placeholder="dd/MM/yyyy"/>
-			<br />
-			
-			<p style="color:blue;"><spring:message code="brotherhood.info.pictures"/></p>
-			<acme:textarea code="actor.brotherhood.pictures" path="pictures"/>
-			<br />
-	
-			<acme:select items="${areas}" itemLabel="name" code="actor.brotherhood.area" path="area"/>
-			<br />
 
 		</jstl:if>
  		 
 	</fieldset>
 	
 	<fieldset>
+		<legend><spring:message code="creditCard.legend"/></legend>
+		
+		<acme:textbox code="creditCard.holder" path="creditCard.holder"/>
+		<br>
+		
+		<acme:textbox code="creditCard.make" path="creditCard.make"/>
+		<br>
+		
+		<acme:textbox code="creditCard.number" path="creditCard.number"/>
+		<br>
+		
+		<acme:textbox code="creditCard.expirationMonth" path="creditCard.expirationMonth"/>
+		<br>
+		
+		<acme:textbox code="creditCard.expirationYear" path="creditCard.expirationYear"/>
+		<br>
+		
+		<acme:textbox code="creditCard.cvvCode" path="creditCard.cvvCode"/>
+		<br>
+	
+	</fieldset>
+	
+	<fieldset>
 		<legend><spring:message code="userAccount.legend"/></legend>
-		<!-- 
-		<acme:textbox code="userAccount.username.requested" path="userAccount.username" id="usernameId" name="username"/>
 		
-		<br />
-		
-		<acme:password code="userAccount.password.requested" path="userAccount.password" id="passwordId" name="password"/>
-		
-		<br />
-		
-		<acme:password code="userAccount.confirmPassword.requested" path="userAccount.password" id="confirmPasswordId" name="confirmPassword"/>
-		
-		<br />
-		 -->
 
-		<acme:textbox path="username" code="userAccount.username.requested" />
+		<acme:textbox path="userAccount.username" code="userAccount.username.requested" />
 		<br>
 
-		<acme:password path="password" code="userAccount.password.requested" id="passwordId" />
+		<acme:password path="userAccount.password" code="userAccount.password.requested" id="passwordId" />
 		<br>
 
-		<acme:password path="confirmPassword" code="userAccount.confirmPassword.requested" id="confirmPasswordId"/>
+		<acme:password path="userAccount.confirmPassword" code="userAccount.confirmPassword.requested" id="confirmPasswordId"/>
 		<br>
 
 		<security:authorize access="hasRole('ADMIN')" >
@@ -115,15 +113,15 @@
  
 		<security:authorize access="isAnonymous()" >
 		
-		<jstl:if test="${rol == 'Brotherhood'}">
+		<jstl:if test="${rol == 'Company'}">
 		
-			<acme:textbox code="actor.authority" path="userAccount.authorities" readonly="true" value="BROTHERHOOD"/>
+			<acme:textbox code="actor.authority" path="userAccount.authorities" readonly="true" value="COMPANY"/>
 			
 		</jstl:if>
 		
-		<jstl:if test="${rol == 'Member'}">
+		<jstl:if test="${rol == 'Hacker'}">
 		
-			<acme:textbox code="actor.authority" path="userAccount.authorities" readonly="true" value="MEMBER"/>
+			<acme:textbox code="actor.authority" path="userAccount.authorities" readonly="true" value="HACKER"/>
 		
 		</jstl:if>
 		
@@ -137,6 +135,14 @@
 		<spring:message code="actor.checkBox" />
 		<a href="welcome/terms.do"><spring:message code="actor.terms"/></a>
 		<form:errors path="checkBoxAccepted" cssClass="error" />
+	</div>
+	<br>
+	
+	<div>
+		<form:checkbox path="checkBoxDataProcessesAccepted" />
+		<spring:message code="actor.checkBox" />
+		<a href="welcome/dataProcesses.do"><spring:message code="actor.dataProcesses"/></a>
+		<form:errors path="checkBoxDataProcessesAccepted" cssClass="error" />
 	</div>
 	<br>
 

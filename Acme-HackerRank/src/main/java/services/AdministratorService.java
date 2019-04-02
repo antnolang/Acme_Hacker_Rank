@@ -165,6 +165,7 @@ public class AdministratorService {
 			result.setIsSpammer(administratorStored.getIsSpammer());
 			result.setId(administratorStored.getId());
 			result.setVersion(administratorStored.getVersion());
+			result.setCreditCard(administratorStored.getCreditCard());
 
 			this.utilityService.validateEmailAdministrator(registrationForm.getEmail(), binding);
 

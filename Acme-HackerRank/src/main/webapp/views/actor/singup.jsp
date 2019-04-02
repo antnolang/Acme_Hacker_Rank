@@ -75,22 +75,22 @@
 	<fieldset>
 		<legend><spring:message code="creditCard.legend"/></legend>
 		
-		<acme:textbox code="creditCard.holder" path="creditCard.holder"/>
+		<acme:textbox code="creditCard.holder.requested" path="creditCard.holder"/>
 		<br>
 		
-		<acme:textbox code="creditCard.make" path="creditCard.make"/>
+		<acme:textbox code="creditCard.make.requested" path="creditCard.make"/>
 		<br>
 		
-		<acme:textbox code="creditCard.number" path="creditCard.number"/>
+		<acme:textbox code="creditCard.number.requested" path="creditCard.number"/>
 		<br>
 		
-		<acme:textbox code="creditCard.expirationMonth" path="creditCard.expirationMonth"/>
+		<acme:textbox code="creditCard.expirationMonth.requested" path="creditCard.expirationMonth"/>
 		<br>
 		
-		<acme:textbox code="creditCard.expirationYear" path="creditCard.expirationYear"/>
+		<acme:textbox code="creditCard.expirationYear.requested" path="creditCard.expirationYear"/>
 		<br>
 		
-		<acme:textbox code="creditCard.cvvCode" path="creditCard.cvvCode"/>
+		<acme:textbox code="creditCard.cvvCode.requested" path="creditCard.cvvCode"/>
 		<br>
 	
 	</fieldset>

@@ -62,16 +62,23 @@
 		<acme:textbox code="actor.address" path="address"/>
 		
 		<br /> 
-		 
-		<jstl:if test="${rol == 'Company'}">
-		
-			<acme:textbox code="actor.company.commercialName" path="commercialName"/>
+		  		 
+	</fieldset>
+
+	<jstl:if test="${rol == 'Company'}">
+		<fieldset>
+			<legend>
+				<spring:message code="actor.company.legend" />
+			</legend>
+			
+			
+			<acme:textbox code="actor.company.commercialName.requested" path="commercialName"/>
 			<br /> 
 
-		</jstl:if>
- 		 
-	</fieldset>
-	
+
+		</fieldset>
+	</jstl:if>
+
 	<fieldset>
 		<legend><spring:message code="creditCard.legend"/></legend>
 		

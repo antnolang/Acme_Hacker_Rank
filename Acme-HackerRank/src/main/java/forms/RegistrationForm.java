@@ -1,7 +1,6 @@
 
 package forms;
 
-
 public class RegistrationForm {
 
 	private int				id;
@@ -15,6 +14,7 @@ public class RegistrationForm {
 	private String			phoneNumber;
 	private String			address;
 	private Boolean			isSpammer;
+	private String			commercialName;
 	private UserAccountForm	userAccount;
 	private boolean			checkBoxAccepted;
 	private boolean			checkBoxDataProcessesAccepted;
@@ -106,6 +106,14 @@ public class RegistrationForm {
 
 	public void setVATnumber(final int vATnumber) {
 		this.VATnumber = vATnumber;
+	}
+
+	public String getCommercialName() {
+		return this.commercialName;
+	}
+
+	public void setCommercialName(final String commercialName) {
+		this.commercialName = commercialName;
 	}
 
 	public CreditCardForm getCreditCard() {

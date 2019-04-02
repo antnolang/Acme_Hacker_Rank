@@ -26,16 +26,16 @@
 	<legend><spring:message code="actor.legend"/></legend>
 	
 	
-	<p> <strong> <spring:message code="actor.fullname" />: </strong>  <jstl:out value="${actor.fullname}" /></p>
+	<p> <strong> <spring:message code="actor.fullname" /> : </strong>  <jstl:out value="${actor.fullname}" /></p>
 
-	<p> <strong> <spring:message code="actor.VATnumber" />: </strong>  <jstl:out value="${actor.VATnumber}" /></p>
+	<p> <strong> <spring:message code="actor.VATnumber" /> : </strong>  <jstl:out value="${actor.VATnumber}" /></p>
 
-	<p> <strong> <spring:message code="actor.email" />: </strong>  <jstl:out value="${actor.email}" /></p>
+	<p> <strong> <spring:message code="actor.email" /> : </strong>  <jstl:out value="${actor.email}" /></p>
 
 
 	<jstl:if test="${actor.photo != null }">
 		<p>
-			<strong> <spring:message code="actor.photo" />:
+			<strong> <spring:message code="actor.photo" /> :
 			</strong> <img alt="Photo" src="<jstl:out value="${actor.photo}" />"
 				height="200px" width="200px">
 		</p>
@@ -44,7 +44,7 @@
 
 	<jstl:if test="${actor.phoneNumber != null }">
 		<p>
-			<strong> <spring:message code="actor.phoneNumber" />:
+			<strong> <spring:message code="actor.phoneNumber" /> :
 			</strong>
 			<jstl:out value="${actor.phoneNumber}" />
 		</p>
@@ -52,7 +52,7 @@
 
 	<jstl:if test="${actor.address != null }">
 		<p>
-			<strong> <spring:message code="actor.address" />
+			<strong> <spring:message code="actor.address" /> :
 			</strong>
 			<jstl:out value="${actor.address}" />
 		</p>
@@ -60,22 +60,18 @@
 
 	<security:authorize access="hasRole('ADMIN')">
 
-		<jstl:if test="${actor.isSpammer != null }">
-			<p>
-				<strong> <spring:message code="actor.isSpammer" />:
-				</strong>
+		
+		<p>
+			<strong> <spring:message code="actor.isSpammer" /> :
+			</strong>
+			<jstl:if test="${actor.isSpammer != null }">
 				<jstl:out value="${actor.isSpammer}" />
-			</p>
-		</jstl:if>
-
-
-		<jstl:if test="${actor.isSpammer == null }">
-			<p>
-				<strong> <spring:message code="actor.isSpammer" />:
-				</strong>
+			</jstl:if>
+			<jstl:if test="${actor.isSpammer == null }">
 				<jstl:out value="N/A" />
-			</p>
-		</jstl:if>
+			</jstl:if>
+		</p>
+
 
 		<jstl:if
 			test="${actor.isSpammer == true}">

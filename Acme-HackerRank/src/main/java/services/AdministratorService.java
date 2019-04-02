@@ -15,6 +15,7 @@ import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
 import domain.Administrator;
+import domain.CreditCard;
 import forms.RegistrationForm;
 
 @Service
@@ -36,6 +37,9 @@ public class AdministratorService {
 
 	@Autowired
 	private UserAccountService		userAccountService;
+
+	@Autowired
+	private UtilityService			utilityService;
 
 
 	// Constructors -------------------------------
@@ -118,9 +122,12 @@ public class AdministratorService {
 	public Administrator reconstruct(final RegistrationForm registrationForm, final BindingResult binding) {
 		Administrator result, administratorStored;
 		UserAccount userAccount;
+		CreditCard creditCard;
 
 		if (registrationForm.getId() == 0) {
 			result = this.create();
+			creditCard = new CreditCard();
+
 			result.setName(registrationForm.getName());
 			result.setSurname(registrationForm.getSurname());
 			result.setEmail(registrationForm.getEmail());
@@ -129,9 +136,18 @@ public class AdministratorService {
 			result.setAddress(registrationForm.getAddress());
 			result.setIsSpammer(registrationForm.getIsSpammer());
 
+			creditCard.setHolder(registrationForm.getCreditCard().getHolder());
+			creditCard.setMake(registrationForm.getCreditCard().getMake());
+			creditCard.setNumber(registrationForm.getCreditCard().getNumber());
+			creditCard.setExpirationMonth(registrationForm.getCreditCard().getExpirationMonth());
+			creditCard.setExpirationYear(registrationForm.getCreditCard().getExpirationYear());
+			creditCard.setCvvCode(registrationForm.getCreditCard().getCvvCode());
+
+			result.setCreditCard(creditCard);
+
 			userAccount = result.getUserAccount();
-			userAccount.setUsername(registrationForm.getUsername());
-			userAccount.setPassword(registrationForm.getPassword());
+			userAccount.setUsername(registrationForm.getUserAccount().getUsername());
+			userAccount.setPassword(registrationForm.getUserAccount().getPassword());
 
 			this.validateRegistration(result, registrationForm, binding);
 		} else {
@@ -148,36 +164,36 @@ public class AdministratorService {
 			result.setId(administratorStored.getId());
 			result.setVersion(administratorStored.getVersion());
 
-			this.validateEmail(registrationForm.getEmail(), binding);
+			this.utilityService.validateEmailAdministrator(registrationForm.getEmail(), binding);
 
-			if (registrationForm.getUsername().isEmpty() && registrationForm.getPassword().isEmpty() && registrationForm.getConfirmPassword().isEmpty()) // No ha actualizado ningun atributo de user account
+			if (registrationForm.getUserAccount().getUsername().isEmpty() && registrationForm.getUserAccount().getPassword().isEmpty() && registrationForm.getUserAccount().getConfirmPassword().isEmpty()) // No ha actualizado ningun atributo de user account
 				result.setUserAccount(administratorStored.getUserAccount());
-			else if (!registrationForm.getUsername().isEmpty() && registrationForm.getPassword().isEmpty() && registrationForm.getConfirmPassword().isEmpty()) {// Modifica el username
-				this.validateUsernameEdition(registrationForm.getUsername(), binding);
+			else if (!registrationForm.getUserAccount().getUsername().isEmpty() && registrationForm.getUserAccount().getPassword().isEmpty() && registrationForm.getUserAccount().getConfirmPassword().isEmpty()) {// Modifica el username
+				this.utilityService.validateUsernameEdition(registrationForm.getUserAccount().getUsername(), binding);
 				if (binding.hasErrors()) {
 
 				} else {
 					userAccount = administratorStored.getUserAccount();
-					userAccount.setUsername(registrationForm.getUsername());
+					userAccount.setUsername(registrationForm.getUserAccount().getUsername());
 					result.setUserAccount(userAccount);
 				}
-			} else if (registrationForm.getUsername().isEmpty() && !registrationForm.getPassword().isEmpty() && !registrationForm.getConfirmPassword().isEmpty()) { // Modifica la password
-				this.validatePasswordEdition(registrationForm.getPassword(), registrationForm.getConfirmPassword(), binding);
+			} else if (registrationForm.getUserAccount().getUsername().isEmpty() && !registrationForm.getUserAccount().getPassword().isEmpty() && !registrationForm.getUserAccount().getConfirmPassword().isEmpty()) { // Modifica la password
+				this.utilityService.validatePasswordEdition(registrationForm.getUserAccount().getPassword(), registrationForm.getUserAccount().getConfirmPassword(), binding);
 				if (binding.hasErrors()) {
 
 				} else {
 					userAccount = administratorStored.getUserAccount();
-					userAccount.setPassword(registrationForm.getPassword());
+					userAccount.setPassword(registrationForm.getUserAccount().getPassword());
 					result.setUserAccount(userAccount);
 				}
-			} else if (!registrationForm.getUsername().isEmpty() && !registrationForm.getPassword().isEmpty() && !registrationForm.getConfirmPassword().isEmpty()) { // Modifica el username y la password
-				this.validateUsernamePasswordEdition(registrationForm, binding);
+			} else if (!registrationForm.getUserAccount().getUsername().isEmpty() && !registrationForm.getUserAccount().getPassword().isEmpty() && !registrationForm.getUserAccount().getConfirmPassword().isEmpty()) { // Modifica el username y la password
+				this.utilityService.validateUsernamePasswordEdition(registrationForm, binding);
 				if (binding.hasErrors()) {
 
 				} else {
 					userAccount = administratorStored.getUserAccount();
-					userAccount.setUsername(registrationForm.getUsername());
-					userAccount.setPassword(registrationForm.getPassword());
+					userAccount.setUsername(registrationForm.getUserAccount().getUsername());
+					userAccount.setPassword(registrationForm.getUserAccount().getPassword());
 					result.setUserAccount(userAccount);
 				}
 			}
@@ -189,14 +205,15 @@ public class AdministratorService {
 	}
 	private void validateRegistration(final Administrator administrator, final RegistrationForm registrationForm, final BindingResult binding) {
 		String password, confirmPassword, username;
-		boolean checkBox;
+		boolean checkBox, checkBoxData;
 
-		password = registrationForm.getPassword();
-		confirmPassword = registrationForm.getConfirmPassword();
-		username = registrationForm.getUsername();
+		password = registrationForm.getUserAccount().getPassword();
+		confirmPassword = registrationForm.getUserAccount().getConfirmPassword();
+		username = registrationForm.getUserAccount().getUsername();
 		checkBox = registrationForm.getCheckBoxAccepted();
+		checkBoxData = registrationForm.getCheckBoxAccepted();
 
-		this.validateEmail(administrator.getEmail(), binding);
+		this.utilityService.validateEmailAdministrator(administrator.getEmail(), binding);
 		if (username.trim().equals(""))
 			binding.rejectValue("username", "actor.username.blank", "Must entry a username.");
 		if (password.trim().equals("") && confirmPassword.trim().equals("")) {
@@ -207,6 +224,8 @@ public class AdministratorService {
 			binding.rejectValue("confirmPassword", "user.missmatch.password", "Does not match with password");
 		if (checkBox == false)
 			binding.rejectValue("checkBoxAccepted", "actor.checkBox.agree", "Must agree terms and conditions");
+		if (checkBoxData == false)
+			binding.rejectValue("checkBoxDataProcessesAccepted", "actor.checkBoxData.agree", "Must agree data processes");
 		if (this.userAccountService.existUsername(username))
 			binding.rejectValue("username", "actor.username.used", "Username already in use");
 		if (this.actorService.existEmail(administrator.getEmail()))
@@ -215,61 +234,6 @@ public class AdministratorService {
 			binding.rejectValue("password", "actor.password.size", "Password must have between 5 and 32 characters");
 		if (username.length() < 5 || username.length() > 32)
 			binding.rejectValue("username", "actor.username.size", "Username must have between 5 and 32 characters.");
-
-	}
-
-	private void validateUsernamePasswordEdition(final RegistrationForm registrationForm, final BindingResult binding) {
-		String password, confirmPassword, username;
-
-		password = registrationForm.getPassword();
-		confirmPassword = registrationForm.getConfirmPassword();
-		username = registrationForm.getUsername();
-
-		if (password.trim().equals("") && confirmPassword.trim().equals("")) {
-			binding.rejectValue("password", "password.empty", "Must entry a password");
-			binding.rejectValue("confirmPassword", "confirmPassword.empty", "Must entry a confirm password");
-		}
-		if (username.trim().equals(""))
-			binding.rejectValue("username", "actor.username.blank", "Must entry a username.");
-		if (!password.equals(confirmPassword))
-			binding.rejectValue("confirmPassword", "user.missmatch.password", "Does not match with password");
-		if (this.userAccountService.existUsername(username))
-			binding.rejectValue("username", "actor.username.used", "Username already in use");
-		if (password.length() < 5 || password.length() > 32)
-			binding.rejectValue("password", "actor.password.size", "Password must have between 5 and 32 characters");
-		if (username.length() < 5 || username.length() > 32)
-			binding.rejectValue("username", "actor.username.size", "Username must have between 5 and 32 characters.");
-
-	}
-
-	private void validateUsernameEdition(final String username, final BindingResult binding) {
-
-		if (username.trim().equals(""))
-			binding.rejectValue("username", "actor.username.blank", "Must entry a username.");
-		if (this.userAccountService.existUsername(username))
-			binding.rejectValue("username", "actor.username.used", "Username already in use");
-		if (username.length() < 5 || username.length() > 32)
-			binding.rejectValue("username", "actor.username.size", "Username must have between 5 and 32 characters.");
-
-	}
-
-	private void validatePasswordEdition(final String password, final String confirmPassword, final BindingResult binding) {
-
-		if (password.trim().equals("") && confirmPassword.trim().equals("")) {
-			binding.rejectValue("password", "password.empty", "Must entry a password");
-			binding.rejectValue("confirmPassword", "confirmPassword.empty", "Must entry a confirm password");
-		}
-		if (!password.equals(confirmPassword))
-			binding.rejectValue("confirmPassword", "user.missmatch.password", "Does not match with password");
-		if (password.length() < 5 || password.length() > 32)
-			binding.rejectValue("password", "actor.password.size", "Password must have between 5 and 32 characters");
-
-	}
-
-	private void validateEmail(final String email, final BindingResult binding) {
-
-		if (!email.matches("[A-Za-z0-9]+@[a-zA-Z0-9.-]+|[\\w\\s]+[\\<][A-Za-z0-9]+@[a-zA-Z0-9.-]+[\\>]|[A-Za-z0-9]+@|[\\w\\s]+[\\<][A-Za-z0-9]+@+[\\>]"))
-			binding.rejectValue("email", "actor.email.error", "Invalid email pattern");
 
 	}
 
@@ -286,6 +250,7 @@ public class AdministratorService {
 		registrationForm.setPhoneNumber(administrator.getPhoneNumber());
 		registrationForm.setAddress(administrator.getAddress());
 		registrationForm.setCheckBoxAccepted(false);
+		registrationForm.setCheckBoxDataProcessesAccepted(false);
 
 		return registrationForm;
 	}

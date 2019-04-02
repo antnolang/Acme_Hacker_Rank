@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +78,16 @@ public class HackerService {
 		result = (Hacker) this.actorService.save(hacker);
 
 		return result;
+	}
+
+	public Collection<Hacker> findAll() {
+		Collection<Hacker> result;
+
+		result = this.hackerRepository.findAll();
+		Assert.notNull(result);
+
+		return result;
+
 	}
 
 	// Other business methods ---------------------

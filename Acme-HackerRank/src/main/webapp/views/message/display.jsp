@@ -23,45 +23,37 @@
 
 <spring:message code="message.format.date" var="formatDate" />
 <p> 
-	<strong> <spring:message code="message.display.sentMoment" />: </strong>
+	<strong> <spring:message code="message.sentMoment" />: </strong>
 	<fmt:formatDate value="${messageToDisplay.sentMoment}" pattern="${formatDate}"/>
 </p>
 	
 <p> 
-	<strong> <spring:message code="message.display.subject" />: </strong>
+	<strong> <spring:message code="message.subject" />: </strong>
  	<jstl:out value="${messageToDisplay.subject}" />
 </p>
 
 <p> 
-	<strong> <spring:message code="message.display.body" />: </strong>
+	<strong> <spring:message code="message.body" />: </strong>
 	<jstl:out value="${messageToDisplay.body}" />
 </p>
 
-<p>
-	<strong> <spring:message code="message.display.priority" />: </strong>
-  	<jstl:out value="${messageToDisplay.priority}" />
-</p>
-
 <jstl:if test="${messageToDisplay.tags != null && messageToDisplay.tags != ''}">
-	<strong><spring:message code="message.display.tags"/>:</strong>
+	<strong><spring:message code="message.tags"/>:</strong>
 	<jstl:out value="${messageToDisplay.tags}" />
 </jstl:if>
 
 <p>
-	<strong> <spring:message code="message.display.sender" />: </strong>
+	<strong> <spring:message code="message.sender" />: </strong>
 	<jstl:out value="${messageToDisplay.sender.fullname}" />
 </p>
 
-<strong> <spring:message code="message.display.recipients"/>: </strong>
-<display:table name="${messageToDisplay.recipients}" id="row" requestURI="message/administrator,brotherhood,member/display.do?messageId=${messageToDisplay.id}&boxId=${boxId}" pagesize="5" class="displaytag">
-
-	<display:column property="fullname" titleKey="message.recipient.name"/>
-
-	<display:column property="email" titleKey="message.recipient.email"/>
-
+<strong> <spring:message code="message.recipients"/>: </strong>
+<display:table name="${messageToDisplay.recipients}" id="row" requestURI="message/administrator,company,hacker/display.do?messageId=${messageToDisplay.id}" pagesize="5" class="displaytag">
+	<display:column property="fullname" titleKey="actor.name"/>
+	<display:column property="email" titleKey="actor.email"/>
 </display:table>	   
 
-<a href="box/administrator,brotherhood,member/display.do?boxId=${boxId}">
+<a href="message/administrator,company,hacker/list.do">
 	<spring:message code="message.button.return" />
 </a>
 	   

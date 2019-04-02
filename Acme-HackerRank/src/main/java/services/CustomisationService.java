@@ -39,8 +39,6 @@ public class CustomisationService {
 	}
 
 	// Other business methods ----------------------------
-
-	// Protected methods ---------------------------------
 	public Customisation find() {
 		Customisation result;
 		Customisation[] all;
@@ -53,6 +51,8 @@ public class CustomisationService {
 		return result;
 	}
 
-	// Private methods -----------------------------------
-
+	// Protected methods ---------------------------------
+	protected void flush() {
+		this.customisationRepository.flush();
+	}
 }

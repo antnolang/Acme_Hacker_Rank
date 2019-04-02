@@ -20,36 +20,16 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="socialProfile/administrator,brotherhood,member/edit.do" modelAttribute="socialProfile" >
+<form:form action="socialProfile/administrator,company,hacker/edit.do" modelAttribute="socialProfile" >
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	<form:hidden path="actor"/>
-	
-	<form:label path="nick">
-		<spring:message code="socialProfile.nick"/>
-	</form:label>
-	<form:input path="nick"/>
-	<form:errors cssClass="error" path="nick"/>
-	<br />
-	
-	<form:label path="socialNetwork">
-		<spring:message code="socialProfile.socialNetwork"/>
-	</form:label>
-	<form:input path="socialNetwork"/>
-	<form:errors cssClass="error" path="socialNetwork"/>
-	<br />
-	
-	<form:label path="linkProfile">
-		<spring:message code="socialProfile.linkProfile"/>
-	</form:label>
-	<form:input path="linkProfile"/>
-	<form:errors cssClass="error" path="linkProfile"/>
-	<br />
+		
+	<acme:textbox code="socialProfile.nick" path="nick" />
+	<acme:textbox code="socialProfile.socialNetwork" path="socialNetwork" />
+	<acme:textbox code="socialProfile.linkProfile" path="linkProfile" />
 	
 	<!-- Buttons -->
-
-	<acme:submit name="save" code="socialProfile.save"/>	
-		
+	<acme:submit name="save" code="socialProfile.save"/>		
 	<acme:cancel url="socialProfile/list.do?actorId=${actorId}" code="socialProfile.cancel"/>
-
 </form:form>

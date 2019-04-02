@@ -17,9 +17,9 @@ import org.springframework.validation.Validator;
 
 import repositories.MessageRepository;
 import domain.Actor;
+import domain.Application;
 import domain.Customisation;
 import domain.Message;
-import forms.MessageForm;
 
 @Service
 @Transactional
@@ -39,6 +39,12 @@ public class MessageService {
 
 	@Autowired
 	private CustomisationService	customisationService;
+
+	@Autowired
+	private AdministratorService	administratorService;
+
+	@Autowired
+	private HackerService			hackerService;
 
 
 	// Constructors -----------------------------------------
@@ -92,6 +98,7 @@ public class MessageService {
 		recipients.remove(principal);
 
 		result = this.create();
+		result.setTags("SYSTEM");
 		result.setRecipients(recipients);
 
 		return result;
@@ -105,43 +112,31 @@ public class MessageService {
 		Message result;
 		boolean isSpam;
 
+		isSpam = this.messageIsSpam(message);
+		message.setIsSpam(isSpam);
+
 		result = this.messageRepository.save(message);
 
-		isSpam = this.messageIsSpam(result);
-
-		if (isSpam) {
-			result.setIsSpam(true);
-			for (final Actor recipient : result.getRecipients()) {
-
-			}
-		} else
-			for (final Actor recipient : result.getRecipients()) {
-
-			}
-
 		return result;
+	}
+
+	public void delete(final Message message) {
+		Assert.notNull(message);
+		Assert.isTrue(this.messageRepository.exists(message.getId()));
+		this.checkByPrincipal(message);
+
+		String tags;
+
+		tags = message.getTags();
+		if (tags == null || !tags.contains("DELETED"))
+			message.setTags("DELETED");
+		else
+			this.messageRepository.delete(message);
 	}
 
 	// Other business methods -------------------------------
-
-	public Integer validateDestinationBox(final MessageForm messageForm, final String language, final BindingResult binding) {
-		Integer result;
-
-		result = messageForm.getDestinationBoxId();
-
-		if (result == null || result == 0)
-			if (language.equals("en"))
-				binding.rejectValue("destinationBoxId", "message.error.null", "Must not be null");
-			else
-				binding.rejectValue("destinationBoxId", "message.error.null", "No debe ser nulo");
-
-		return result;
-	}
-
 	public Message sendBroadcast(final Message message) {
-		Assert.notNull(message);
-		Assert.isTrue(message.getId() == 0);
-		this.checkByPrincipal(message);
+		Assert.isTrue(message.getTags() != null && message.getTags().contains("SYSTEM"));
 
 		Message result;
 		boolean isSpam;
@@ -153,23 +148,30 @@ public class MessageService {
 		recipients = this.actorService.findAll();
 		recipients.remove(principal);
 
+		isSpam = this.messageIsSpam(message);
+
 		message.setRecipients(recipients);
+		message.setIsSpam(isSpam);
 
 		result = this.messageRepository.save(message);
 
-		recipients = result.getRecipients();
-		isSpam = this.messageIsSpam(result);
-		if (isSpam) {
-			result.setIsSpam(true);
-			for (final Actor a : recipients) {
-
-			}
-		} else
-			for (final Actor a : recipients) {
-
-			}
-
 		return result;
+	}
+
+	public Collection<Message> findSentMessagesOrderByTags(final int actorId) {
+		Collection<Message> results;
+
+		results = this.messageRepository.findSentMessagesOrderByTags(actorId);
+
+		return results;
+	}
+
+	public Collection<Message> findReceivedMessagesOrderByTags(final int actorId) {
+		Collection<Message> results;
+
+		results = this.messageRepository.findReceivedMessagesOrderByTags(actorId);
+
+		return results;
 	}
 
 
@@ -199,31 +201,65 @@ public class MessageService {
 
 	public Message breachNotification() {
 		Message message, result;
-		List<Actor> recipients;
-		Actor principal;
 		String subject, body;
 
-		recipients = new ArrayList<Actor>();
-		recipients.addAll(this.actorService.findAll());
-
 		subject = "Breach notification / Notificación de brecha de seguridad";
-		body = "A breach happened. So, we recommend you that update your password /" + "Se produjo una brecha de seguridad. Le recomendamos que actualice su contraseña.";
+		body = "Dear valued user, we regret to inform you that your data has been exposed. Urge you to remain vigilant /" + "Apreciado usuario, lamentamos informarle de que sus datos han sido expuestos. Le instamos a estar alerta.";
 
-		message = this.create();
+		message = this.createBroadcast();
 		message.setSubject(subject);
 		message.setBody(body);
-		message.setRecipients(recipients);
 
 		result = this.messageRepository.save(message);
 
-		principal = this.actorService.findPrincipal();
+		return result;
+	}
 
-		for (final Actor a : recipients) {
+	protected Message notification_applicationStatusChanges(final Application application) {
+		Assert.notNull(application);
+		Assert.isTrue(application.getId() != 0);
 
-		}
+		Message notification, result;
+		Actor hacker, company;
+		List<Actor> recipients;
+		String subject, body;
+
+		hacker = application.getHacker();
+		company = application.getPosition().getCompany();
+
+		recipients = new ArrayList<Actor>();
+		recipients.add(hacker);
+		recipients.add(company);
+
+		subject = "Application notification / Notificación de solicitud";
+		body = "The application has been " + application.getStatus() + ". / La solicitud has sido " + application.getStatus() + ".";
+
+		notification = this.createNotification(recipients, subject, body);
+
+		result = this.messageRepository.save(notification);
 
 		return result;
 	}
+
+	//	protected Message notification_newOfferPublished(Position position) {
+	//		Assert.notNull(position);
+	//		Assert.isTrue(position.getIsFinalMode() && !position.getIsCancelled());
+	//		
+	//		Message notification, result;
+	//		List<Hacker> all, hackers;
+	//		Collection<Position>  returned_positions;
+	//		String subject, body;
+	//		
+	//		all = this.hackerService.findAll();
+	//		
+	//		for (Hacker h: all) {
+	//			thi
+	//		}
+	//		
+	//		notification = this.createNotification(hackers, subject, body);
+	//	
+	//	
+	//	}
 
 	// Protected methods ------------------------------------
 	protected Double numberMessagesSentByActor(final int actorId) {
@@ -251,6 +287,25 @@ public class MessageService {
 	}
 
 	// Private methods --------------------------------------
+	private Message createNotification(final Collection<Actor> recipients, final String subject, final String body) {
+		Message result;
+		Date current_moment;
+		Actor system;
+
+		current_moment = this.utilityService.current_moment();
+		system = this.administratorService.findSystem();
+
+		result = new Message();
+		result.setSender(system);
+		result.setRecipients(recipients);
+		result.setSentMoment(current_moment);
+		result.setBody(body);
+		result.setSubject(subject);
+		result.setTags("SYSTEM");
+
+		return result;
+	}
+
 	private void checkByPrincipal(final Message message) {
 		Actor principal;
 

@@ -1,26 +1,22 @@
 
 package forms;
 
-import security.UserAccount;
-
 public class RegistrationForm {
 
-	private int			id;
-	private String		name;
-	private String		middleName;
-	private String		surname;
-	private String		fullname;
-	private String		photo;
-	private String		email;
-	private String		phoneNumber;
-	private String		address;
-	private Boolean		isSpammer;
-	private Double		score;
-	private UserAccount	userAccount;
-	private String		username;
-	private String		password;
-	private String		confirmPassword;
-	private boolean		checkBoxAccepted;
+	private int				id;
+	private String			name;
+	private String			middleName;
+	private String			surname;
+	private String			fullname;
+	private String			photo;
+	private String			email;
+	private String			phoneNumber;
+	private String			address;
+	private Boolean			isSpammer;
+	private Double			score;
+	private UserAccountForm	userAccount;
+	private boolean			checkBoxAccepted;
+	private boolean			checkBoxDataProcessesAccepted;
 
 
 	public int getId() {
@@ -111,20 +107,20 @@ public class RegistrationForm {
 		this.score = score;
 	}
 
-	public UserAccount getUserAccount() {
+	public UserAccountForm getUserAccount() {
 		return this.userAccount;
 	}
 
-	public void setUserAccount(final UserAccount userAccount) {
+	public void setUserAccount(final UserAccountForm userAccount) {
 		this.userAccount = userAccount;
 	}
 
-	public String getConfirmPassword() {
-		return this.confirmPassword;
+	public boolean isCheckBoxDataProcessesAccepted() {
+		return this.checkBoxDataProcessesAccepted;
 	}
 
-	public void setConfirmPassword(final String confirmPassword) {
-		this.confirmPassword = confirmPassword;
+	public void setCheckBoxDataProcessesAccepted(final boolean checkBoxDataProcessesAccepted) {
+		this.checkBoxDataProcessesAccepted = checkBoxDataProcessesAccepted;
 	}
 
 	public boolean getCheckBoxAccepted() {
@@ -133,22 +129,6 @@ public class RegistrationForm {
 
 	public void setCheckBoxAccepted(final boolean checkBoxAccepted) {
 		this.checkBoxAccepted = checkBoxAccepted;
-	}
-
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setUsername(final String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(final String password) {
-		this.password = password;
 	}
 
 }

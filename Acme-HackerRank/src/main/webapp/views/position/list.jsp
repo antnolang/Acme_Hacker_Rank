@@ -11,8 +11,6 @@
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -27,9 +25,7 @@
 
 
 <display:table name="positions" id="row" requestURI="${requestURI}" class="displaytag" pagesize="5">
-		
 
-	
 	<display:column>
 		<a href="position/display.do?positionId=${row.id}"><spring:message code="position.table.display"/></a>
 	</display:column>	

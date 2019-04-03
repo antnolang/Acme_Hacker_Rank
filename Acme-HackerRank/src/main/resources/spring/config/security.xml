@@ -69,21 +69,10 @@
 		<security:intercept-url pattern="/customisation/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/dashboard/**" access="hasRole('ADMIN')" />
 		
-		<security:intercept-url pattern="/position/list.do**" access="isAnonymous()" /> 
-		<security:intercept-url pattern="/position/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/position/list.do**" access="permitAll" /> 
+		<security:intercept-url pattern="/position/display.do**" access="permitAll" /> 
 	
 		<security:intercept-url pattern="/socialProfile/**" access="permitAll" />
-		
-		<security:intercept-url pattern="/finder/member/**" access="hasRole('MEMBER')" />
-	
-		<security:intercept-url pattern="/float/display.do" access="permitAll" /> 
-		<security:intercept-url pattern="/float/list.do" access="permitAll" /> 
-		
-		<security:intercept-url pattern="/member/list.do**" access="permitAll" /> 
-		
-		<security:intercept-url pattern="/procession/display.do" access="permitAll" /> 
-		<security:intercept-url pattern="/procession/list.do" access="permitAll" /> 	
-		
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 

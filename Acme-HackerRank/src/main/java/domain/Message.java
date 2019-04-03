@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -95,9 +94,8 @@ public class Message extends DomainEntity {
 
 	//Relationships ----------------------------------------------------
 
-	private Actor					sender;
-	private Collection<Actor>		recipients;
-	private Collection<SystemTag>	systemTags;
+	private Actor				sender;
+	private Collection<Actor>	recipients;
 
 
 	@Valid
@@ -120,16 +118,6 @@ public class Message extends DomainEntity {
 
 	public void setRecipients(final Collection<Actor> recipients) {
 		this.recipients = recipients;
-	}
-
-	@NotNull
-	@OneToMany
-	public Collection<SystemTag> getSystemTags() {
-		return this.systemTags;
-	}
-
-	public void setSystemTags(final Collection<SystemTag> systemTags) {
-		this.systemTags = systemTags;
 	}
 
 }

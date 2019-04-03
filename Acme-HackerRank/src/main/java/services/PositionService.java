@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -132,6 +134,16 @@ public class PositionService {
 		return result;
 	}
 
+	public Double[] findDataSalaryOffered() {
+		Double[] result;
+
+		result = this.positionRepository.findDataSalaryOffered();
+		Assert.notNull(result);
+
+		return result;
+
+	}
+
 	public Collection<Position> findPositionByPrincipal() {
 		Collection<Position> result;
 		Company principal;
@@ -140,6 +152,19 @@ public class PositionService {
 		result = this.positionRepository.findPositionByCompany(principal.getId());
 
 		return result;
+	}
+
+	public List<Position> findPositionsBestWorstSalary() {
+		final List<Position> result;
+
+		final List<Position> positions = new ArrayList<>(this.positionRepository.findPositionsBestWorstSalary());
+		result = new ArrayList<>();
+
+		result.add(positions.get(0));
+		result.add(positions.get(positions.size() - 1));
+
+		return result;
+
 	}
 
 	// Protected methods -----------------------------------------------

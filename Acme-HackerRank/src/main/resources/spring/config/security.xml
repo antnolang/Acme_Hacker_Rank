@@ -45,6 +45,8 @@
 		
 		<security:intercept-url pattern="/error.do" access="permitAll" /> 
 		
+		<security:intercept-url pattern="/actor/administrator,company,hacker/**" access="isAuthenticated()"/>
+		
 		<security:intercept-url pattern="/actor/registerCompany.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/actor/registerHacker.do" access="isAnonymous()" /> 
 		
@@ -72,6 +74,7 @@
 		<security:intercept-url pattern="/position/list.do**" access="permitAll" /> 
 		<security:intercept-url pattern="/position/display.do**" access="permitAll" /> 
 	
+		<security:intercept-url pattern="/socialProfile/administrator,company,hacker/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/socialProfile/**" access="permitAll" />
 		
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />

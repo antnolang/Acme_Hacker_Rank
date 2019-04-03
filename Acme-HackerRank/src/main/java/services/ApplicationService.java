@@ -1,12 +1,15 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import repositories.ApplicationRepository;
+import domain.Application;
 
 @Service
 @Transactional
@@ -31,6 +34,15 @@ public class ApplicationService {
 	//Constructor ----------------------------------------------------
 	public ApplicationService() {
 		super();
+	}
+
+	// Protected methods -----------------------------------------------
+	protected Collection<Application> findApplicationsByProblemHacker(final int idProblem, final int idHacker) {
+		Collection<Application> result;
+
+		result = this.findApplicationsByProblemHacker(idProblem, idHacker);
+
+		return result;
 	}
 
 	//Simple CRUD methods -------------------------------------------

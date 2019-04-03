@@ -60,8 +60,6 @@ public class PositionService {
 		return result;
 	}
 
-	// Other business methods ---------------------
-
 	public Position create() {
 		Position result;
 		Company company;

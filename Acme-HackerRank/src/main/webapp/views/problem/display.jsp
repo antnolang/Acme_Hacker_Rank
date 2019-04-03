@@ -20,3 +20,52 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+	<security:authorize access="hasRole('HACKER')">
+		<strong><spring:message code="problem.company"/>:</strong>
+			<a href="actor/display.do?actorId=${problem.company.id}"><jstl:out value="${problem.company.commercialName}"/></a>
+		<br/>
+	</security:authorize>
+
+
+	<strong><spring:message code="problem.position"/>:</strong>
+		<a href="position/display.do?positionId=${problem.position.id}"><jstl:out value="${problem.position.title}"/></a>
+	<br/>
+	
+	<strong><spring:message code="problem.title"/>:</strong>
+		<jstl:out value="${problem.title}"/>
+	<br/>
+	
+	<strong><spring:message code="problem.statement"/>:</strong>
+		<jstl:out value="${problem.statement}"/>
+	<br/>
+	
+	<strong><spring:message code="problem.hint"/>:</strong>
+		<jstl:out value="${problem.hint}"/>
+	<br/>
+	
+	<strong><spring:message code="problem.attachments"/>:</strong>
+		<jstl:out value="${problem.attachments}"/>
+	<br/>
+	
+	<security:authorize access="hasRole('COMPANY')">
+		<strong><spring:message code="problem.finalMode"/>:</strong>
+			<jstl:out value="${problem.finalMode}"/>
+		<br/>
+	</security:authorize>
+	
+	
+	<!-- Links -->
+		
+	<security:authorize access="hasRole('COMPANY')">
+		<a href="position/list.do?companyId=${problem.company.id}">
+			<spring:message	code="position.back" />			
+		</a>
+	</security:authorize>
+	
+	<security:authorize access="hasRole('HACKER')">
+		<a href="position/display.positionId=${problem.position.id}">
+			<spring:message	code="position.back" />			
+		</a>
+	</security:authorize>
+	
+

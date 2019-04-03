@@ -41,6 +41,7 @@ public class SystemTag extends DomainEntity {
 	// Relationships
 
 	private Actor	actor;
+	private Message	message;
 
 
 	@Valid
@@ -52,6 +53,17 @@ public class SystemTag extends DomainEntity {
 
 	public void setActor(final Actor actor) {
 		this.actor = actor;
+	}
+
+	@Valid
+	@NotNull
+	@ManyToOne(optional = false)
+	public Message getMessage() {
+		return this.message;
+	}
+
+	public void setMessage(final Message message) {
+		this.message = message;
 	}
 
 }

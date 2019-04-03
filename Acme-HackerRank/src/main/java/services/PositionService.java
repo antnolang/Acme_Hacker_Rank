@@ -119,13 +119,13 @@ public class PositionService {
 	}
 
 	//Other public methods  -----------------------------------------------
-	//	public Collection<Position> findAllPositionAvaliable() {
-	//		Collection<Position> result;
-	//
-	//		result = this.positionRepository.findAllPositionAvaliable();
-	//
-	//		return result;
-	//	}
+	public Collection<Position> findAllPositionAvailable() {
+		Collection<Position> result;
+
+		result = this.positionRepository.findAllPositionAvailable();
+
+		return result;
+	}
 	public Collection<Position> findFinalModePositionsByCompany(final int companyId) {
 		Collection<Position> result;
 

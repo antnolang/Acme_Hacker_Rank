@@ -32,6 +32,9 @@
 			</li>
 		</security:authorize>
 		
+		<li><a  href="position/availableList.do" class="fNiv"><spring:message	code="master.page.availableposition" /></a>
+		</li>
+		
 		<security:authorize access="isAnonymous()">
 		
 			<li><a class="fNiv" href="company/list.do"><spring:message code="master.page.company.list" /></a></li>
@@ -61,6 +64,10 @@
 				</ul>
 			</li>
 		</security:authorize>
+		
+		
+		
+			
 	</ul>
 </div>
 

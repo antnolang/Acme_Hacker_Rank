@@ -31,13 +31,13 @@
 	</display:column>	
 	
 	<security:authorize access="hasRole('COMPANY')">
-	<jstl:if test="${principal == row.commpany}">
+	<jstl:if test="${principal == row.company}">
 		<display:column>
 			<a href="position/company/edit.do?positionId=${row.id}"><spring:message code="position.edit"/></a>
 		</display:column>
 	</jstl:if>
-	</security:authorize>	
-
+	</security:authorize>
+	
 	<display:column property="ticker" titleKey="position.ticker" />
 	
 	<display:column property="title" titleKey="position.title" />

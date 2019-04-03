@@ -16,8 +16,8 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	String existTicker(String ticker);
 
 	//TODO ¿cuando es una position displonible?
-	//	@Query("")
-	//	Collection<Position> findAllPositionAvaliable();
+	@Query("select p from Position p where p.isFinalMode = true and p.isCancelled = false")
+	Collection<Position> findAllPositionAvailable();
 
 	@Query("select p from Position p where p.company.id=?1")
 	Collection<Position> findPositionByCompany(int id);

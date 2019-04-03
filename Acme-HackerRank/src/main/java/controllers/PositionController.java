@@ -44,6 +44,7 @@ public class PositionController extends AbstractController {
 
 		try {
 			result = new ModelAndView("position/list");
+			positions = this.positionService.findFinalModePositionsByCompany(companyId);
 
 			try {
 				principal = this.companyService.findByPrincipal();
@@ -51,10 +52,30 @@ public class PositionController extends AbstractController {
 				principal = null;
 			}
 
-			if (principal != null && principal.getId() == companyId)
+			if (principal != null && principal.getId() == companyId) {
 				result.addObject("principal", principal);
+				positions = this.positionService.findPositionByPrincipal();
+			}
+			result.addObject("principal", principal);
 
-			positions = this.positionService.findFinalModePositionsByCompany(companyId);
+			result.addObject("positions", positions);
+
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:../error.do");
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/availableList", method = RequestMethod.GET)
+	public ModelAndView availableList() {
+		ModelAndView result;
+		Collection<Position> positions;
+
+		try {
+			result = new ModelAndView("position/list");
+
+			positions = this.positionService.findAllPositionAvailable();
 
 			result.addObject("positions", positions);
 

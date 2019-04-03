@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -26,6 +27,9 @@ public class UtilityService {
 
 	@Autowired
 	private CustomisationService	customisationService;
+
+	@Autowired
+	private PositionService			positionService;
 
 
 	// Constructors ------------------------
@@ -108,6 +112,37 @@ public class UtilityService {
 			word = s.trim();
 			result.add(word);
 		}
+
+		return result;
+	}
+
+	public String generateValidTicker(final String title) {
+		final String letters;
+		String result;
+		Integer counter;
+
+		//TODO poner que letters son las primeras letras del título, si es mas pequeño poner X 
+		counter = 0;
+		letters = "";
+
+		do {
+			result = letters + this.createRandomNumbers();
+			counter++;
+		} while (!(this.positionService.existTicker(result) == null) && counter < 650000);
+
+		return result;
+	}
+
+	private String createRandomNumbers() {
+		String result, characters;
+		Random randomNumber;
+
+		result = "";
+		randomNumber = new Random();
+		characters = "0123456789";
+
+		for (int i = 0; i <= 3; i++)
+			result += characters.charAt(randomNumber.nextInt(characters.length()));
 
 		return result;
 	}

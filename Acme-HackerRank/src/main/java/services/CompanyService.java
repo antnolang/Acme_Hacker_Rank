@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +87,15 @@ public class CompanyService {
 		Company result;
 
 		result = (Company) this.actorService.save(company);
+
+		return result;
+	}
+
+	public Collection<Company> findAll() {
+		Collection<Company> result;
+
+		result = this.companyRepository.findAll();
+		Assert.notNull(result);
 
 		return result;
 	}

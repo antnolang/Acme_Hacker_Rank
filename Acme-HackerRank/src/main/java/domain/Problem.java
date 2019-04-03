@@ -82,17 +82,29 @@ public class Problem extends DomainEntity {
 	// Relationships
 
 	private Position	position;
+	private Company		company;
 
 
 	@Valid
 	@NotNull
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = true)
 	public Position getPosition() {
 		return this.position;
 	}
 
 	public void setPosition(final Position position) {
 		this.position = position;
+	}
+
+	@Valid
+	@NotNull
+	@ManyToOne(optional = false)
+	public Company getCompany() {
+		return this.company;
+	}
+
+	public void setCompany(final Company company) {
+		this.company = company;
 	}
 
 }

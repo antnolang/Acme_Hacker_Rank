@@ -86,7 +86,6 @@ public class Problem extends DomainEntity {
 
 
 	@Valid
-	@NotNull
 	@ManyToOne(optional = true)
 	public Position getPosition() {
 		return this.position;

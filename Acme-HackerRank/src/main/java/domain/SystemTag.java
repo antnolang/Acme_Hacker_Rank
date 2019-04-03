@@ -24,17 +24,17 @@ public class SystemTag extends DomainEntity {
 
 	// Attributes
 
-	private String	title;
+	private String	text;
 
 
 	@NotBlank
 	@Pattern(regexp = "^DELETE|HARDDELETE$")
-	public String getTitle() {
-		return this.title;
+	public String getText() {
+		return this.text;
 	}
 
-	public void setTitle(final String title) {
-		this.title = title;
+	public void setText(final String text) {
+		this.text = text;
 	}
 
 

@@ -5,6 +5,9 @@ import java.util.Collection;
 
 import javax.transaction.Transactional;
 
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -13,6 +16,7 @@ import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
+import domain.CreditCard;
 
 @Service
 @Transactional
@@ -43,6 +47,7 @@ public class ActorService {
 	public Actor save(final Actor actor) {
 		Assert.notNull(actor);
 		this.utilityService.checkEmailActors(actor);
+		Assert.isTrue(!this.checkIsExpired(actor.getCreditCard()), "Expired credit card");
 
 		final Actor result;
 		boolean isUpdating;
@@ -171,6 +176,24 @@ public class ActorService {
 
 		actor = this.actorRepository.findActorByEmail(email);
 		result = !(actor == null);
+
+		return result;
+	}
+
+	protected boolean checkIsExpired(final CreditCard creditCard) {
+		String year, month;
+		LocalDate expiration, now;
+		boolean result;
+		DateTimeFormatter formatter;
+
+		year = creditCard.getExpirationYear();
+		month = creditCard.getExpirationMonth();
+		formatter = DateTimeFormat.forPattern("yy-MM-dd");
+		expiration = LocalDate.parse(year + "-" + month + "-" + "01", formatter);
+		expiration = expiration.plusMonths(1).minusDays(1);
+		now = LocalDate.now();
+
+		result = now.isAfter(expiration);
 
 		return result;
 	}

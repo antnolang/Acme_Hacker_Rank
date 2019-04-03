@@ -86,6 +86,7 @@ public abstract class Actor extends DomainEntity {
 
 	@Valid
 	@NotNull
+	@Column(unique = true)
 	public CreditCard getCreditCard() {
 		return this.creditCard;
 	}

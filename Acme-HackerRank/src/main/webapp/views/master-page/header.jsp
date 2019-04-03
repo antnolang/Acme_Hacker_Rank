@@ -26,6 +26,7 @@
 					<li class="arrow"></li>
 					<li><a href="customisation/administrator/display.do"> <spring:message code="master.page.customisation" /> </a></li>
 					<li><a href="dashboard/administrator/display.do"> <spring:message code="master.page.dashboard" /> </a></li>
+					<li><a href="actor/administrator/registerAdministrator.do"><spring:message code="master.page.administrator.create" /></a></li>
 					<li><a href="actor/administrator/list.do"><spring:message code="master.page.administrator.list" /></a></li>
 				</ul>
 			</li>
@@ -33,6 +34,14 @@
 		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			
+			<li><a class="fNiv"><spring:message	code="master.page.register" /></a>	
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="actor/registerCompany.do"><spring:message code="master.page.company.create" /></a></li>
+					<li><a href="actor/registerHacker.do"><spring:message code="master.page.hacker.create" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">

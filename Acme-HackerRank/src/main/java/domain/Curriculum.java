@@ -13,6 +13,9 @@ import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Curriculum extends DomainEntity {
@@ -27,6 +30,7 @@ public class Curriculum extends DomainEntity {
 	// Attributes
 
 	private boolean	isOriginal;
+	private String	title;
 
 
 	public boolean getIsOriginal() {
@@ -35,6 +39,16 @@ public class Curriculum extends DomainEntity {
 
 	public void setIsOriginal(final boolean isOriginal) {
 		this.isOriginal = isOriginal;
+	}
+
+	@NotBlank
+	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
+	public String getTitle() {
+		return this.title;
+	}
+
+	public void setTitle(final String title) {
+		this.title = title;
 	}
 
 

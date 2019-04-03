@@ -2,10 +2,6 @@
 package controllers.authenticated;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-
-import javax.swing.Box;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,17 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
 import services.AdministratorService;
-import services.CustomisationService;
 import services.MessageService;
-import services.UtilityService;
 import controllers.AbstractController;
 import domain.Actor;
-import domain.Customisation;
 import domain.Message;
-import forms.MessageForm;
 
 @Controller
-@RequestMapping("/message/administrator,brotherhood,member")
+@RequestMapping("/message/administrator,company,hacker")
 public class MessageMultiUserController extends AbstractController {
 
 	@Autowired
@@ -37,13 +29,7 @@ public class MessageMultiUserController extends AbstractController {
 	private ActorService			actorService;
 
 	@Autowired
-	private CustomisationService	customisationService;
-
-	@Autowired
 	private AdministratorService	administratorService;
-
-	@Autowired
-	private UtilityService			utilityService;
 
 
 	public MessageMultiUserController() {
@@ -51,7 +37,7 @@ public class MessageMultiUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int messageId, @RequestParam final int boxId) {
+	public ModelAndView display(@RequestParam final int messageId) {
 		ModelAndView result;
 		Message message;
 
@@ -59,11 +45,27 @@ public class MessageMultiUserController extends AbstractController {
 			message = this.messageService.findOneToDisplay(messageId);
 
 			result = new ModelAndView("message/display");
-			result.addObject("boxId", boxId);
 			result.addObject("messageToDisplay", message);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/error.do");
 		}
+
+		return result;
+	}
+
+	public ModelAndView list() {
+		ModelAndView result;
+		Collection<Message> sentMessages, receivedMessages;
+		Actor principal;
+
+		principal = this.actorService.findPrincipal();
+
+		sentMessages = this.messageService.findSentMessagesOrderByTags(principal.getId());
+		receivedMessages = this.messageService.findReceivedMessagesOrderByTags(principal.getId());
+
+		result = new ModelAndView("message/list");
+		result.addObject("sentMessages", sentMessages);
+		result.addObject("receivedMessages", receivedMessages);
 
 		return result;
 	}
@@ -81,50 +83,6 @@ public class MessageMultiUserController extends AbstractController {
 
 	}
 
-	@RequestMapping(value = "/move", method = RequestMethod.GET)
-	public ModelAndView move(@RequestParam final int messageId, @RequestParam final int boxId) {
-		ModelAndView result;
-		MessageForm messageForm;
-
-		try {
-			//this.messageService.findOneToMove(messageId, boxId);
-
-			messageForm = new MessageForm();
-			messageForm.setMessageId(messageId);
-			messageForm.setOriginBoxId(boxId);
-
-			result = this.moveModelAndView(messageForm);
-		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:/error.do");
-		}
-
-		return result;
-	}
-
-	@RequestMapping(value = "/move", method = RequestMethod.POST, params = "move")
-	public ModelAndView moveMessage(final MessageForm messageForm, final BindingResult binding, final Locale locale) {
-		ModelAndView result;
-		Message target;
-		final Box origin, destination;
-
-		target = this.messageService.findOne(messageForm.getMessageId());
-		//origin = this.boxService.findOne(messageForm.getOriginBoxId());
-		//destination = this.boxService.findOne(messageForm.getDestinationBoxId());
-
-		this.messageService.validateDestinationBox(messageForm, locale.getLanguage(), binding);
-		if (binding.hasErrors())
-			result = this.moveModelAndView(messageForm);
-		else
-			try {
-				//this.messageService.moveMessage(target, origin, destination);
-				result = new ModelAndView("redirect:/box/administrator,brotherhood,member/list.do");
-			} catch (final Throwable oops) {
-				result = this.moveModelAndView(messageForm, "message.commit.error");
-			}
-
-		return result;
-	}
-
 	@RequestMapping(value = "/send", method = RequestMethod.POST, params = "send")
 	public ModelAndView send(final Message message, final BindingResult binding) {
 		ModelAndView result;
@@ -136,7 +94,7 @@ public class MessageMultiUserController extends AbstractController {
 		else
 			try {
 				this.messageService.send(messageRec);
-				result = new ModelAndView("redirect:/box/administrator,brotherhood,chapter,member,sponsor/list.do");
+				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(messageRec, "message.commit.error");
 			}
@@ -148,14 +106,12 @@ public class MessageMultiUserController extends AbstractController {
 	public ModelAndView delete(@RequestParam final int messageId, @RequestParam final int boxId) {
 		ModelAndView result;
 		Message message;
-		final Box box;
 
-		//box = this.boxService.findOne(boxId);
 		message = this.messageService.findOne(messageId);
-
 		try {
-			//this.messageService.delete(message, box);
-			result = new ModelAndView("redirect:/box/administrator,brotherhood,member/list.do");
+			this.messageService.delete(message);
+
+			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/error.do");
 		}
@@ -176,17 +132,10 @@ public class MessageMultiUserController extends AbstractController {
 		ModelAndView result;
 		Collection<Actor> actors;
 		Actor principal, system;
-		Customisation customisation;
-		final String priorities_str;
-		final List<String> priorities;
-
-		customisation = this.customisationService.find();
-
-		//priorities_str = customisation.getPriorities();
-		//priorities = this.utilityService.ListByString(priorities_str);
 
 		system = this.administratorService.findSystem();
 		principal = this.actorService.findPrincipal();
+
 		actors = this.actorService.findAll();
 		actors.remove(principal);
 		actors.remove(system);
@@ -194,36 +143,10 @@ public class MessageMultiUserController extends AbstractController {
 		result = new ModelAndView("message/send");
 		result.addObject("message", message);
 		result.addObject("actors", actors);
-		//result.addObject("priorities", priorities);
 		result.addObject("isBroadcastMessage", false);
-		result.addObject("actionURI", "message/administrator,brotherhood,member/send.do");
+		result.addObject("actionURI", "message/administrator,company,hacker/send.do");
 		result.addObject("messageCode", messageCode);
 
 		return result;
 	}
-
-	protected ModelAndView moveModelAndView(final MessageForm messageForm) {
-		ModelAndView result;
-
-		result = this.moveModelAndView(messageForm, null);
-
-		return result;
-	}
-
-	protected ModelAndView moveModelAndView(final MessageForm messageForm, final String messageCode) {
-		ModelAndView result;
-		final Collection<Box> boxes;
-		Actor principal;
-
-		principal = this.actorService.findPrincipal();
-		//boxes = this.boxService.findBoxesByActor(principal.getId());
-
-		result = new ModelAndView("message/move");
-		result.addObject("messageForm", messageForm);
-		//result.addObject("destinationBoxes", boxes);
-		result.addObject("messageCode", messageCode);
-
-		return result;
-	}
-
 }

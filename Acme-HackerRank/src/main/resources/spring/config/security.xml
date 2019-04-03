@@ -44,6 +44,9 @@
 		
 		<security:intercept-url pattern="/error.do" access="permitAll" /> 
 		
+		<security:intercept-url pattern="/actor/registerCompany.do" access="isAnonymous()" /> 
+		<security:intercept-url pattern="/actor/registerHacker.do" access="isAnonymous()" /> 
+		
 		<security:intercept-url pattern="/actor/administrator/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/actor/display.do**" access="permitAll" />  
 		<security:intercept-url pattern="/actor/display.do" access="hasAnyRole('ADMIN')" /> 
@@ -54,6 +57,7 @@
 		<security:intercept-url pattern="/box/**" access="isAuthenticated()" /> 
 		
 		<security:intercept-url pattern="/message/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
 		
 		<security:intercept-url pattern="/enrolment/**" access="permitAll" /> 
 		

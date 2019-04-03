@@ -26,17 +26,16 @@ public class SocialProfileController extends AbstractController {
 
 
 	// Constructors -----------------------------------------------------------
-
 	public SocialProfileController() {
 		super();
 	}
 
-	// List
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final int actorId) {
 		ModelAndView result;
 		Integer actorAuthenticateId = null;
 		Collection<SocialProfile> socialProfiles;
+		Boolean isAuthorized;
 
 		try {
 			socialProfiles = this.socialProfileService.findSocialProfilesByActor(actorId);
@@ -46,18 +45,13 @@ public class SocialProfileController extends AbstractController {
 			} catch (final Throwable ups) {
 			}
 
+			isAuthorized = actorAuthenticateId != null && actorAuthenticateId == actorId;
+
 			result = new ModelAndView("socialProfile/list");
 			result.addObject("socialProfiles", socialProfiles);
 			result.addObject("actorId", actorId);
-
 			result.addObject("requestURI", "socialProfile/list.do?actorId=" + actorId);
-			if (actorAuthenticateId != null) {
-				if (actorAuthenticateId == actorId)
-					result.addObject("isAuthorized", true);
-				else
-					result.addObject("isAuthorized", false);
-			} else
-				result.addObject("isAuthorized", false);
+			result.addObject("isAuthorized", isAuthorized);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:../error.do");
 		}

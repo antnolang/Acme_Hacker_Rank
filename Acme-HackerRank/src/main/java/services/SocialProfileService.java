@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.SocialProfileRepository;
 import domain.Actor;
@@ -35,7 +37,7 @@ public class SocialProfileService {
 	}
 
 	// Simple CRUD methods ----------------------------------------------------
-	protected SocialProfile findOne(final int socialProfileId) {
+	public SocialProfile findOne(final int socialProfileId) {
 		SocialProfile result;
 
 		result = this.socialProfileRepository.findOne(socialProfileId);
@@ -114,7 +116,36 @@ public class SocialProfileService {
 		this.socialProfileRepository.delete(socialProfile);
 	}
 
+
 	// Other business methods -------------------------------------------------
+
+	@Autowired
+	private Validator	validator;
+
+
+	public SocialProfile reconstruct(final SocialProfile socialProfile, final BindingResult binding) {
+		SocialProfile result, stored_socialProfile;
+
+		if (socialProfile.getId() == 0)
+			result = this.create();
+		else {
+			stored_socialProfile = this.findOne(socialProfile.getId());
+
+			result = new SocialProfile();
+			result.setId(stored_socialProfile.getId());
+			result.setVersion(stored_socialProfile.getVersion());
+			result.setActor(stored_socialProfile.getActor());
+		}
+
+		result.setNick(socialProfile.getNick().trim());
+		result.setSocialNetwork(socialProfile.getSocialNetwork().trim());
+		result.setLinkProfile(socialProfile.getLinkProfile().trim());
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
+
 	public Collection<SocialProfile> findSocialProfilesByActor(final int actorId) {
 		Collection<SocialProfile> result;
 
@@ -131,6 +162,10 @@ public class SocialProfileService {
 		result = this.socialProfileRepository.findSocialProfilesByActor(actorId);
 
 		return result;
+	}
+
+	protected void flush() {
+		this.socialProfileRepository.flush();
 	}
 
 	// private methods -----------------------------

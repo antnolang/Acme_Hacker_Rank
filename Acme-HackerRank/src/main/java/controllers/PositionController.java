@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CompanyService;
+import services.CustomisationService;
 import services.PositionService;
 import domain.Company;
 import domain.Position;
@@ -22,10 +23,13 @@ public class PositionController extends AbstractController {
 	// Services------------------------------------
 
 	@Autowired
-	private PositionService	positionService;
+	private PositionService			positionService;
 
 	@Autowired
-	private CompanyService	companyService;
+	private CompanyService			companyService;
+
+	@Autowired
+	private CustomisationService	customisationService;
 
 
 	// Constructor ------------------------------------

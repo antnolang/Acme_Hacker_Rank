@@ -21,7 +21,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 	<strong><spring:message code="position.company"/>:</strong>
-		<jstl:out value="${position.company.commercialName}"/>
+		<a href="actor/display.do?actorId=${position.company.id}"><jstl:out value="${position.company.commercialName}"/></a>
 	<br/>
 	
 	<strong><spring:message code="position.ticker"/>:</strong>
@@ -37,18 +37,23 @@
 	<br/>
 	
 	<security:authorize access="hasRole('COMPANY')">
-	<jstl:if test="${principal == position.commpany}">
+	<jstl:if test="${principal == position.company}">
 		<strong><spring:message code="position.finalMode"/>:</strong>
-			<jstl:out value="${position.finalMode}"/>
+			<jstl:out value="${position.isFinalMode}"/>
 		<br/>
 		
+		<jstl:if test="position.isCancelled">
+		
 		<strong><spring:message code="position.isCancelled"/>:</strong>
-			<jstl:out value="${position.isCancelled}"/>
 		<br/>
+		</jstl:if>
 	</jstl:if>
 	</security:authorize>
+	
 	<strong><spring:message code="position.deadline"/>:</strong>
-		<jstl:out value="${position.deadline}"/>
+	<spring:message code="position.formatDeadline1" var="formatDeadline"/>
+		<fmt:formatDate value="${position.deadline}" pattern="${formatDeadline}"/>
+		
 	<br/>
 	
 	<strong><spring:message code="position.profile"/>:</strong>
@@ -63,8 +68,10 @@
 		<jstl:out value="${position.technologies}"/>
 	<br/>
 	
+	<spring:message code="position.vat" var="vatTag"/>
 	<strong><spring:message code="position.salary"/>:</strong>
-		<jstl:out value="${position.salary}"/>
+	<fmt:formatNumber type="number" maxFractionDigits="2" value="${position.salary * (1 + position.company.VATnumber)}"/> &#8364; <jstl:out value="(${position.company.VATnumber}% ${vatTag} Inc.)"/>
+
 	<br/>
 	
 	

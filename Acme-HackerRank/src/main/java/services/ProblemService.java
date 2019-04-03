@@ -77,6 +77,18 @@ public class ProblemService {
 
 		return result;
 	}
+
+	public Collection<Problem> findProblemsByPrincipal() {
+		final Collection<Problem> problems;
+		Company principal;
+
+		principal = this.companyService.findByPrincipal();
+		problems = this.problemRepository.findByCompany(principal.getId());
+
+		Assert.notNull(problems);
+
+		return problems;
+	}
 	// Other business methods ---------------------
 
 	// Private methods-----------------------------------------------

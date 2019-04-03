@@ -27,16 +27,16 @@
 	<legend><spring:message code="actor.legend"/></legend>
 	
 	
-	<p> <strong> <spring:message code="actor.fullname" /> : </strong>  <jstl:out value="${actor.fullname}" /></p>
+	<p> <strong> <spring:message code="actor.fullname" />  </strong>  <jstl:out value="${actor.fullname}" /></p>
 
-	<p> <strong> <spring:message code="actor.VATnumber" /> : </strong>  <jstl:out value="${actor.VATnumber}" /></p>
+	<p> <strong> <spring:message code="actor.VATnumber" />  </strong>  <jstl:out value="${actor.VATnumber}" /></p>
 
-	<p> <strong> <spring:message code="actor.email" /> : </strong>  <jstl:out value="${actor.email}" /></p>
+	<p> <strong> <spring:message code="actor.email" />  </strong>  <jstl:out value="${actor.email}" /></p>
 
 
 	<jstl:if test="${!empty actor.photo }">
 		<p>
-			<strong> <spring:message code="actor.photo" /> :
+			<strong> <spring:message code="actor.photo" /> 
 			</strong> <img alt="Photo" src="<jstl:out value="${actor.photo}" />"
 				height="200px" width="200px">
 		</p>
@@ -45,7 +45,7 @@
 
 	<jstl:if test="${!empty actor.phoneNumber }">
 		<p>
-			<strong> <spring:message code="actor.phoneNumber" /> :
+			<strong> <spring:message code="actor.phoneNumber" /> 
 			</strong>
 			<jstl:out value="${actor.phoneNumber}" />
 		</p>
@@ -53,7 +53,7 @@
 
 	<jstl:if test="${!empty actor.address }">
 		<p>
-			<strong> <spring:message code="actor.address" /> :
+			<strong> <spring:message code="actor.address" /> 
 			</strong>
 			<jstl:out value="${actor.address}" />
 		</p>
@@ -63,7 +63,7 @@
 
 		<jstl:if test="${isAuthorized == false }">
 			<p>
-				<strong> <spring:message code="actor.isSpammer" /> :
+				<strong> <spring:message code="actor.isSpammer" /> 
 				</strong>
 				<jstl:if test="${actor.isSpammer != null }">
 					<jstl:out value="${actor.isSpammer}" />
@@ -102,10 +102,20 @@
 			<spring:message code="actor.company.legend" />
 		</legend>
 		<p>
-			<strong> <spring:message code="actor.company.commercialName" />:
+			<strong> <spring:message code="actor.company.commercialName" />
 			</strong>
 			<jstl:out value="${actor.commercialName}" />
 		</p>
+		
+		<jstl:if test="${emptyPositions == false }">
+			<p>
+				<strong> <spring:message
+						code="actor.company.positions" />
+				</strong>
+				<a href="position/list.do?companyId=${actor.id}"><spring:message
+				code="actor.company.positions" /></a>
+			</p>
+		</jstl:if>
 
 
 	</fieldset>
@@ -116,28 +126,28 @@
 	<legend><spring:message code="creditCard.legend"/></legend>
 	
 	<p>
-		<strong><spring:message code="creditCard.holder"/>: </strong>
+		<strong><spring:message code="creditCard.holder"/> </strong>
 		<jstl:out value="${actor.creditCard.holder}"/>
 	</p>
 	
 	<p>
-		<strong><spring:message code="creditCard.make"/>: </strong>
+		<strong><spring:message code="creditCard.make"/> </strong>
 		<jstl:out value="${actor.creditCard.make}"/>
 	</p>
 	
 	<p>
 		<jstl:set var="length" value="${fn:length(actor.creditCard.number)}"/>
-		<strong><spring:message code="creditCard.number"/>: </strong>
+		<strong><spring:message code="creditCard.number"/> </strong>
 		<jstl:out value="****${fn:substring(actor.creditCard.number, length - 4, length)}"/>
 	</p>
 	
 	<p>
-		<strong><spring:message code="creditCard.expirationMonth"/>: </strong>
+		<strong><spring:message code="creditCard.expirationMonth"/> </strong>
 		<jstl:out value="${actor.creditCard.expirationMonth}"/>
 	</p>
 	
 	<p>
-		<strong><spring:message code="creditCard.expirationYear"/>: </strong>
+		<strong><spring:message code="creditCard.expirationYear"/> </strong>
 		<jstl:out value="${actor.creditCard.expirationYear}"/>
 	</p>
 

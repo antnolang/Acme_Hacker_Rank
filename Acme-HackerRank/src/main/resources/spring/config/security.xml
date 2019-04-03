@@ -41,8 +41,11 @@
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll"/> <!-- requires-channel="https" --> 
 		<security:intercept-url pattern="/welcome/terms.do" access="permitAll" /> 
+		<security:intercept-url pattern="/welcome/dataProcesses.do" access="permitAll" /> 
 		
 		<security:intercept-url pattern="/error.do" access="permitAll" /> 
+		
+		<security:intercept-url pattern="/actor/administrator,company,hacker/**" access="isAuthenticated()"/>
 		
 		<security:intercept-url pattern="/actor/registerCompany.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/actor/registerHacker.do" access="isAnonymous()" /> 
@@ -56,6 +59,8 @@
 
 		<security:intercept-url pattern="/box/**" access="isAuthenticated()" /> 
 		
+		<security:intercept-url pattern="/company/list.do" access="isAnonymous()" /> 
+		
 		<security:intercept-url pattern="/message/administrator/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
 		
@@ -65,8 +70,11 @@
 		
 		<security:intercept-url pattern="/customisation/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/dashboard/**" access="hasRole('ADMIN')" />
-		<security:intercept-url pattern="/position/**" access="hasRole('ADMIN')" />
+		
+		<security:intercept-url pattern="/position/list.do**" access="isAnonymous()" /> 
+		<security:intercept-url pattern="/position/administrator/**" access="hasRole('ADMIN')" />
 	
+		<security:intercept-url pattern="/socialProfile/administrator,company,hacker/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/socialProfile/**" access="permitAll" />
 		
 		<security:intercept-url pattern="/finder/member/**" access="hasRole('MEMBER')" />

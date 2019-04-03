@@ -23,13 +23,15 @@
 <form:form action="socialProfile/administrator,company,hacker/edit.do" modelAttribute="socialProfile" >
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
-	<form:hidden path="actor"/>
 		
 	<acme:textbox code="socialProfile.nick" path="nick" />
 	<acme:textbox code="socialProfile.socialNetwork" path="socialNetwork" />
 	<acme:textbox code="socialProfile.linkProfile" path="linkProfile" />
 	
 	<!-- Buttons -->
-	<acme:submit name="save" code="socialProfile.save"/>		
+	<acme:submit name="save" code="socialProfile.save"/>
+	<jstl:if test="${socialProfile.id != 0}">
+		<acme:submit name="delete" code="socialProfile.delete" />
+	</jstl:if>		
 	<acme:cancel url="socialProfile/list.do?actorId=${actorId}" code="socialProfile.cancel"/>
 </form:form>

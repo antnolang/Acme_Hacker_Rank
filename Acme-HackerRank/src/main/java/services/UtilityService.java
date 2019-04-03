@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.transaction.Transactional;
 
@@ -29,6 +30,9 @@ public class UtilityService {
 
 	@Autowired
 	private CustomisationService	customisationService;
+
+	@Autowired
+	private PositionService			positionService;
 
 	@Autowired
 	private UserAccountService		userAccountService;
@@ -118,6 +122,37 @@ public class UtilityService {
 		return result;
 	}
 
+	public String generateValidTicker(final String title) {
+		final String letters;
+		String result;
+		Integer counter;
+
+		//TODO poner que letters son las primeras letras del título, si es mas pequeño poner X 
+		counter = 0;
+		letters = "";
+
+		do {
+			result = letters + this.createRandomNumbers();
+			counter++;
+		} while (!(this.positionService.existTicker(result) == null) && counter < 650000);
+
+		return result;
+	}
+
+	private String createRandomNumbers() {
+		String result, characters;
+		Random randomNumber;
+
+		result = "";
+		randomNumber = new Random();
+		characters = "0123456789";
+
+		for (int i = 0; i <= 3; i++)
+			result += characters.charAt(randomNumber.nextInt(characters.length()));
+
+		return result;
+	}
+
 	protected void validateUsernamePasswordEdition(final RegistrationForm registrationForm, final BindingResult binding) {
 		String password, confirmPassword, username;
 
@@ -126,43 +161,43 @@ public class UtilityService {
 		username = registrationForm.getUserAccount().getUsername();
 
 		if (password.trim().equals("") && confirmPassword.trim().equals("")) {
-			binding.rejectValue("password", "password.empty", "Must entry a password");
-			binding.rejectValue("confirmPassword", "confirmPassword.empty", "Must entry a confirm password");
+			binding.rejectValue("userAccount.password", "password.empty", "Must entry a password");
+			binding.rejectValue("userAccount.confirmPassword", "confirmPassword.empty", "Must entry a confirm password");
 		}
 		if (username.trim().equals(""))
-			binding.rejectValue("username", "actor.username.blank", "Must entry a username.");
+			binding.rejectValue("userAccount.username", "actor.username.blank", "Must entry a username.");
 		if (!password.equals(confirmPassword))
-			binding.rejectValue("confirmPassword", "user.missmatch.password", "Does not match with password");
+			binding.rejectValue("userAccount.confirmPassword", "user.missmatch.password", "Does not match with password");
 		if (this.userAccountService.existUsername(username))
-			binding.rejectValue("username", "actor.username.used", "Username already in use");
+			binding.rejectValue("userAccount.username", "actor.username.used", "Username already in use");
 		if (password.length() < 5 || password.length() > 32)
-			binding.rejectValue("password", "actor.password.size", "Password must have between 5 and 32 characters");
+			binding.rejectValue("userAccount.password", "actor.password.size", "Password must have between 5 and 32 characters");
 		if (username.length() < 5 || username.length() > 32)
-			binding.rejectValue("username", "actor.username.size", "Username must have between 5 and 32 characters.");
+			binding.rejectValue("userAccount.username", "actor.username.size", "Username must have between 5 and 32 characters.");
 
 	}
 
 	protected void validateUsernameEdition(final String username, final BindingResult binding) {
 
 		if (username.trim().equals(""))
-			binding.rejectValue("username", "actor.username.blank", "Must entry a username.");
+			binding.rejectValue("userAccount.username", "actor.username.blank", "Must entry a username.");
 		if (this.userAccountService.existUsername(username))
-			binding.rejectValue("username", "actor.username.used", "Username already in use");
+			binding.rejectValue("userAccount.username", "actor.username.used", "Username already in use");
 		if (username.length() < 5 || username.length() > 32)
-			binding.rejectValue("username", "actor.username.size", "Username must have between 5 and 32 characters.");
+			binding.rejectValue("userAccount.username", "actor.username.size", "Username must have between 5 and 32 characters.");
 
 	}
 
 	protected void validatePasswordEdition(final String password, final String confirmPassword, final BindingResult binding) {
 
 		if (password.trim().equals("") && confirmPassword.trim().equals("")) {
-			binding.rejectValue("password", "password.empty", "Must entry a password");
-			binding.rejectValue("confirmPassword", "confirmPassword.empty", "Must entry a confirm password");
+			binding.rejectValue("userAccount.password", "password.empty", "Must entry a password");
+			binding.rejectValue("userAccount.confirmPassword", "confirmPassword.empty", "Must entry a confirm password");
 		}
 		if (!password.equals(confirmPassword))
-			binding.rejectValue("confirmPassword", "user.missmatch.password", "Does not match with password");
+			binding.rejectValue("userAccount.confirmPassword", "user.missmatch.password", "Does not match with password");
 		if (password.length() < 5 || password.length() > 32)
-			binding.rejectValue("password", "actor.password.size", "Password must have between 5 and 32 characters");
+			binding.rejectValue("userAccount.password", "actor.password.size", "Password must have between 5 and 32 characters");
 
 	}
 

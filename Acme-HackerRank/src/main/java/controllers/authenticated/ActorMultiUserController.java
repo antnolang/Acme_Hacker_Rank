@@ -9,19 +9,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.AdministratorService;
+import services.CompanyService;
+import services.HackerService;
 import controllers.ActorAbstractController;
+import domain.Actor;
 import domain.Administrator;
+import domain.Company;
+import domain.Hacker;
 import forms.RegistrationForm;
 
 @Controller
-@RequestMapping(value = "/actor/administrator,brotherhood,member")
+@RequestMapping(value = "/actor/administrator,company,hacker")
 public class ActorMultiUserController extends ActorAbstractController {
 
 	// Services
 
 	@Autowired
 	private AdministratorService	administratorService;
+
+	@Autowired
+	private CompanyService			companyService;
+
+	@Autowired
+	private HackerService			hackerService;
+
+	@Autowired
+	private ActorService			actorService;
 
 
 	// Constructor
@@ -36,11 +51,27 @@ public class ActorMultiUserController extends ActorAbstractController {
 	public ModelAndView edit(@RequestParam final int actorId) {
 		ModelAndView result;
 		Administrator administrator;
+		Company company;
+		final Hacker hacker;
+		Actor actor;
+
+		result = new ModelAndView();
 
 		try {
-			administrator = this.administratorService.findOneToDisplayEdit(actorId);
-			result = this.createModelAndView(administrator);
-			result.addObject("rol", "Administrator");
+			actor = this.actorService.findOneToDisplayEdit(actorId);
+			if (actor instanceof Administrator) {
+				administrator = this.administratorService.findOneToDisplayEdit(actorId);
+				result = this.createModelAndView(administrator);
+				result.addObject("rol", "Administrator");
+			} else if (actor instanceof Company) {
+				company = this.companyService.findOneToDisplayEdit(actorId);
+				result = this.createModelAndView(company);
+				result.addObject("rol", "Company");
+			} else if (actor instanceof Hacker) {
+				hacker = this.hackerService.findOneToDisplayEdit(actorId);
+				result = this.createModelAndView(hacker);
+				result.addObject("rol", "Hacker");
+			}
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/error.do");
@@ -71,7 +102,73 @@ public class ActorMultiUserController extends ActorAbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveCompany")
+	public ModelAndView saveCompany(final RegistrationForm registrationForm, final BindingResult binding) {
+		ModelAndView result;
+		Company company;
+
+		company = this.companyService.reconstruct(registrationForm, binding);
+
+		if (binding.hasErrors()) {
+			result = this.createModelAndView(registrationForm);
+			result.addObject("rol", "Company");
+		} else
+			try {
+				this.companyService.save(company);
+				result = new ModelAndView("redirect:/actor/display.do");
+			} catch (final Throwable oops) {
+				result = this.createModelAndView(registrationForm, "actor.commit.error");
+				result.addObject("rol", "Company");
+			}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveHacker")
+	public ModelAndView saveHacker(final RegistrationForm registrationForm, final BindingResult binding) {
+		ModelAndView result;
+		Hacker hacker;
+
+		hacker = this.hackerService.reconstruct(registrationForm, binding);
+
+		if (binding.hasErrors()) {
+			result = this.createModelAndView(registrationForm);
+			result.addObject("rol", "Hacker");
+		} else
+			try {
+				this.hackerService.save(hacker);
+				result = new ModelAndView("redirect:/actor/display.do");
+			} catch (final Throwable oops) {
+				result = this.createModelAndView(registrationForm, "actor.commit.error");
+				result.addObject("rol", "Hacker");
+			}
+
+		return result;
+	}
+
 	// Ancillary methods
+
+	protected ModelAndView createModelAndView(final Hacker hacker) {
+		ModelAndView result;
+		RegistrationForm registrationForm;
+
+		registrationForm = this.hackerService.createForm(hacker);
+
+		result = this.createModelAndView(registrationForm, null);
+
+		return result;
+	}
+
+	protected ModelAndView createModelAndView(final Company company) {
+		ModelAndView result;
+		RegistrationForm registrationForm;
+
+		registrationForm = this.companyService.createForm(company);
+
+		result = this.createModelAndView(registrationForm, null);
+
+		return result;
+	}
 
 	protected ModelAndView createModelAndView(final Administrator administrator) {
 		ModelAndView result;

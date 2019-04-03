@@ -45,6 +45,8 @@
 		
 		<security:intercept-url pattern="/error.do" access="permitAll" /> 
 		
+		<security:intercept-url pattern="/actor/administrator,company,hacker/**" access="isAuthenticated()"/>
+		
 		<security:intercept-url pattern="/actor/registerCompany.do" access="isAnonymous()" /> 
 		<security:intercept-url pattern="/actor/registerHacker.do" access="isAnonymous()" /> 
 		

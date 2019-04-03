@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.PositionRepository;
+
 import domain.Company;
+
 import domain.Position;
 
 @Service
@@ -22,13 +24,13 @@ public class PositionService {
 	@Autowired
 	private PositionRepository	positionRepository;
 
-	// Other supporting services -------------------
 
-	@Autowired
-	private CompanyService		companyService;
 
 	@Autowired
 	private UtilityService		utilityService;
+
+
+	// Other supporting services -------------------
 
 
 	// Constructors -------------------------------
@@ -39,7 +41,27 @@ public class PositionService {
 
 	// Simple CRUD methods ------------------------
 
+	public Position findOne(final int positionId) {
+		Position result;
+
+		result = this.positionRepository.findOne(positionId);
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Position findOneToDisplay(final int positionId) {
+		Position result;
+
+		result = this.findOne(positionId);
+		Assert.isTrue(result.getIsFinalMode() == true);
+		Assert.isTrue(result.getIsCancelled() == false);
+
+		return result;
+	}
+
 	// Other business methods ---------------------
+
 
 	public Position create() {
 		Position result;
@@ -111,8 +133,15 @@ public class PositionService {
 
 		result = this.positionRepository.findAllPositionAvaliable();
 
+	public Collection<Position> findFinalModePositionsByCompany(final int companyId) {
+		Collection<Position> result;
+
+		result = this.positionRepository.findFinalModePositionsByCompany(companyId);
+
+
 		return result;
 	}
+
 
 	public Collection<Position> findPositionByPrincipal() {
 		Collection<Position> result;
@@ -143,4 +172,5 @@ public class PositionService {
 
 		Assert.isTrue(owner.equals(principal));
 	}
+
 }

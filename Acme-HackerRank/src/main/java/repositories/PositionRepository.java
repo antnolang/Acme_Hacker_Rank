@@ -12,6 +12,7 @@ import domain.Position;
 @Repository
 public interface PositionRepository extends JpaRepository<Position, Integer> {
 
+
 	@Query("select p.ticker from Position p where p.ticker = ?1")
 	String existTicker(String ticker);
 
@@ -21,4 +22,9 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 
 	@Query("select p from Position p where p.company.id=?1")
 	Collection<Position> findPositionByCompany(int id);
+	
+	@Query("select p from Position p where p.company.id = ?1 and p.isFinalMode = true and p.isCancelled = false")
+	Collection<Position> findFinalModePositionsByCompany(int companyId);
+
+
 }

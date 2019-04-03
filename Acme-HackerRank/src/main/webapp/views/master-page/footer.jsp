@@ -21,4 +21,5 @@
 <b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-HackerRank, Inc.</b>
 <br>
 <a href="welcome/terms.do"><spring:message code="master.page.terminos"/></a>
-
+<br>
+<a href="welcome/dataProcesses.do"><spring:message code="master.page.dataProcesses"/></a>

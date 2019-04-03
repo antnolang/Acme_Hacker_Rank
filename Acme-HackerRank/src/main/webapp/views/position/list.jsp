@@ -1,3 +1,4 @@
+
 <%--
  * list.jsp
  *
@@ -10,6 +11,8 @@
 
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -22,11 +25,14 @@
 
 
 
-<display:table name="positions" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 
+<display:table name="positions" id="row" requestURI="${requestURI}" class="displaytag" pagesize="5">
+		
+
+	
 	<display:column>
-		<a href="position/company/display.do?positionId=${row.id}"><spring:message code="position.display"/></a>
-	</display:column>
+		<a href="position/display.do?positionId=${row.id}"><spring:message code="position.table.display"/></a>
+	</display:column>	
 	
 	<security:authorize access="hasRole('COMPANY')">
 	<jstl:if test="${principal == row.commpany}">
@@ -34,12 +40,21 @@
 			<a href="position/company/edit.do?positionId=${row.id}"><spring:message code="position.edit"/></a>
 		</display:column>
 	</jstl:if>
-	</security:authorize>
-	
-	<display:column property="title" titleKey="positon.title" />
-	
-	<display:column property="deadline" titleKey="position.deadline" />
+	</security:authorize>	
 
+	<display:column property="ticker" titleKey="position.ticker" />
 	
+	<display:column property="title" titleKey="position.title" />
+	
+	<spring:message code="position.formatDeadline" var="formatMomentDeadline" />
+	<display:column property="deadline" titleKey="position.deadline" sortable="true" format="${formatMomentDeadline}"/>
+			
+	<display:column property="profile" titleKey="position.profile" />
+	
+	<display:column property="skills" titleKey="position.skills" />
+	
+	<display:column property="technologies" titleKey="position.technologies" />
+
 </display:table>
+
 

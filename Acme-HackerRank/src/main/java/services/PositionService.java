@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.PositionRepository;
-
 import domain.Company;
-
 import domain.Position;
 
 @Service
@@ -24,14 +22,14 @@ public class PositionService {
 	@Autowired
 	private PositionRepository	positionRepository;
 
-
+	@Autowired
+	private CompanyService		companyService;
 
 	@Autowired
 	private UtilityService		utilityService;
 
 
 	// Other supporting services -------------------
-
 
 	// Constructors -------------------------------
 
@@ -62,7 +60,6 @@ public class PositionService {
 
 	// Other business methods ---------------------
 
-
 	public Position create() {
 		Position result;
 		Company company;
@@ -88,14 +85,6 @@ public class PositionService {
 			position.setTicker(this.utilityService.generateValidTicker(position.getTitle()));
 
 		result = this.positionRepository.save(position);
-
-		return result;
-	}
-
-	public Position findOne(final int positionId) {
-		Position result;
-
-		result = this.positionRepository.findOne(positionId);
 
 		return result;
 	}
@@ -128,20 +117,20 @@ public class PositionService {
 	}
 
 	//Other public methods  -----------------------------------------------
-	public Collection<Position> findAllPositionAvaliable() {
-		Collection<Position> result;
-
-		result = this.positionRepository.findAllPositionAvaliable();
-
+	//	public Collection<Position> findAllPositionAvaliable() {
+	//		Collection<Position> result;
+	//
+	//		result = this.positionRepository.findAllPositionAvaliable();
+	//
+	//		return result;
+	//	}
 	public Collection<Position> findFinalModePositionsByCompany(final int companyId) {
 		Collection<Position> result;
 
 		result = this.positionRepository.findFinalModePositionsByCompany(companyId);
 
-
 		return result;
 	}
-
 
 	public Collection<Position> findPositionByPrincipal() {
 		Collection<Position> result;

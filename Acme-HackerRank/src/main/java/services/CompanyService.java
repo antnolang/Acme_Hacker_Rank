@@ -122,6 +122,14 @@ public class CompanyService {
 		return result;
 	}
 
+	public Collection<Company> findCompaniesOfferedMorePositions() {
+		Collection<Company> result;
+
+		result = this.companyRepository.findCompaniesOfferedMorePositions();
+
+		return result;
+	}
+
 	public Company reconstruct(final RegistrationForm registrationForm, final BindingResult binding) {
 		Company result, companyStored;
 		UserAccount userAccount;

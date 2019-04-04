@@ -1,6 +1,7 @@
 
 package controllers.administrator;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.CompanyService;
 import services.PositionService;
 import controllers.AbstractController;
+import domain.Company;
 import domain.Position;
 
 @Controller
@@ -22,6 +25,9 @@ public class DashboardAdministratorController extends AbstractController {
 
 	@Autowired
 	private PositionService	positionService;
+
+	@Autowired
+	private CompanyService	companyService;
 
 
 	// Constructors --------------
@@ -39,10 +45,16 @@ public class DashboardAdministratorController extends AbstractController {
 		// LEVEL C -----------------------------------------
 
 		// Req 11.2.1
+		Double[] findDataNumberPositionsPerCompany;
+		findDataNumberPositionsPerCompany = this.positionService.findDataNumberPositionsPerCompany();
+		result.addObject("findDataNumberPositionsPerCompany", findDataNumberPositionsPerCompany);
 
 		// Req 11.2.2
 
 		// Req 11.2.3
+		Collection<Company> findCompaniesOfferedMorePositions;
+		findCompaniesOfferedMorePositions = this.companyService.findCompaniesOfferedMorePositions();
+		result.addObject("findCompaniesOfferedMorePositions", findCompaniesOfferedMorePositions);
 
 		// Req 11.2.4
 

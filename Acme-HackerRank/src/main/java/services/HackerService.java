@@ -103,6 +103,15 @@ public class HackerService {
 
 	// Other business methods ---------------------
 
+	public Collection<Hacker> findHackersWithMoreApplications() {
+		Collection<Hacker> result;
+
+		result = this.hackerRepository.findHackersWithMoreApplications();
+		Assert.notNull(result);
+
+		return result;
+	}
+
 	public Hacker findByPrincipal() {
 		Hacker result;
 		int userAccountId;

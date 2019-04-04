@@ -151,7 +151,10 @@
 		<jstl:out value="${actor.creditCard.expirationYear}"/>
 	</p>
 
-</fieldset>
+	<a href="creditCard/administrator,company,hacker/edit.do?actorId=${actor.id}"><spring:message
+				code="actor.creditCard.edit" /></a>
+
+	</fieldset>
 </jstl:if>
 
 <fieldset>

@@ -5,12 +5,12 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CompanyService;
-import services.PositionService;
 import services.ProblemService;
 import controllers.AbstractController;
 import domain.Problem;
@@ -24,12 +24,6 @@ public class ProblemCompanyController extends AbstractController {
 	@Autowired
 	private ProblemService	problemService;
 
-	@Autowired
-	private PositionService	positionService;
-
-	@Autowired
-	private CompanyService	companyService;
-
 
 	// Constructor ------------------------------------
 
@@ -39,8 +33,8 @@ public class ProblemCompanyController extends AbstractController {
 
 	// List------------------------------------
 
-	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
-	public ModelAndView listAll() {
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Problem> problems;
 
@@ -49,12 +43,102 @@ public class ProblemCompanyController extends AbstractController {
 			problems = this.problemService.findProblemsByPrincipal();
 
 			result.addObject("problems", problems);
+			result.addObject("requestURI", "problem/company/list.do");
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../error.do");
 		}
 
 		return result;
+	}
+	// Create
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		ModelAndView result;
+		Problem problem;
+
+		problem = this.problemService.create();
+
+		result = this.createEditModelAndView(problem);
+
+		return result;
+	}
+
+	// Edit
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int problemId) {
+		ModelAndView result;
+		Problem problem;
+
+		try {
+			problem = this.problemService.findOneToEditDelete(problemId);
+
+			result = this.createEditModelAndView(problem);
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:../../error.do");
+		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+	public ModelAndView save(final Problem problem, final BindingResult binding) {
+		ModelAndView result;
+		Problem problemRec;
+
+		problemRec = this.problemService.reconstruct(problem, binding);
+		if (binding.hasErrors())
+			result = this.createEditModelAndView(problem);
+		else
+			try {
+
+				this.problemService.save(problemRec);
+				result = new ModelAndView("redirect:../company/list.do");
+			}
+
+			catch (final Throwable oops) {
+				result = this.createEditModelAndView(problem, "problem.commit.error");
+			}
+
+		return result;
+	}
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(final Problem problem, final BindingResult binding) {
+		ModelAndView result;
+		Problem problemBbdd;
+
+		try {
+			problemBbdd = this.problemService.findOneToEditDelete(problem.getId());
+
+			this.problemService.delete(problemBbdd);
+			result = new ModelAndView("redirect:../company/list.do");
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(problem, "problem.delete.error");
+		}
+
+		return result;
+	}
+
+	// Arcillary methods --------------------------
+
+	protected ModelAndView createEditModelAndView(final Problem problem) {
+		ModelAndView result;
+
+		result = this.createEditModelAndView(problem, null);
+
+		return result;
+	}
+
+	protected ModelAndView createEditModelAndView(final Problem problem, final String messageCode) {
+		ModelAndView result;
+
+		result = new ModelAndView("problem/edit");
+		result.addObject("problem", problem);
+		result.addObject("messageCode", messageCode);
+
+		return result;
+
 	}
 
 }

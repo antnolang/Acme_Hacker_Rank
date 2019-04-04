@@ -33,7 +33,7 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('COMPANY')">
-			<li><a  href="problem/company/listAll.do" class="fNiv"><spring:message	code="master.page.company.listAll" /></a>
+			<li><a  href="problem/company/list.do" class="fNiv"><spring:message	code="master.page.company.listAll" /></a>
 			</li>
 		</security:authorize>
 		

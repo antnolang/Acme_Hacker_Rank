@@ -41,25 +41,6 @@ public class PositionService {
 
 	// Simple CRUD methods ------------------------
 
-	public Position findOne(final int positionId) {
-		Position result;
-
-		result = this.positionRepository.findOne(positionId);
-		Assert.notNull(result);
-
-		return result;
-	}
-
-	public Position findOneToDisplay(final int positionId) {
-		Position result;
-
-		result = this.findOne(positionId);
-		Assert.isTrue(result.getIsFinalMode() == true);
-		Assert.isTrue(result.getIsCancelled() == false);
-
-		return result;
-	}
-
 	public Position create() {
 		Position result;
 		Company company;
@@ -85,6 +66,25 @@ public class PositionService {
 			position.setTicker(this.utilityService.generateValidTicker(position.getTitle()));
 
 		result = this.positionRepository.save(position);
+
+		return result;
+	}
+
+	public Position findOne(final int positionId) {
+		Position result;
+
+		result = this.positionRepository.findOne(positionId);
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Position findOneToDisplay(final int positionId) {
+		Position result;
+
+		result = this.findOne(positionId);
+		Assert.isTrue(result.getIsFinalMode() == true);
+		Assert.isTrue(result.getIsCancelled() == false);
 
 		return result;
 	}

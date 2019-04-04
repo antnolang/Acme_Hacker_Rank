@@ -10,8 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import security.UserAccount;
-import services.CompanyService;
-import services.PositionService;
 import services.ProblemService;
 import controllers.AbstractController;
 import domain.Problem;
@@ -24,12 +22,6 @@ public class ProblemCompanyHackerController extends AbstractController {
 
 	@Autowired
 	private ProblemService	problemService;
-
-	@Autowired
-	private PositionService	positionService;
-
-	@Autowired
-	private CompanyService	companyService;
 
 
 	// Constructor ------------------------------------

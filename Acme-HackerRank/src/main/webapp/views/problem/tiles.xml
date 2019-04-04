@@ -24,7 +24,13 @@
 	<definition name="problem/list" extends="master.page">	
 		<put-attribute name="title" value="Problem list" />
 		<put-attribute name="body" value="/views/problem/list.jsp" />
-		</definition>
+	</definition>
+		
+	<definition name="problem/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit a problem" />
+		<put-attribute name="body" value="/views/problem/edit.jsp" />
+	</definition>
+		
 	
 	
 </tiles-definitions>

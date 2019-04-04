@@ -8,6 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ProblemRepository;
 import domain.Application;
@@ -35,6 +37,9 @@ public class ProblemService {
 	@Autowired
 	private HackerService		hackerService;
 
+	@Autowired
+	private Validator			validator;
+
 
 	// Constructors -------------------------------
 
@@ -43,6 +48,51 @@ public class ProblemService {
 	}
 
 	// Simple CRUD methods ------------------------
+
+	public Problem create() {
+		Problem result;
+		Company company;
+
+		result = new Problem();
+		company = this.companyService.findByPrincipal();
+
+		result.setCompany(company);
+		result.setIsFinalMode(false);
+
+		return result;
+	}
+
+	public Problem save(final Problem problem) {
+		Assert.notNull(problem);
+		this.checkByPrincipal(problem);
+		Assert.isTrue(!problem.getIsFinalMode());
+
+		final Problem result;
+
+		result = this.problemRepository.save(problem);
+
+		return result;
+	}
+
+	public void delete(final Problem problem) {
+		Assert.notNull(problem);
+		Assert.isTrue(this.problemRepository.exists(problem.getId()));
+		this.checkByPrincipal(problem);
+
+		this.problemRepository.delete(problem);
+	}
+
+	public Problem findOneToEditDelete(final int problemId) {
+		Problem result;
+
+		result = this.problemRepository.findOne(problemId);
+		this.checkByPrincipal(result);
+		Assert.isTrue(!result.getIsFinalMode());
+
+		Assert.notNull(result);
+
+		return result;
+	}
 
 	public Problem findOne(final int problemId) {
 		Problem result;
@@ -100,6 +150,33 @@ public class ProblemService {
 		principal = this.companyService.findByPrincipal();
 
 		Assert.isTrue(owner.equals(principal));
+	}
+	// Reconstruct ----------------------------------------------
+	public Problem reconstruct(final Problem problem, final BindingResult binding) {
+		Problem result, problemStored;
+
+		if (problem.getId() != 0) {
+			result = new Problem();
+			problemStored = this.findOne(problem.getId());
+			result.setAttachments(problemStored.getAttachments());
+			result.setCompany(problemStored.getCompany());
+			result.setHint(problemStored.getHint());
+			result.setIsFinalMode(problemStored.getIsFinalMode());
+			result.setPosition(problemStored.getPosition());
+			result.setStatement(problemStored.getStatement());
+			result.setTitle(problemStored.getTitle());
+
+		} else
+			result = this.create();
+		result.setId(problem.getId());
+		result.setAttachments(problem.getAttachments());
+		result.setHint(problem.getHint());
+		result.setStatement(problem.getStatement());
+		result.setTitle(problem.getTitle());
+
+		this.validator.validate(result, binding);
+
+		return result;
 	}
 
 }

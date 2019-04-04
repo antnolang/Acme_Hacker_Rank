@@ -61,6 +61,7 @@ public class PositionController extends AbstractController {
 			result.addObject("principal", principal);
 			result.addObject("owner", owner);
 			result.addObject("positions", positions);
+			result.addObject("requestURI", "position/list.do?companyId=" + companyId);
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../error.do");
@@ -81,6 +82,7 @@ public class PositionController extends AbstractController {
 
 			result.addObject("owner", null);
 			result.addObject("positions", positions);
+			result.addObject("requestURI", "position/availableList");
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../error.do");

@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -17,6 +19,7 @@ import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
 import domain.CreditCard;
+import domain.Curriculum;
 import domain.Hacker;
 import forms.RegistrationForm;
 
@@ -266,6 +269,16 @@ public class HackerService {
 		registrationForm.setCheckBoxDataProcessesAccepted(false);
 
 		return registrationForm;
+	}
+
+	public List<Curriculum> originalCurricula() {
+		List<Curriculum> originalCurricula;
+		Hacker hacker;
+
+		hacker = this.findByPrincipal();
+		originalCurricula = new ArrayList<Curriculum>(this.hackerRepository.originalCurricula(hacker.getId()));
+
+		return originalCurricula;
 	}
 
 }

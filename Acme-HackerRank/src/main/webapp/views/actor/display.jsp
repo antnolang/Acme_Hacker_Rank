@@ -113,7 +113,7 @@
 						code="actor.company.positions" />
 				</strong>
 				<a href="position/list.do?companyId=${actor.id}"><spring:message
-				code="actor.company.positions" /></a>
+				code="table.positions" /></a>
 			</p>
 		</jstl:if>
 

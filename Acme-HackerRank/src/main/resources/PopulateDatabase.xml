@@ -166,6 +166,18 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount14" class="security.UserAccount">
+		<property name="username" value="hacker9" />
+		<property name="password" value="8d9faf0956e7eb5f9dc7583a803ec4d2" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="HACKER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!-- Administrator -->
 	<bean id="administrator1" class="domain.Administrator">
@@ -672,6 +684,15 @@
 		<property name="expirationMonth" value="04" />
 		<property name="expirationYear" value="21" />
 		<property name="cvvCode" value="180" />
+	</bean>
+	
+	<bean id="creditCard14" class="domain.CreditCard">
+		<property name="holder" value="holder14" />
+		<property name="make" value="MCARD" />
+		<property name="number" value="5363673506446743" />
+		<property name="expirationMonth" value="07" />
+		<property name="expirationYear" value="24" />
+		<property name="cvvCode" value="613" />
 	</bean>
 
 	<!-- Curriculum -->
@@ -1612,6 +1633,20 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="finder9" class="domain.Finder">
+		<property name="keyword" value="" />
+		<property name="updatedMoment" value="2019/01/01 10:15" />
+		<property name="hacker" ref="hacker9" />
+		<property name="positions">
+			<list>
+				<ref bean="position1" />
+				<ref bean="position2" />
+				<ref bean="position3" />
+				<ref bean="position4" />
+			</list>
+		</property>
+	</bean>
 
 	<!-- Hacker -->
 	<bean id="hacker1" class="domain.Hacker">
@@ -1716,6 +1751,19 @@
 		<property name="phoneNumber" value="63015521" />
 		<property name="address" value="Calle Hacker 8" />
 		<property name="userAccount" ref="userAccount13" />
+	</bean>
+
+	<bean id="hacker9" class="domain.Hacker">
+		<property name="name" value="Hacker9" />
+		<property name="surname" value="Rubio" />
+		<property name="VATnumber" value="32" />
+		<property name="creditCard" ref="creditCard14" />
+		<property name="photo"
+			value="https://www.madmen-onlinemarketing.de/wp-content/uploads/jan-madmen-onlinemarketing-e1525337078609.jpg" />
+		<property name="email" value="hacker9@gmail.com" />
+		<property name="phoneNumber" value="632321239" />
+		<property name="address" value="Calle Hacker 9" />
+		<property name="userAccount" ref="userAccount14" />
 	</bean>
 
 	<!-- SystemTag -->

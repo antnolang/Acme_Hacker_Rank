@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
-import services.CustomisationService;
 import services.PositionService;
 import domain.Actor;
 import domain.Administrator;
@@ -21,13 +20,10 @@ public class ActorAbstractController extends AbstractController {
 	// Services ---------------------------------------------------------------
 
 	@Autowired
-	private ActorService			actorService;
+	private ActorService	actorService;
 
 	@Autowired
-	private CustomisationService	customisationService;
-
-	@Autowired
-	private PositionService			positionService;
+	private PositionService	positionService;
 
 
 	// Main methods -----------------------------------------------------------
@@ -61,6 +57,7 @@ public class ActorAbstractController extends AbstractController {
 			}
 		} else {
 			actor = this.actorService.findOne(actorId);
+			result.addObject("isAuthorized", false);
 			if (actor instanceof Administrator && actorId == principal.getId())
 				actor = this.actorService.findOneToDisplayEdit(actorId);
 			else if (actor instanceof Administrator && actorId != principal.getId())

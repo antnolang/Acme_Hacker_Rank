@@ -19,10 +19,10 @@
 		<th> <spring:message code="dashboard.deviation" /> </th>
 	</tr>
 	<tr>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
+		<td> <jstl:out value="${findDataNumberPositionsPerCompany[0]}" /> </td>
+		<td> <jstl:out value="${findDataNumberPositionsPerCompany[1]}" /> </td>
+		<td> <jstl:out value="${findDataNumberPositionsPerCompany[2]}" /> </td>
+		<td> <jstl:out value="${findDataNumberPositionsPerCompany[3]}" /> </td>
 	</tr>
 </table>
 
@@ -43,7 +43,7 @@
 </table>
 
 <p><strong> <spring:message code="dashboard.three" />: </strong></p>
-<display:table name="companiesMorePositions" id="row" requestURI="dashboard/administrator/display.do" pagesize="5" class="displaytag">
+<display:table name="findCompaniesOfferedMorePositions" id="row" requestURI="dashboard/administrator/display.do" pagesize="5" class="displaytag">
 	<display:column property="fullname" titleKey="table.fullname" />
 	<display:column property="email" titleKey="table.email" />
 	<display:column property="phoneNumber" titleKey="table.phoneNumber" />

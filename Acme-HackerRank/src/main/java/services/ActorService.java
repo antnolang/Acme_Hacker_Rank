@@ -11,12 +11,15 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.ActorRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Actor;
 import domain.CreditCard;
+import forms.CreditCardForm;
 
 @Service
 @Transactional
@@ -34,6 +37,9 @@ public class ActorService {
 
 	@Autowired
 	private MessageService	messageService;
+
+	@Autowired
+	private Validator		validator;
 
 
 	// Constructors -------------------------------
@@ -197,4 +203,62 @@ public class ActorService {
 
 		return result;
 	}
+
+	public void updateCreditCard(final CreditCard creditCard) {
+		Assert.notNull(creditCard);
+		Actor actor;
+
+		actor = this.findOneToDisplayEdit(this.findPrincipal().getId());
+
+		actor.setCreditCard(creditCard);
+
+	}
+
+	public CreditCardForm createCreditCardForm(final CreditCard creditCard) {
+		CreditCardForm creditCardForm;
+
+		creditCardForm = new CreditCardForm();
+
+		creditCardForm.setHolder(creditCard.getHolder());
+		creditCardForm.setMake(creditCard.getMake());
+		creditCardForm.setNumber(creditCard.getNumber());
+		creditCardForm.setExpirationMonth(creditCard.getExpirationMonth());
+		creditCardForm.setExpirationYear(creditCard.getExpirationYear());
+		creditCardForm.setCvvCode(creditCard.getCvvCode());
+
+		return creditCardForm;
+	}
+
+	public CreditCard reconstructCreditCard(final CreditCardForm creditCardForm, final BindingResult binding) {
+		CreditCard result;
+		final CreditCard creditCardStored;
+		Actor actor;
+
+		actor = this.findPrincipal();
+		creditCardStored = actor.getCreditCard();
+		result = new CreditCard();
+
+		result.setHolder(creditCardForm.getHolder());
+		result.setMake(creditCardForm.getMake());
+		result.setNumber(creditCardForm.getNumber());
+		result.setExpirationMonth(creditCardForm.getExpirationMonth());
+		result.setExpirationYear(creditCardForm.getExpirationYear());
+		result.setCvvCode(creditCardForm.getCvvCode());
+
+		this.validateCreditCard(result, creditCardStored, creditCardForm, binding);
+
+		this.validator.validate(result, binding);
+
+		return result;
+	}
+
+	private void validateCreditCard(final CreditCard creditCard, final CreditCard creditCardStored, final CreditCardForm creditCardForm, final BindingResult binding) {
+
+		if (creditCard.getNumber().equals(creditCardStored.getNumber()))
+			binding.rejectValue("number", "creditCard.number.error", "The number can't be equal to the previous credit card");
+		if (creditCard.getCvvCode() == creditCardStored.getCvvCode())
+			binding.rejectValue("cvvCode", "creditCard.cvvCode.error", "The cvv code can't be equal to the previous credit card");
+
+	}
+
 }

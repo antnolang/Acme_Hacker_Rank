@@ -10,6 +10,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.PositionRepository;
 import domain.Company;
@@ -30,6 +32,9 @@ public class PositionService {
 	@Autowired
 	private UtilityService		utilityService;
 
+	@Autowired
+	private Validator			validator;
+
 
 	// Other supporting services -------------------
 
@@ -48,7 +53,7 @@ public class PositionService {
 		result = new Position();
 		company = this.companyService.findByPrincipal();
 
-		result.setTicker("0000-XXXX");
+		result.setTicker("XXXX-0000");
 		result.setCompany(company);
 		result.setIsFinalMode(false);
 		result.setIsCancelled(false);
@@ -62,12 +67,17 @@ public class PositionService {
 
 		final Position result;
 
-		if (position.getId() == 0)
-			position.setTicker(this.utilityService.generateValidTicker(position.getTitle()));
-
 		result = this.positionRepository.save(position);
 
 		return result;
+	}
+
+	public void delete(final Position position) {
+		Assert.notNull(position);
+		Assert.isTrue(this.positionRepository.exists(position.getId()));
+		this.checkByPrincipal(position);
+
+		this.positionRepository.delete(position);
 	}
 
 	public Position findOne(final int positionId) {
@@ -97,25 +107,23 @@ public class PositionService {
 		return results;
 	}
 
-	public Position findOneToEdit(final int positionId) {
+	public Position findOneToEditDelete(final int positionId) {
 		Position result;
 
 		result = this.positionRepository.findOne(positionId);
-
+		this.checkByPrincipal(result);
 		Assert.isTrue(!result.getIsFinalMode());
+
+		Assert.notNull(result);
 
 		return result;
 	}
 
-	public void delete(final Position position) {
-		Assert.notNull(position);
-		Assert.isTrue(this.positionRepository.exists(position.getId()));
+	public void makeFinal(final Position position) {
 		this.checkByPrincipal(position);
 
-		this.positionRepository.delete(position);
-
+		position.setIsFinalMode(true);
 	}
-
 	//Other public methods  -----------------------------------------------
 	public Collection<Position> findAllPositionAvailable() {
 		Collection<Position> result;
@@ -191,6 +199,36 @@ public class PositionService {
 		principal = this.companyService.findByPrincipal();
 
 		Assert.isTrue(owner.equals(principal));
+	}
+
+	// Reconstruct ----------------------------------------------
+	public Position reconstruct(final Position position, final BindingResult binding) {
+		Position result, positionStored;
+
+		if (position.getId() != 0) {
+			result = new Position();
+			positionStored = this.findOne(position.getId());
+			result.setCompany(positionStored.getCompany());
+			result.setIsFinalMode(false);
+			result.setIsCancelled(false);
+			result.setTicker(positionStored.getTicker());
+
+		} else {
+			result = this.create();
+			result.setTicker(this.utilityService.generateValidTicker(position.getTitle()));
+		}
+
+		result.setDeadline(position.getDeadline());
+		result.setDescription(position.getDescription());
+		result.setProfile(position.getProfile());
+		result.setSalary(position.getSalary());
+		result.setSkills(position.getSkills());
+		result.setTechnologies(position.getTechnologies());
+		result.setTitle(position.getTitle());
+
+		this.validator.validate(result, binding);
+
+		return result;
 	}
 
 }

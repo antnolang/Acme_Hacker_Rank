@@ -165,13 +165,9 @@ public class ProblemService {
 		if (problem.getId() != 0) {
 			result = new Problem();
 			problemStored = this.findOne(problem.getId());
-			result.setAttachments(problemStored.getAttachments());
 			result.setCompany(problemStored.getCompany());
-			result.setHint(problemStored.getHint());
 			result.setIsFinalMode(problemStored.getIsFinalMode());
 			result.setPosition(problemStored.getPosition());
-			result.setStatement(problemStored.getStatement());
-			result.setTitle(problemStored.getTitle());
 
 		} else
 			result = this.create();

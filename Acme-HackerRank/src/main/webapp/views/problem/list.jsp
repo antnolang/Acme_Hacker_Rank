@@ -45,4 +45,7 @@
 
 </display:table>
 
+	<a href="problem/company/create.do"><spring:message code="problem.create"/></a>
+
+
 

@@ -31,17 +31,17 @@
 	</display:column>	
 	
 	<security:authorize access="hasRole('COMPANY')">
-	<jstl:if test="${principal == row.company && !position.isFinalMode}">
-		<display:column>
+	<display:column>
+		<jstl:if test="${principal == row.company && !position.isFinalMode}">
 			<a href="position/company/edit.do?positionId=${row.id}"><spring:message code="position.edit"/></a>
-		</display:column>
-	</jstl:if>
+		</jstl:if>
+	</display:column>
 	
-	<jstl:if test="${principal == row.company}">
-		<display:column>
+	<display:column>	
+		<jstl:if test="${principal == row.company}">
 			<a href="position/company/cancel.do?positionId=${row.id}"><spring:message code="position.cancel"/></a>
-		</display:column>
-	</jstl:if>
+		</jstl:if>
+	</display:column>
 	
 	</security:authorize>
 	
@@ -59,5 +59,9 @@
 	<display:column property="technologies" titleKey="position.technologies" />
 
 </display:table>
+
+	<jstl:if test="${principal == owner}">
+ 		<a href="position/company/create.do"><spring:message code="position.create"/></a>
+ 	</jstl:if>
 
 

@@ -41,10 +41,12 @@ public class PositionController extends AbstractController {
 		ModelAndView result;
 		Collection<Position> positions;
 		Company principal;
+		Company owner;
 
 		try {
 			result = new ModelAndView("position/list");
 			positions = this.positionService.findFinalModePositionsByCompany(companyId);
+			owner = this.companyService.findOne(companyId);
 
 			try {
 				principal = this.companyService.findByPrincipal();
@@ -57,7 +59,7 @@ public class PositionController extends AbstractController {
 				positions = this.positionService.findPositionByPrincipal();
 			}
 			result.addObject("principal", principal);
-
+			result.addObject("owner", owner);
 			result.addObject("positions", positions);
 
 		} catch (final Throwable oops) {

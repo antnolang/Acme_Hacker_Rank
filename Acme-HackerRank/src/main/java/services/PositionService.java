@@ -165,6 +165,14 @@ public class PositionService {
 
 	}
 
+	public Double[] findDataNumberPositionsPerCompany() {
+		Double[] result;
+
+		result = this.positionRepository.findDataNumberPositionsPerCompany();
+
+		return result;
+	}
+
 	// Protected methods -----------------------------------------------
 	protected String existTicker(final String ticker) {
 		String result;

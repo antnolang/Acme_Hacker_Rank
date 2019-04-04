@@ -59,7 +59,7 @@
 
 		<security:intercept-url pattern="/box/**" access="isAuthenticated()" /> 
 		
-		<security:intercept-url pattern="/company/list.do" access="isAnonymous()" /> 
+		<security:intercept-url pattern="/company/list.do" access="permitAll" /> 
 		
 		<security:intercept-url pattern="/message/administrator/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />

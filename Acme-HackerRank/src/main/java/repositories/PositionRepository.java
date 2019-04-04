@@ -31,4 +31,8 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	// Query dashboard 11.2.6 The best and the worst position in terms of salary
 	@Query("select p from Position p where p.salary = (select max(p.salary) from Position p) or p.salary = (select min(p.salary) from Position p) order by p.salary DESC")
 	Collection<Position> findPositionsBestWorstSalary();
+
+	// Query dashboard 11.2.1 The average, the minimum, the maximum, and the standard deviation of the number of positions per company
+	@Query("select avg(1.0 * (select count(p) from Position p where p.company.id = c.id)), min(1.0 * (select count(p) from Position p where p.company.id = c.id)), max(1.0 * (select count(p) from Position p where p.company.id = c.id)),stddev(1.0 * (select count(p) from Position p where p.company.id = c.id)) from Company c)")
+	Double[] findDataNumberPositionsPerCompany();
 }

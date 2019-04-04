@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.ProblemService;
 import controllers.AbstractController;
@@ -116,6 +117,24 @@ public class ProblemCompanyController extends AbstractController {
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(problem, "problem.delete.error");
 		}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/makeFinal", method = RequestMethod.GET)
+	public ModelAndView makeFinal(@RequestParam final int problemId, final RedirectAttributes redir) {
+		ModelAndView result;
+		Problem problem;
+
+		problem = this.problemService.findOne(problemId);
+
+		try {
+			this.problemService.makeFinal(problem);
+		} catch (final Throwable oops) {
+			redir.addFlashAttribute("messageCode", "problem.make.final.error");
+		}
+
+		result = new ModelAndView("redirect:/problem/company/list.do");
 
 		return result;
 	}

@@ -139,7 +139,11 @@ public class ProblemService {
 
 		return problems;
 	}
-	// Other business methods ---------------------
+	public void makeFinal(final Problem problem) {
+		this.checkByPrincipal(problem);
+
+		problem.setIsFinalMode(true);
+	}
 
 	// Private methods-----------------------------------------------
 	private void checkByPrincipal(final Problem problem) {

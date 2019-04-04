@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import repositories.ApplicationRepository;
 import domain.Application;
@@ -46,6 +47,18 @@ public class ApplicationService {
 	}
 
 	//Simple CRUD methods -------------------------------------------
+
+	// Other business methods ---------------------------------------
+
+	public Double[] findDataNumberApplicationPerHacker() {
+		Double[] result;
+
+		result = this.applicationRepository.findDataNumberApplicationPerHacker();
+		Assert.notNull(result);
+
+		return result;
+	}
+
 	//	public Application create(final Position position) {
 	//		Assert.isTrue(position.getIsFinalMode());
 	//		Assert.isTrue(!(position.getIsCancelled()));

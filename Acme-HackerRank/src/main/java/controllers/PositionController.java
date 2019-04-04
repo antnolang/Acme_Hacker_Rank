@@ -79,6 +79,7 @@ public class PositionController extends AbstractController {
 
 			positions = this.positionService.findAllPositionAvailable();
 
+			result.addObject("owner", null);
 			result.addObject("positions", positions);
 
 		} catch (final Throwable oops) {

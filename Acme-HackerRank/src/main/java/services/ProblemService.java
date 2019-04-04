@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -15,6 +17,7 @@ import repositories.ProblemRepository;
 import domain.Application;
 import domain.Company;
 import domain.Hacker;
+import domain.Position;
 import domain.Problem;
 
 @Service
@@ -181,6 +184,21 @@ public class ProblemService {
 		this.validator.validate(result, binding);
 
 		return result;
+	}
+
+	public List<Problem> problemsWithoutAcceptedApplicationWithoutOwnApplication(final Position position, final Hacker hacker) {
+		Collection<Problem> problemsAll;
+		Collection<Problem> problemsBusy;
+		List<Problem> problemsFree;
+
+		problemsAll = this.problemRepository.positionProblem(position.getId());
+		problemsBusy = this.problemRepository.problemsWithAcceptedApplicationWithOwnApplication(position.getId(), hacker.getId());
+
+		problemsAll.removeAll(problemsBusy);
+
+		problemsFree = new ArrayList<Problem>(problemsAll);
+
+		return problemsFree;
 	}
 
 }

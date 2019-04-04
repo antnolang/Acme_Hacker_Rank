@@ -39,8 +39,8 @@ public class ProblemCompanyController extends AbstractController {
 
 	// List------------------------------------
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
+	public ModelAndView listAll() {
 		ModelAndView result;
 		Collection<Problem> problems;
 

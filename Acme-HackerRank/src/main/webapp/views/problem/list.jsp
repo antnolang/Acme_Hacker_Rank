@@ -27,11 +27,17 @@
 		<a href="problem/company,hacker/display.do?problemId=${row.id}"><spring:message code="problem.display"/></a>
 	</display:column>	
 	
-	<jstl:if test="${!problem.isFinalMode}">
-		<display:column>
+	<display:column>
+		<jstl:if test="${!row.isFinalMode}">
 			<a href="problem/company/edit.do?problemId=${row.id}"><spring:message code="problem.edit"/></a>
-		</display:column>
-	</jstl:if>
+		</jstl:if>
+	</display:column>
+	
+	<display:column>
+		<jstl:if test="${!row.isFinalMode}">
+			<a href="problem/company/makeFinal.do?problemId=${row.id}"><spring:message code="problem.makeFinal"/></a>
+		</jstl:if>
+	</display:column>
 	
 	<display:column property="title" titleKey="problem.title" />
 			

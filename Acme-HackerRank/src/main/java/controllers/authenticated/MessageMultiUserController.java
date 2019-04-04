@@ -40,12 +40,16 @@ public class MessageMultiUserController extends AbstractController {
 	public ModelAndView display(@RequestParam final int messageId) {
 		ModelAndView result;
 		Message message;
+		String w_tags;
 
 		try {
 			message = this.messageService.findOneToDisplay(messageId);
 
+			w_tags = this.messageService.displayMessageTags(message);
+
 			result = new ModelAndView("message/display");
 			result.addObject("messageToDisplay", message);
+			result.addObject("w_tags", w_tags);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/error.do");
 		}
@@ -53,6 +57,7 @@ public class MessageMultiUserController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Message> sentMessages, receivedMessages;

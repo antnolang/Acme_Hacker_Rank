@@ -14,7 +14,9 @@
 
 	
 	<display:column>
+		<jstl:if test="${row.userAccount.authorities != '[ADMIN]' }">
 		<a href="actor/display.do?actorId=${row.id}"><spring:message code="actor.table.display.profile"/></a>
+		</jstl:if>
 	</display:column>		
 
 	<display:column property="fullname" titleKey="table.fullname" />
@@ -25,7 +27,10 @@
 	
 	<display:column property="address" titleKey="table.address"/>
 	
-	<display:column property="commercialName" titleKey="table.commercialName"/>
+	<jstl:if test="${requestURI == 'company/list.do' }">
+		<display:column property="commercialName" titleKey="table.commercialName"/>
+	</jstl:if>
+	
 		
 
 </display:table>

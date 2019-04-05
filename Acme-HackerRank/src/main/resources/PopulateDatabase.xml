@@ -1765,13 +1765,13 @@
 
 	<!-- SystemTag -->
 	<bean id="systemTag1" class="domain.SystemTag">
-		<property name="text" value="HARDDELETE" />
+		<property name="text" value="HARDDELETED" />
 		<property name="actor" ref="hacker2" />
 		<property name="message" ref="message1" />
 	</bean>
 	
 	<bean id="systemTag2" class="domain.SystemTag">
-		<property name="text" value="DELETE" />
+		<property name="text" value="DELETED" />
 		<property name="actor" ref="hacker2" />
 		<property name="message" ref="message3" />
 	</bean>

@@ -21,7 +21,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-<spring:message code="message.format.date" var="formatDate" />
+<spring:message code="message.date.format" var="formatDate" />
 <p> 
 	<strong> <spring:message code="message.sentMoment" />: </strong>
 	<fmt:formatDate value="${messageToDisplay.sentMoment}" pattern="${formatDate}"/>
@@ -37,9 +37,9 @@
 	<jstl:out value="${messageToDisplay.body}" />
 </p>
 
-<jstl:if test="${messageToDisplay.tags != null && messageToDisplay.tags != ''}">
+<jstl:if test="${w_tags != null && w_tags != ''}">
 	<strong><spring:message code="message.tags"/>:</strong>
-	<jstl:out value="${messageToDisplay.tags}" />
+	<jstl:out value="${w_tags}" />
 </jstl:if>
 
 <p>
@@ -48,12 +48,12 @@
 </p>
 
 <strong> <spring:message code="message.recipients"/>: </strong>
-<display:table name="${messageToDisplay.recipients}" id="row" requestURI="message/administrator,company,hacker/display.do?messageId=${messageToDisplay.id}" pagesize="5" class="displaytag">
+<display:table name="${messageToDisplay.recipients}" id="row" requestURI="message/administrator,company,hacker/display.do" pagesize="5" class="displaytag">
 	<display:column property="fullname" titleKey="actor.name"/>
 	<display:column property="email" titleKey="actor.email"/>
 </display:table>	   
 
 <a href="message/administrator,company,hacker/list.do">
-	<spring:message code="message.button.return" />
+	<spring:message code="message.return" />
 </a>
 	   

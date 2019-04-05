@@ -2,9 +2,11 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +21,7 @@ import domain.Message;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+	"classpath:spring/junit.xml"
 })
 @Transactional
 public class MessageServiceTest extends AbstractTest {
@@ -35,9 +37,99 @@ public class MessageServiceTest extends AbstractTest {
 
 	// Suite test ---------------------------------------------
 
+	/*
+	 * A: level A: requirement 23.2 (An authenticated user can display his or her messages).
+	 * B: The business rule that is intended to be broken: This user try to display a "deleted" message.
+	 * C: Analysis of sentence coverage: 33/34 -> 97.05% of executed lines codes .
+	 * D: Analysis of data coverage: intentionally blank.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void findOneToDisplay_negativeTest_uno() {
+		super.authenticate("hacker2");
+
+		int messageId;
+		Message message;
+
+		messageId = super.getEntityId("message1");
+		message = this.messageService.findOneToDisplay(messageId);
+
+		Assert.isNull(message);
+
+		super.unauthenticate();
+	}
+
+	/*
+	 * A: level A: requirement 23.2 (An authenticated user can display his or her messages).
+	 * B: The business rule that is intended to be broken: An user try to display a message that he or she hasn't sent or hasn't received.
+	 * C: Analysis of sentence coverage: 18/34 -> 52.94% of executed lines codes .
+	 * D: Analysis of data coverage: intentionally blank.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void findOneToDisplay_negativeTest_dos() {
+		super.authenticate("company1");
+
+		int messageId;
+		Message message;
+
+		messageId = super.getEntityId("message1");
+		message = this.messageService.findOneToDisplay(messageId);
+
+		Assert.isNull(message);
+
+		super.unauthenticate();
+	}
+
+	/*
+	 * A: level A: requirement 23.2 (An authenticated user can display his or her messages).
+	 * C: Analysis of sentence coverage: 34/34 -> 100.00% of executed lines codes .
+	 * D: Analysis of data coverage: intentionally blank.
+	 */
+	@Test
+	public void findOneToDisplay_positiveTest() {
+		super.authenticate("hacker1");
+
+		int messageId;
+		Message message;
+
+		messageId = super.getEntityId("message1");
+		message = this.messageService.findOneToDisplay(messageId);
+
+		Assert.notNull(message);
+
+		super.unauthenticate();
+	}
+
+	/*
+	 * A: level A: requirement 23.2 (An authenticated user can list his or her messages).
+	 * C: Analysis of sentence coverage: 6/6 -> 100.00% of executed lines codes .
+	 * D: Analysis of data coverage: intentionally blank.
+	 */
+	@Test
+	public void findMessageByActor_test() {
+		super.authenticate("hacker1");
+
+		int actorId;
+		Collection<Message> sentMessages, receivedMessages;
+
+		actorId = super.getEntityId("hacker1");
+
+		sentMessages = this.messageService.findSentMessagesOrderByTags(actorId);
+		receivedMessages = this.messageService.findReceivedMessagesOrderByTags(actorId);
+
+		Assert.notEmpty(sentMessages);
+		Assert.notEmpty(receivedMessages);
+
+		super.unauthenticate();
+	}
+
+	/*
+	 * A: level A: requirement 23.2 (An authenticated user can send a message).
+	 * C: Analysis of sentence coverage: 22/22 -> 100.00% of executed lines codes .
+	 * D: Analysis of data coverage: intentionally blank.
+	 */
 	@Test
 	public void createTest() {
-		super.authenticate("member1");
+		super.authenticate("hacker1");
 
 		Message message;
 
@@ -56,29 +148,14 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * Test negativo: message is null.
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void negative_sendTest_uno() {
-		super.authenticate("member1");
-
-		final Message message = null;
-		Message sent;
-
-		sent = this.messageService.send(message);
-
-		Assert.isNull(sent);
-
-		super.unauthenticate();
-	}
-
-	/*
-	 * Test negativo: se trata de editar un mensaje
-	 * de la BD
+	 * A: level A: requirement 23.2 (An authenticated user can send a message).
+	 * B: The business rule that is intended to be broken: An user try to edit a message.
+	 * C: Analysis of sentence coverage: 16/53 -> 30.18% of executed lines codes .
+	 * D: Analysis of data coverage: intentionally blank.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void negative_sendTest_dos() {
-		super.authenticate("member1");
+		super.authenticate("hacker1");
 
 		final int messageId = super.getEntityId("message1");
 		Message message = null, sent;
@@ -94,128 +171,75 @@ public class MessageServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
-	/*
-	 * Test negativo: el sender no coincide con el principal
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void negative_sendTest_tres() {
-		super.authenticate("member1");
-
-		final List<Actor> recipients = new ArrayList<Actor>();
-
-		final int recipientId = super.getEntityId("administrator1");
-		final int actorId = super.getEntityId("member2");
-		final Actor sender = this.actorService.findOne(actorId);
-		final Actor recipient = this.actorService.findOne(recipientId);
-
-		recipients.add(recipient);
-
-		Message message, sent;
-
-		message = this.messageService.create();
-		message.setSender(sender);
-		message.setRecipients(recipients);
-		message.setSubject("Subject Test");
-		message.setBody("Body Test");
-
-		sent = this.messageService.send(message);
-
-		Assert.isNull(sent);
-
-		super.unauthenticate();
-	}
-
-	/*
-	 * Test negativo: prioridad no valida.
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void negative_sendTest_cuatro() {
-		super.authenticate("member1");
-
-		final List<Actor> recipients = new ArrayList<Actor>();
-
-		final int recipientId = super.getEntityId("administrator1");
-		final Actor recipient = this.actorService.findOne(recipientId);
-		recipients.add(recipient);
-
-		Message message, sent;
-
-		message = this.messageService.create();
-		message.setRecipients(recipients);
-		message.setSubject("Subject Test");
-		message.setBody("Body Test");
-
-		sent = this.messageService.send(message);
-
-		Assert.isNull(sent);
-
-		super.unauthenticate();
-	}
-
-	/*
-	 * Test positivo: Se envia correctamente un mensaje. Dicho mensaje
-	 * no contiene palabra spam, por tanto, se almacenara en la
-	 * bandeja de entrada del receptor.
-	 */
 	@Test
-	public void positive_sendTest_uno() {
-		super.authenticate("member1");
+	public void driverSend() {
+		final Object testingData[][] = {
+			{
+				null, "¿Que tal?", "", ConstraintViolationException.class
+			}, {
+				"", "¿Que tal?", "", ConstraintViolationException.class
+			}, {
+				"<script> Alert('HACKED'); </script>", "¿Que tal?", "", ConstraintViolationException.class
+			}, {
+				"Saludos", null, "", ConstraintViolationException.class
+			}, {
+				"Saludos", "", "", ConstraintViolationException.class
+			}, {
+				"saludos", "<script> Alert('HACKED'); </script>", "", ConstraintViolationException.class
+			}, {
+				"saludos", "¿Que tal?", "<script> Alert('HACKED'); </script>", ConstraintViolationException.class
+			}
+		};
 
-		final List<Actor> recipients = new ArrayList<Actor>();
-		final int recipientId = super.getEntityId("administrator1");
-		final Actor recipient = this.actorService.findOne(recipientId);
-		recipients.add(recipient);
+		for (int i = 0; i < testingData.length; i++)
+			this.templateSend((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (Class<?>) testingData[i][3]);
 
-		Message message, sent, found;
-
-		message = this.messageService.create();
-		message.setRecipients(recipients);
-		message.setSubject("Subject Test");
-		message.setBody("Body Test");
-
-		sent = this.messageService.send(message);
-		found = this.messageService.findOne(sent.getId());
-
-		Assert.notNull(sent);
-		Assert.notNull(found);
-
-		super.unauthenticate();
 	}
+	protected void templateSend(final String subject, final String body, final String tags, final Class<?> expected) {
+		Class<?> caught;
+		Message message, saved;
+		List<Actor> recipients;
+		Actor actor_one, actor_two, actor_three;
+		int actor_uno, actor_dos, actor_tres;
+		actor_uno = super.getEntityId("company1");
+		actor_dos = super.getEntityId("company2");
+		actor_tres = super.getEntityId("company3");
 
-	/*
-	 * Test positivo: Se envia correctamente un mensaje. Dicho mensaje
-	 * contiene palabra spam, por tanto, se almacenara en la
-	 * bandeja de spam de los receptores.
-	 */
-	@Test
-	public void positive_sendTest_dos() {
-		super.authenticate("member1");
+		actor_one = this.actorService.findOne(actor_uno);
+		actor_two = this.actorService.findOne(actor_dos);
+		actor_three = this.actorService.findOne(actor_tres);
 
-		final List<Actor> recipients = new ArrayList<Actor>();
+		recipients = new ArrayList<Actor>();
+		recipients.add(actor_one);
+		recipients.add(actor_two);
+		recipients.add(actor_three);
 
-		int recipientId = super.getEntityId("administrator1");
-		final Actor recipientUno = this.actorService.findOne(recipientId);
+		this.startTransaction();
 
-		recipientId = super.getEntityId("member2");
-		final Actor recipientDos = this.actorService.findOne(recipientId);
+		caught = null;
+		try {
+			super.authenticate("hacker1");
 
-		recipients.add(recipientUno);
-		recipients.add(recipientDos);
+			message = this.messageService.create();
+			message.setSubject(subject);
+			message.setBody(body);
+			message.setTags(tags);
+			message.setRecipients(recipients);
 
-		Message message, sent, found;
+			saved = this.messageService.send(message);
+			this.messageService.flush();
 
-		message = this.messageService.create();
-		message.setRecipients(recipients);
-		message.setSubject("Subject Test-sex");
-		message.setBody("Body Test. ViaGra");
+			Assert.notNull(saved);
+			Assert.isTrue(saved.getId() != 0);
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		} finally {
+			super.unauthenticate();
+		}
 
-		sent = this.messageService.send(message);
-		found = this.messageService.findOne(sent.getId());
+		this.rollbackTransaction();
 
-		Assert.notNull(sent);
-		Assert.notNull(found);
-
-		super.unauthenticate();
+		super.checkExceptions(expected, caught);
 	}
 
 	/*

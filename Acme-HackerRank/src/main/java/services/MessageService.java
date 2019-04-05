@@ -52,6 +52,9 @@ public class MessageService {
 	@Autowired
 	private SystemTagService		systemTagService;
 
+	@Autowired
+	private FinderService			finderService;
+
 
 	// Constructors -----------------------------------------
 	public MessageService() {
@@ -345,6 +348,10 @@ public class MessageService {
 		result = this.messageRepository.numberSpamMessagesSentByActor(actorId);
 
 		return result;
+	}
+
+	protected void flush() {
+		this.messageRepository.flush();
 	}
 
 	// Private methods --------------------------------------

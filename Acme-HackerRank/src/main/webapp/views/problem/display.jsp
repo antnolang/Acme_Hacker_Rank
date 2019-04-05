@@ -25,11 +25,6 @@
 			<a href="actor/display.do?actorId=${problem.company.id}"><jstl:out value="${problem.company.commercialName}"/></a>
 		<br/>
 	</security:authorize>
-
-
-	<strong><spring:message code="problem.position"/>:</strong>
-		<a href="position/display.do?positionId=${problem.position.id}"><jstl:out value="${problem.position.title}"/></a>
-	<br/>
 	
 	<strong><spring:message code="problem.title"/>:</strong>
 		<jstl:out value="${problem.title}"/>
@@ -52,6 +47,8 @@
 			<jstl:out value="${problem.isFinalMode}"/>
 		<br/>
 	</security:authorize>
+	
+	
 	
 	
 	<!-- Links -->

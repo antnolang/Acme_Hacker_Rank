@@ -132,7 +132,9 @@ public class UtilityService {
 
 		size = title.length();
 
-		if (size == 1)
+		if (size == 0)
+			letters = "XXXX-";
+		else if (size == 1)
 			letters = title + "XXX-";
 		else if (size == 2)
 			letters = title + "XX-";

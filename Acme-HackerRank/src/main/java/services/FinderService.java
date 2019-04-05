@@ -38,4 +38,12 @@ public class FinderService {
 
 		return result;
 	}
+
+	public Double findRatioEmptyVsNonEmpty() {
+		Double result;
+
+		result = this.finderRepository.findRatioEmptyVsNonEmpty();
+
+		return result;
+	}
 }

@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -20,6 +22,7 @@ import domain.Actor;
 import domain.Application;
 import domain.Customisation;
 import domain.Message;
+import domain.SystemTag;
 
 @Service
 @Transactional
@@ -46,6 +49,9 @@ public class MessageService {
 	@Autowired
 	private HackerService			hackerService;
 
+	@Autowired
+	private SystemTagService		systemTagService;
+
 
 	// Constructors -----------------------------------------
 	public MessageService() {
@@ -63,11 +69,17 @@ public class MessageService {
 
 	public Message findOneToDisplay(final int messageId) {
 		Message result;
+		SystemTag systemTag;
+		Actor principal;
 
 		result = this.messageRepository.findOne(messageId);
-
 		Assert.notNull(result);
 		this.checkSenderOrRecipient(result);
+
+		// If actor "has removed" the message, then it's not visible to him
+		principal = this.actorService.findPrincipal();
+		systemTag = this.systemTagService.findMessageTaggedAsHARDDELETED(principal.getId(), result.getId());
+		Assert.isNull(systemTag);
 
 		return result;
 	}
@@ -123,18 +135,75 @@ public class MessageService {
 	public void delete(final Message message) {
 		Assert.notNull(message);
 		Assert.isTrue(this.messageRepository.exists(message.getId()));
-		this.checkByPrincipal(message);
+		this.checkSenderOrRecipient(message);
 
-		String tags;
+		SystemTag systemTagAsDeleted, systemTagAsHardDeleted;
+		Actor principal;
+		Integer number;
 
-		tags = message.getTags();
-		if (tags == null || !tags.contains("DELETED"))
-			message.setTags("DELETED");
-		else
-			this.messageRepository.delete(message);
+		principal = this.actorService.findPrincipal();
+
+		systemTagAsDeleted = this.systemTagService.findMessageTaggedAsDELETED(principal.getId(), message.getId());
+		systemTagAsHardDeleted = this.systemTagService.findMessageTaggedAsHARDDELETED(principal.getId(), message.getId());
+
+		if (systemTagAsDeleted != null) {
+			// If the message has already been tagged as "DELETED", now this message is not visible
+			// to the principal
+			systemTagAsDeleted.setText("HARDDELETED");
+
+			number = this.systemTagService.numberOfTimesTaggedAsHARDDELETED(message.getId());
+
+			// If all involved actors have tagged the message as HARDDELETED, then the message is removed
+			// from the system and its SystemTag objects
+			if (number == (message.getRecipients().size() + 1)) {
+				this.systemTagService.deleteByMessage(message);
+
+				this.messageRepository.delete(message);
+			}
+
+		} else if (systemTagAsDeleted == null && systemTagAsHardDeleted == null)
+			// If the message "is deleted" and the message doesn't have tag "DELETED", then
+			// it gets tag "DELETED"
+			this.systemTagService.createAndSave(message);
 	}
 
 	// Other business methods -------------------------------
+	public Map<Integer, String> displayTagsByMessage(final Collection<Message> messages) {
+		Map<Integer, String> result;
+		String tags;
+
+		result = new HashMap<Integer, String>();
+
+		for (final Message m : messages) {
+			tags = this.displayMessageTags(m);
+
+			result.put(m.getId(), tags);
+		}
+
+		return result;
+	}
+
+	public String displayMessageTags(final Message message) {
+		String result, tags;
+		SystemTag systemTag;
+		Actor principal;
+
+		principal = this.actorService.findPrincipal();
+		systemTag = this.systemTagService.findMessageTaggedAsDELETED(principal.getId(), message.getId());
+
+		tags = message.getTags();
+		if ((tags != null && tags != "") && systemTag != null)
+			result = tags + " DELETED";
+		else if ((tags != null && tags != "") && systemTag == null)
+			result = tags;
+		else if ((tags == null || tags == "") && systemTag != null)
+			result = "DELETED";
+		else
+			result = "";
+
+		return result;
+	}
+
 	public Message sendBroadcast(final Message message) {
 		Assert.isTrue(message.getTags() != null && message.getTags().contains("SYSTEM"));
 
@@ -161,7 +230,7 @@ public class MessageService {
 	public Collection<Message> findSentMessagesOrderByTags(final int actorId) {
 		Collection<Message> results;
 
-		results = this.messageRepository.findSentMessagesOrderByTags(actorId);
+		results = this.messageRepository.findMessagesSentByActorOrderByTags(actorId);
 
 		return results;
 	}
@@ -274,14 +343,6 @@ public class MessageService {
 		Double result;
 
 		result = this.messageRepository.numberSpamMessagesSentByActor(actorId);
-
-		return result;
-	}
-
-	protected Collection<Message> findMessagesSentByActor(final int actorId) {
-		Collection<Message> result;
-
-		result = this.messageRepository.findMessagesSentByActor(actorId);
 
 		return result;
 	}

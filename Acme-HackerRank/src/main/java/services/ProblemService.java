@@ -167,7 +167,7 @@ public class ProblemService {
 			problemStored = this.findOne(problem.getId());
 			result.setCompany(problemStored.getCompany());
 			result.setIsFinalMode(problemStored.getIsFinalMode());
-			result.setPosition(problemStored.getPosition());
+			//result.setPosition(problemStored.getPosition());
 
 		} else
 			result = this.create();

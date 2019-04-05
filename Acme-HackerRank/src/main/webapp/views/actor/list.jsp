@@ -8,13 +8,13 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<display:table name="actors" id="row" requestURI="${requestURI}" class="displaytag" pagesize="5">
-		
-
-	
+<display:table name="actors" id="row" requestURI="${requestURI}" class="displaytag" pagesize="5">	
 	<display:column>
+		<jstl:if test="${row.userAccount.authorities != '[ADMIN]' }">
 		<a href="actor/display.do?actorId=${row.id}"><spring:message code="actor.table.display.profile"/></a>
+		</jstl:if>
 	</display:column>		
 
 	<display:column property="fullname" titleKey="table.fullname" />
@@ -23,11 +23,18 @@
 	
 	<display:column property="phoneNumber" titleKey="table.phoneNumber" />
 	
-	<display:column property="address" titleKey="table.address"/>
+	<display:column property="address" titleKey="table.address"/>	
 	
-	<display:column property="commercialName" titleKey="table.commercialName"/>
-		
-
+	<jstl:if test="${requestURI == 'company/list.do' }">
+		<display:column property="commercialName" titleKey="table.commercialName"/>
+	</jstl:if>
+	
+	<display:column property="isSpammer" titleKey="table.isSpammer" />
 </display:table>
 
+<security:authorize access="hasRole('ADMIN')">
+	<form:form action="actor/administrator/spammersProcess.do">
+		<acme:submit name="spammers" code="actor.launch" />
+	</form:form>
+</security:authorize>
  	

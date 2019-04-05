@@ -54,6 +54,6 @@
 </display:table>	   
 
 <a href="message/administrator,company,hacker/list.do">
-	<spring:message code="message.button.return" />
+	<spring:message code="message.return" />
 </a>
 	   

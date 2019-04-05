@@ -182,19 +182,11 @@ public class ProblemService {
 		return result;
 	}
 
-	public List<Problem> problemsWithoutAcceptedApplicationWithoutOwnApplication(final Position position, final Hacker hacker) {
-		Collection<Problem> problemsAll;
-		Collection<Problem> problemsBusy;
-		List<Problem> problemsFree;
+	public List<Problem> problemsPosition(final Position position) {
+		List<Problem> problemsPosition;
 
-		problemsAll = this.problemRepository.positionProblem(position.getId());
-		problemsBusy = this.problemRepository.problemsWithAcceptedApplicationWithOwnApplication(position.getId(), hacker.getId());
+		problemsPosition = new ArrayList<Problem>(this.problemRepository.problemsPosition(position.getId()));
 
-		problemsAll.removeAll(problemsBusy);
-
-		problemsFree = new ArrayList<Problem>(problemsAll);
-
-		return problemsFree;
+		return problemsPosition;
 	}
-
 }

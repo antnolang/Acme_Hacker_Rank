@@ -19,5 +19,5 @@ public interface ProblemRepository extends JpaRepository<Problem, Integer> {
 	Collection<Problem> problemsWithAcceptedApplicationWithOwnApplication(int idPosition, int idHacker);
 
 	@Query("select p from Problem p join p.position po where po.id=?1")
-	Collection<Problem> positionProblem(int idPosition);
+	Collection<Problem> problemsPosition(int idPosition);
 }

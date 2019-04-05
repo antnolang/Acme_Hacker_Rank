@@ -1639,7 +1639,6 @@
 			<list>
 				<ref bean="position1" />
 				<ref bean="position2" />
-				<ref bean="position3" />
 				<ref bean="position4" />
 			</list>
 		</property>

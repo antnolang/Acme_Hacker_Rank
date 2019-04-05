@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +48,14 @@ public class SystemTagService {
 		return result;
 	}
 
+	public void deleteByMessage(final Message message) {
+		Collection<SystemTag> systemTags;
+
+		systemTags = this.systemTagByMessage(message.getId());
+
+		this.systemTagRepository.delete(systemTags);
+	}
+
 	// Other business methods -------------------
 	protected SystemTag findByActorAndMessage(final int actorId, final int messageId) {
 		SystemTag result;
@@ -77,6 +87,14 @@ public class SystemTagService {
 		result = this.systemTagRepository.numberOfTimesTaggedAsHARDDELETED(messageId);
 
 		return result;
+	}
+
+	private Collection<SystemTag> systemTagByMessage(final int messageId) {
+		Collection<SystemTag> results;
+
+		results = this.systemTagRepository.systemTagByMessage(messageId);
+
+		return results;
 	}
 
 }

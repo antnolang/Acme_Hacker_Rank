@@ -37,7 +37,7 @@
 	<jstl:out value="${messageToDisplay.body}" />
 </p>
 
-<jstl:if test="${w_tags != null}">
+<jstl:if test="${w_tags != null && w_tags != ''}">
 	<strong><spring:message code="message.tags"/>:</strong>
 	<jstl:out value="${w_tags}" />
 </jstl:if>

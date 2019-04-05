@@ -2,6 +2,9 @@
 package controllers.authenticated;
 
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -61,6 +64,8 @@ public class MessageMultiUserController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView result;
 		Collection<Message> sentMessages, receivedMessages;
+		Set<Message> messages;
+		Map<Integer, String> mapa;
 		Actor principal;
 
 		principal = this.actorService.findPrincipal();
@@ -68,9 +73,17 @@ public class MessageMultiUserController extends AbstractController {
 		sentMessages = this.messageService.findSentMessagesOrderByTags(principal.getId());
 		receivedMessages = this.messageService.findReceivedMessagesOrderByTags(principal.getId());
 
+		messages = new HashSet<>();
+		messages.addAll(sentMessages);
+		messages.addAll(receivedMessages);
+
+		mapa = this.messageService.displayTagsByMessage(messages);
+
 		result = new ModelAndView("message/list");
 		result.addObject("sentMessages", sentMessages);
 		result.addObject("receivedMessages", receivedMessages);
+		result.addObject("requestURI", "message/administrator,company,hacker/list.do");
+		result.addObject("mapa", mapa);
 
 		return result;
 	}
@@ -108,7 +121,7 @@ public class MessageMultiUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int messageId, @RequestParam final int boxId) {
+	public ModelAndView delete(@RequestParam final int messageId) {
 		ModelAndView result;
 		Message message;
 

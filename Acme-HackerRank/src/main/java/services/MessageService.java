@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -151,8 +153,13 @@ public class MessageService {
 
 			number = this.systemTagService.numberOfTimesTaggedAsHARDDELETED(message.getId());
 
-			if (number == message.getRecipients().size())
+			// If all involved actors have tagged the message as HARDDELETED, then the message is removed
+			// from the system and its SystemTag objects
+			if (number == (message.getRecipients().size() + 1)) {
+				this.systemTagService.deleteByMessage(message);
+
 				this.messageRepository.delete(message);
+			}
 
 		} else if (systemTagAsDeleted == null && systemTagAsHardDeleted == null)
 			// If the message "is deleted" and the message doesn't have tag "DELETED", then
@@ -161,6 +168,21 @@ public class MessageService {
 	}
 
 	// Other business methods -------------------------------
+	public Map<Integer, String> displayTagsByMessage(final Collection<Message> messages) {
+		Map<Integer, String> result;
+		String tags;
+
+		result = new HashMap<Integer, String>();
+
+		for (final Message m : messages) {
+			tags = this.displayMessageTags(m);
+
+			result.put(m.getId(), tags);
+		}
+
+		return result;
+	}
+
 	public String displayMessageTags(final Message message) {
 		String result, tags;
 		SystemTag systemTag;
@@ -177,7 +199,7 @@ public class MessageService {
 		else if ((tags == null || tags == "") && systemTag != null)
 			result = "DELETED";
 		else
-			result = null;
+			result = "";
 
 		return result;
 	}

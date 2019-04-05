@@ -28,7 +28,7 @@
 		</a>
 	</display:column>
 	<display:column>
-		<a href="message/administrator,company,hacker/delete.do?boxId=${row.id}">
+		<a href="message/administrator,company,hacker/delete.do?messageId=${row.id}">
 			<spring:message code="message.delete" />
 		</a>
 	</display:column>
@@ -37,7 +37,7 @@
 		<display:column property="sentMoment" titleKey="message.sentMoment" format="${dateFormat}" />
 	
 	<display:column property="subject" titleKey="message.subject"/>
-	<display:column property="tags" titleKey="message.tags"/>	
+	<display:column value="${mapa.get(row.id)}" titleKey="message.tags"/>	
 </display:table>
 <br />
 
@@ -50,18 +50,18 @@
 		</a>
 	</display:column>
 	<display:column>
-		<a href="message/administrator,company,hacker/delete.do?boxId=${fila.id}">
+		<a href="message/administrator,company,hacker/delete.do?messageId=${fila.id}">
 			<spring:message code="message.delete" />
 		</a>
 	</display:column>
 	
-	<display:column property="sender.fullname" titleKey="actor.name" />
+	<display:column property="sender.fullname" titleKey="message.sender" />
 	
 	<spring:message code="message.format" var="dateFormat"/>
 	<display:column property="sentMoment" titleKey="message.sentMoment" format="${dateFormat}"/>
 	
 	<display:column property="subject" titleKey="message.subject"/>
-	<display:column property="tags" titleKey="message.tags"/>	
+	<display:column value="${mapa.get(fila.id)}" titleKey="message.tags"/>	
 </display:table>
 <br />
 

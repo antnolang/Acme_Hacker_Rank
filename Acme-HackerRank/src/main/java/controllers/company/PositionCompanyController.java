@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import services.CompanyService;
 import services.PositionService;
 import controllers.AbstractController;
+import domain.Company;
 import domain.Position;
 
 @Controller
@@ -22,6 +24,9 @@ public class PositionCompanyController extends AbstractController {
 
 	@Autowired
 	private PositionService	positionService;
+
+	@Autowired
+	private CompanyService	companyService;
 
 
 	// Constructor ------------------------------------
@@ -67,6 +72,7 @@ public class PositionCompanyController extends AbstractController {
 	public ModelAndView save(final Position position, final BindingResult binding) {
 		ModelAndView result;
 		Position positionRec;
+		final Company principal;
 
 		positionRec = this.positionService.reconstruct(position, binding);
 		if (binding.hasErrors())
@@ -74,8 +80,9 @@ public class PositionCompanyController extends AbstractController {
 		else
 			try {
 
+				principal = this.companyService.findByPrincipal();
 				this.positionService.save(positionRec);
-				result = new ModelAndView("redirect:../company/list.do");
+				result = new ModelAndView("redirect:../list.do?companyId=" + principal.getId());
 			}
 
 			catch (final Throwable oops) {

@@ -64,6 +64,7 @@ public class PositionService {
 	public Position save(final Position position) {
 		Assert.notNull(position);
 		this.checkByPrincipal(position);
+		Assert.isTrue(position.getDeadline().after(this.utilityService.current_moment()));
 
 		final Position result;
 
@@ -226,9 +227,16 @@ public class PositionService {
 		result.setTechnologies(position.getTechnologies());
 		result.setTitle(position.getTitle());
 
+		this.checkDeadline(result, binding);
+
 		this.validator.validate(result, binding);
 
 		return result;
+	}
+
+	private void checkDeadline(final Position position, final BindingResult binding) {
+		if (position.getDeadline().before(this.utilityService.current_moment()))
+			binding.rejectValue("deadline", "position.commit.deadline");
 	}
 
 }

@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CompanyService;
-import services.CustomisationService;
 import services.PositionService;
 import domain.Company;
 import domain.Position;
@@ -23,13 +22,10 @@ public class PositionController extends AbstractController {
 	// Services------------------------------------
 
 	@Autowired
-	private PositionService			positionService;
+	private PositionService	positionService;
 
 	@Autowired
-	private CompanyService			companyService;
-
-	@Autowired
-	private CustomisationService	customisationService;
+	private CompanyService	companyService;
 
 
 	// Constructor ------------------------------------
@@ -45,10 +41,12 @@ public class PositionController extends AbstractController {
 		ModelAndView result;
 		Collection<Position> positions;
 		Company principal;
+		Company owner;
 
 		try {
 			result = new ModelAndView("position/list");
 			positions = this.positionService.findFinalModePositionsByCompany(companyId);
+			owner = this.companyService.findOne(companyId);
 
 			try {
 				principal = this.companyService.findByPrincipal();
@@ -61,8 +59,9 @@ public class PositionController extends AbstractController {
 				positions = this.positionService.findPositionByPrincipal();
 			}
 			result.addObject("principal", principal);
-
+			result.addObject("owner", owner);
 			result.addObject("positions", positions);
+			result.addObject("requestURI", "position/list.do?companyId=" + companyId);
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../error.do");
@@ -81,7 +80,9 @@ public class PositionController extends AbstractController {
 
 			positions = this.positionService.findAllPositionAvailable();
 
+			result.addObject("owner", null);
 			result.addObject("positions", positions);
+			result.addObject("requestURI", "position/availableList");
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../error.do");

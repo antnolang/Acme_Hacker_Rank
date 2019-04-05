@@ -49,7 +49,7 @@
 	
 	<security:authorize access="hasRole('COMPANY')">
 		<strong><spring:message code="problem.finalMode"/>:</strong>
-			<jstl:out value="${problem.finalMode}"/>
+			<jstl:out value="${problem.isFinalMode}"/>
 		<br/>
 	</security:authorize>
 	

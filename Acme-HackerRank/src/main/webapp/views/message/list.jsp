@@ -19,6 +19,8 @@
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<h3> <spring:message code="message.header_sent" /> </h3>
+
 <display:table name="sentMessages" id="row" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	<display:column>
 		<a href="message/administrator,company,hacker/display.do?messageId=${row.id}">
@@ -26,17 +28,20 @@
 		</a>
 	</display:column>
 	<display:column>
-		<a href="message/administrator,company,hacker/delete.do?boxId=${row.id}">
+		<a href="message/administrator,company,hacker/delete.do?messageId=${row.id}" onclick="return confirm('<spring:message code="message.confirm.delete"/>')">
 			<spring:message code="message.delete" />
 		</a>
 	</display:column>
 	
-	<spring:message code="message.date.format" var="dateFormat"/>
-	<display:column property="sentMoment" titleKey="message.sendMoment" format="${dateFormat}"/>
+	<spring:message code="message.format" var="dateFormat"/>
+		<display:column property="sentMoment" titleKey="message.sentMoment" format="${dateFormat}" />
 	
 	<display:column property="subject" titleKey="message.subject"/>
-	<display:column property="tags" titleKey="message.tags"/>	
+	<display:column value="${mapa.get(row.id)}" titleKey="message.tags"/>	
 </display:table>
+<br />
+
+<h3> <spring:message code="message.header_received" /> </h3>
 
 <display:table name="receivedMessages" id="fila" requestURI="${requestURI}" pagesize="5" class="displaytag">
 	<display:column>
@@ -45,19 +50,20 @@
 		</a>
 	</display:column>
 	<display:column>
-		<a href="message/administrator,company,hacker/delete.do?boxId=${fila.id}">
+		<a href="message/administrator,company,hacker/delete.do?messageId=${fila.id}" onclick="return confirm('<spring:message code="message.confirm.delete"/>')">
 			<spring:message code="message.delete" />
 		</a>
 	</display:column>
 	
-	<display:column property="sender.fullname" titleKey="actor.name" />
+	<display:column property="sender.fullname" titleKey="message.sender" />
 	
-	<spring:message code="message.date.format" var="dateFormat"/>
-	<display:column property="sentMoment" titleKey="message.sendMoment" format="${dateFormat}"/>
+	<spring:message code="message.format" var="dateFormat"/>
+	<display:column property="sentMoment" titleKey="message.sentMoment" format="${dateFormat}"/>
 	
 	<display:column property="subject" titleKey="message.subject"/>
-	<display:column property="tags" titleKey="message.tags"/>	
+	<display:column value="${mapa.get(fila.id)}" titleKey="message.tags"/>	
 </display:table>
+<br />
 
 <!-- LINKS -->
 <a href="message/administrator,company,hacker/send.do">
@@ -70,7 +76,7 @@
 		<spring:message code="message.broadcast" />
 	</a>
 	<br />
-	<a href="message/administrator/breachNotification.do" onclick="return confirm('<spring:message code="message.confirm"/>')">
+	<a href="message/administrator/breachNotification.do" onclick="return confirm('<spring:message code="message.confirm.delete"/>')">
 		<spring:message code="message.breach" />
 	</a>
 </security:authorize>

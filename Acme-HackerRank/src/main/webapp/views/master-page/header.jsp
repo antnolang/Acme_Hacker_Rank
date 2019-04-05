@@ -32,6 +32,11 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('COMPANY')">
+			<li><a  href="problem/company/list.do" class="fNiv"><spring:message	code="master.page.company.listAll" /></a>
+			</li>
+		</security:authorize>
+		
 		<li><a  href="position/availableList.do" class="fNiv"><spring:message	code="master.page.availableposition" /></a>
 		</li>
 		
@@ -61,7 +66,7 @@
 				<ul>
 					<li class="arrow"></li>		
 					<li><a href="actor/display.do"><spring:message code="master.page.actor.display" /></a></li>			
-					<li><a href="box/administrator,brotherhood,member/list.do"><spring:message code="master.page.box.list" /></a></li>
+					<li><a href="message/administrator,company,hacker/list.do"><spring:message code="master.page.message.list" /></a></li>
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>
 			</li>

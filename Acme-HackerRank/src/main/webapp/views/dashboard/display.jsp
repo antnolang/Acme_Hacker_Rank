@@ -35,10 +35,10 @@
 		<th> <spring:message code="dashboard.deviation" /> </th>
 	</tr>
 	<tr>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
+		<td> <jstl:out value="${findDataNumberApplicationPerHacker[0]}" /> </td>
+		<td> <jstl:out value="${findDataNumberApplicationPerHacker[1]}" /> </td>
+		<td> <jstl:out value="${findDataNumberApplicationPerHacker[2]}" /> </td>
+		<td> <jstl:out value="${findDataNumberApplicationPerHacker[3]}" /> </td>
 	</tr>
 </table>
 
@@ -52,7 +52,7 @@
 </display:table>
 
 <p><strong> <spring:message code="dashboard.four" />: </strong></p>
-<display:table name="hackersMoreApplications" id="row" requestURI="dashboard/administrator/display.do" pagesize="5" class="displaytag">
+<display:table name="findHackersWithMoreApplications" id="row" requestURI="dashboard/administrator/display.do" pagesize="5" class="displaytag">
 	<display:column property="fullname" titleKey="table.fullname" />
 	<display:column property="email" titleKey="table.email" />
 	<display:column property="phoneNumber" titleKey="table.phoneNumber" />
@@ -89,36 +89,36 @@
 <p> <strong> <spring:message code="dashboard.seven" />: </strong> </p>
 <table>
 	<tr>
-		<th> <spring:message code="dashboard.average" /> </th>
 		<th> <spring:message code="dashboard.min" /> </th>
 		<th> <spring:message code="dashboard.max" /> </th>
+		<th> <spring:message code="dashboard.average" /> </th>
 		<th> <spring:message code="dashboard.deviation" /> </th>
 	</tr>
 	<tr>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
+		<td> <jstl:out value="${findDataNumberCurriculumPerHacker[0]}" /> </td>
+		<td> <jstl:out value="${findDataNumberCurriculumPerHacker[1]}" /> </td>
+		<td> <jstl:out value="${findDataNumberCurriculumPerHacker[2]}" /> </td>
+		<td> <jstl:out value="${findDataNumberCurriculumPerHacker[3]}" /> </td>
 	</tr>
 </table>
 
 <p> <strong> <spring:message code="dashboard.eight" />: </strong> </p>
 <table>
 	<tr>
-		<th> <spring:message code="dashboard.average" /> </th>
 		<th> <spring:message code="dashboard.min" /> </th>
 		<th> <spring:message code="dashboard.max" /> </th>
+		<th> <spring:message code="dashboard.average" /> </th>
 		<th> <spring:message code="dashboard.deviation" /> </th>
 	</tr>
 	<tr>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
-		<td> <jstl:out value="" /> </td>
+		<td> <jstl:out value="${findDataNumberResultsFinder[0]}" /> </td>
+		<td> <jstl:out value="${findDataNumberResultsFinder[1]}" /> </td>
+		<td> <jstl:out value="${findDataNumberResultsFinder[2]}" /> </td>
+		<td> <jstl:out value="${findDataNumberResultsFinder[3]}" /> </td>
 	</tr>
 </table>
 
 <p>
 	<strong> <spring:message code="dashboard.nine" /> </strong>:
-	<jstl:out value="" />
+	<jstl:out value="${findRatioEmptyVsNonEmpty}" />
 </p>

@@ -147,7 +147,6 @@ public class ActorService {
 	}
 
 	public void markAsSpammer(final Actor actor, final Boolean bool) {
-		Assert.notNull(actor);
 		actor.setIsSpammer(bool);
 	}
 
@@ -160,16 +159,15 @@ public class ActorService {
 			this.launchSpammerProcess(a);
 	}
 
-	protected void launchSpammerProcess(final Actor actor) {
-		Assert.notNull(actor);
-		Assert.isTrue(actor.getId() != 0);
+	private void launchSpammerProcess(final Actor actor) {
+		Double percentage, numberMessages, numberSpamMessages;
 
-		Double messagesSent, numberSpamMessages;
-
-		messagesSent = this.messageService.numberMessagesSentByActor(actor.getId());
+		numberMessages = this.messageService.numberMessagesSentByActor(actor.getId());
 		numberSpamMessages = this.messageService.numberSpamMessagesSentByActor(actor.getId());
 
-		if ((numberSpamMessages / (messagesSent)) >= 0.1)
+		percentage = numberSpamMessages / numberMessages;
+
+		if (percentage >= 0.1)
 			this.markAsSpammer(actor, true);
 		else
 			this.markAsSpammer(actor, false);

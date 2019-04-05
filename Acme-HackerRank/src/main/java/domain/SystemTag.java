@@ -28,7 +28,7 @@ public class SystemTag extends DomainEntity {
 
 
 	@NotBlank
-	@Pattern(regexp = "^DELETE|HARDDELETE$")
+	@Pattern(regexp = "^DELETED|HARDDELETED$")
 	public String getText() {
 		return this.text;
 	}

@@ -126,10 +126,20 @@ public class UtilityService {
 		final String letters;
 		String result;
 		Integer counter;
+		Integer size;
 
-		//TODO poner que letters son las primeras letras del título, si es mas pequeño poner X 
 		counter = 0;
-		letters = "";
+
+		size = title.length();
+
+		if (size == 1)
+			letters = title + "XXX-";
+		else if (size == 2)
+			letters = title + "XX-";
+		else if (size == 3)
+			letters = title + "X-";
+		else
+			letters = title.substring(0, 4) + "-";
 
 		do {
 			result = letters + this.createRandomNumbers();

@@ -52,6 +52,9 @@ public class MessageService {
 	@Autowired
 	private SystemTagService		systemTagService;
 
+	@Autowired
+	private FinderService			finderService;
+
 
 	// Constructors -----------------------------------------
 	public MessageService() {
@@ -209,13 +212,15 @@ public class MessageService {
 
 		Message result;
 		boolean isSpam;
-		Actor principal;
+		Actor principal, system;
 		Collection<Actor> recipients;
 
 		principal = this.actorService.findPrincipal();
+		system = this.administratorService.findSystem();
 
 		recipients = this.actorService.findAll();
 		recipients.remove(principal);
+		recipients.remove(system);
 
 		isSpam = this.messageIsSpam(message);
 
@@ -284,6 +289,27 @@ public class MessageService {
 		return result;
 	}
 
+	// This method id used when an actor want to delete all his or her data.
+	public void deleteMessages(final Actor actor) {
+		Collection<Message> sentMessages, receivedMessages;
+
+		sentMessages = this.findSentMessagesOrderByTags(actor.getId());
+		for (final Message m1 : sentMessages) {
+			this.systemTagService.deleteByMessage(m1);
+
+			this.messageRepository.delete(m1);
+		}
+
+		receivedMessages = this.findReceivedMessagesOrderByTags(actor.getId());
+		for (final Message m2 : receivedMessages)
+			if (m2.getRecipients().size() == 1) {
+				this.systemTagService.deleteByMessage(m2);
+
+				this.messageRepository.delete(m2);
+			} else
+				m2.getRecipients().remove(actor);
+	}
+
 	protected Message notification_applicationStatusChanges(final Application application) {
 		Assert.notNull(application);
 		Assert.isTrue(application.getId() != 0);
@@ -345,6 +371,10 @@ public class MessageService {
 		result = this.messageRepository.numberSpamMessagesSentByActor(actorId);
 
 		return result;
+	}
+
+	protected void flush() {
+		this.messageRepository.flush();
 	}
 
 	// Private methods --------------------------------------

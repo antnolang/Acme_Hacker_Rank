@@ -20,6 +20,11 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+	<jstl:if test="${position.isCancelled == true}">
+		<strong><h2><spring:message code="position.isCancelled"/></h2></strong>
+		<br/>
+	</jstl:if>
+	
 	<strong><spring:message code="position.company"/>:</strong>
 		<a href="actor/display.do?actorId=${position.company.id}"><jstl:out value="${position.company.commercialName}"/></a>
 	<br/>
@@ -41,12 +46,6 @@
 		<strong><spring:message code="position.finalMode"/>:</strong>
 			<jstl:out value="${position.isFinalMode}"/>
 		<br/>
-		
-		<jstl:if test="position.isCancelled">
-		
-		<strong><spring:message code="position.isCancelled"/>:</strong>
-		<br/>
-		</jstl:if>
 	</jstl:if>
 	</security:authorize>
 	
@@ -73,6 +72,36 @@
 	<fmt:formatNumber type="number" maxFractionDigits="2" value="${position.salary * (1 + position.company.VATnumber)}"/> &#8364; <jstl:out value="(${position.company.VATnumber}% ${vatTag} Inc.)"/>
 
 	<br/>
+	
+
+<security:authorize access="hasRole('COMPANY')">
+<jstl:if test="${principal == position.company}">	
+<fieldset>
+	<legend>
+		<spring:message code="position.problems" />
+	</legend>
+	<display:table name="problemList" id="rowPoroblem"
+		pagesize="5" class="displaytag" requestURI="position/display.do">
+		
+		<display:column>
+			<a href="problem/company,hacker/display.do?problemId=${rowPoroblem.id}"><spring:message
+					code="position.display" /> </a>
+		</display:column>
+		
+		
+		<display:column>
+			<jstl:if test="${rowProblem.isFinalMode}">
+				<a href="problem/company/edit.do?problemId=${rowPoroblem.id}">
+					<spring:message code="position.edit" />
+				</a>
+			</jstl:if>
+		</display:column>
+
+		<display:column property="title" titleKey="position.title" />
+	</display:table>
+</fieldset>
+</jstl:if>
+</security:authorize>
 	
 	
 	<!-- Links -->	

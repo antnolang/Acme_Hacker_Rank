@@ -1,6 +1,8 @@
 
 package controllers.authenticated;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -102,6 +104,29 @@ public class ActorMultiUserController extends ActorAbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "deleteAdmin")
+	public ModelAndView deleteAdministrator(final RegistrationForm registrationForm, final BindingResult binding, final HttpSession session) {
+		Administrator administrator;
+		ModelAndView result;
+
+		administrator = this.administratorService.findOneToDisplayEdit(registrationForm.getId());
+
+		if (binding.hasErrors()) {
+			result = this.createModelAndView(registrationForm);
+			result.addObject("rol", "Administrator");
+		} else
+			try {
+				this.administratorService.delete(administrator);
+				session.invalidate();
+				result = new ModelAndView("redirect:/welcome/index.do");
+			} catch (final Throwable oops) {
+				result = this.createModelAndView(registrationForm, "actor.commit.error");
+				result.addObject("rol", "Administrator");
+			}
+
+		return result;
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveCompany")
 	public ModelAndView saveCompany(final RegistrationForm registrationForm, final BindingResult binding) {
 		ModelAndView result;
@@ -124,6 +149,29 @@ public class ActorMultiUserController extends ActorAbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "deleteCompany")
+	public ModelAndView deleteCompany(final RegistrationForm registrationForm, final BindingResult binding, final HttpSession session) {
+		ModelAndView result;
+		Company company;
+
+		company = this.companyService.findOneToDisplayEdit(registrationForm.getId());
+
+		if (binding.hasErrors()) {
+			result = this.createModelAndView(registrationForm);
+			result.addObject("rol", "Company");
+		} else
+			try {
+				this.companyService.delete(company);
+				session.invalidate();
+				result = new ModelAndView("redirect:/welcome/index.do");
+			} catch (final Throwable oops) {
+				result = this.createModelAndView(registrationForm, "actor.commit.error");
+				result.addObject("rol", "Company");
+			}
+
+		return result;
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "saveHacker")
 	public ModelAndView saveHacker(final RegistrationForm registrationForm, final BindingResult binding) {
 		ModelAndView result;
@@ -138,6 +186,29 @@ public class ActorMultiUserController extends ActorAbstractController {
 			try {
 				this.hackerService.save(hacker);
 				result = new ModelAndView("redirect:/actor/display.do");
+			} catch (final Throwable oops) {
+				result = this.createModelAndView(registrationForm, "actor.commit.error");
+				result.addObject("rol", "Hacker");
+			}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "deleteHacker")
+	public ModelAndView deleteHacker(final RegistrationForm registrationForm, final BindingResult binding, final HttpSession session) {
+		ModelAndView result;
+		Hacker hacker;
+
+		hacker = this.hackerService.findOneToDisplayEdit(registrationForm.getId());
+
+		if (binding.hasErrors()) {
+			result = this.createModelAndView(registrationForm);
+			result.addObject("rol", "Hacker");
+		} else
+			try {
+				this.hackerService.delete(hacker);
+				session.invalidate();
+				result = new ModelAndView("redirect:/welcome/index.do");
 			} catch (final Throwable oops) {
 				result = this.createModelAndView(registrationForm, "actor.commit.error");
 				result.addObject("rol", "Hacker");

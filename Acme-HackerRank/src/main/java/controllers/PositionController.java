@@ -12,8 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.CompanyService;
 import services.PositionService;
+import services.ProblemService;
 import domain.Company;
 import domain.Position;
+import domain.Problem;
 
 @Controller
 @RequestMapping(value = "/position")
@@ -26,6 +28,9 @@ public class PositionController extends AbstractController {
 
 	@Autowired
 	private CompanyService	companyService;
+
+	@Autowired
+	private ProblemService	problemService;
 
 
 	// Constructor ------------------------------------
@@ -90,7 +95,7 @@ public class PositionController extends AbstractController {
 
 			result.addObject("owner", null);
 			result.addObject("positions", positions);
-			result.addObject("requestURI", "position/availableList");
+			result.addObject("requestURI", "position/availableList.do");
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../error.do");
@@ -106,6 +111,7 @@ public class PositionController extends AbstractController {
 		ModelAndView result;
 		Position position;
 		Company principal;
+		Collection<Problem> problemList;
 
 		try {
 			result = new ModelAndView("position/display");
@@ -119,7 +125,10 @@ public class PositionController extends AbstractController {
 
 			if (principal != null && principal.equals(position.getCompany())) {
 				position = this.positionService.findOne(positionId);
+				problemList = this.problemService.findProblemByPostion(positionId);
+
 				result.addObject("principal", principal);
+				result.addObject("problemList", problemList);
 			}
 
 			else

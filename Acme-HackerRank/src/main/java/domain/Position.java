@@ -1,12 +1,14 @@
 
 package domain;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -145,9 +147,19 @@ public class Position extends DomainEntity {
 
 
 	// Relationships
+	private Collection<Problem>	problems;
+	private Company				company;
 
-	private Company	company;
 
+	@NotNull
+	@ManyToMany
+	public Collection<Problem> getProblems() {
+		return this.problems;
+	}
+
+	public void setPositions(final Collection<Problem> problems) {
+		this.problems = problems;
+	}
 
 	@Valid
 	@NotNull

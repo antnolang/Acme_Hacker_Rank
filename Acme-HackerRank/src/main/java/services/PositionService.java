@@ -16,6 +16,7 @@ import org.springframework.validation.Validator;
 import repositories.PositionRepository;
 import domain.Company;
 import domain.Position;
+import domain.Problem;
 
 @Service
 @Transactional
@@ -28,6 +29,9 @@ public class PositionService {
 
 	@Autowired
 	private CompanyService		companyService;
+
+	@Autowired
+	private ProblemService		problemService;
 
 	@Autowired
 	private UtilityService		utilityService;
@@ -94,7 +98,7 @@ public class PositionService {
 		Position result;
 
 		result = this.findOne(positionId);
-		Assert.isTrue(result.getIsFinalMode() == true);
+		Assert.isTrue(result.getIsFinalMode());
 
 		return result;
 	}
@@ -120,9 +124,20 @@ public class PositionService {
 	}
 
 	public void makeFinal(final Position position) {
+		Collection<Problem> problems;
+
+		problems = this.problemService.findProblemByPostion(position.getId());
+
+		Assert.isTrue(problems.size() >= 2);
 		this.checkByPrincipal(position);
 
 		position.setIsFinalMode(true);
+	}
+	public void cancel(final Position position) {
+		this.checkByPrincipal(position);
+		Assert.isTrue(position.getIsFinalMode());
+
+		position.setIsCancelled(true);
 	}
 	//Other public methods  -----------------------------------------------
 	public Collection<Position> findAllPositionAvailable() {
@@ -180,7 +195,15 @@ public class PositionService {
 
 		return result;
 	}
+	// This method id used when an actor want to delete all his or her data.
+	public void deleteByCompany(final Company company) {
+		Collection<Position> positions;
 
+		positions = this.positionRepository.findPositionByCompany(company.getId());
+
+		this.positionRepository.delete(positions);
+
+	}
 	// Protected methods -----------------------------------------------
 	protected String existTicker(final String ticker) {
 		String result;

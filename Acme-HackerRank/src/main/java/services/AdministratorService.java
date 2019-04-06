@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,8 +86,26 @@ public class AdministratorService {
 
 	public Administrator save(final Administrator administrator) {
 		Administrator result;
+		Assert.isTrue(this.findByPrincipal() != null);
+		Assert.isTrue(this.findAll().contains(this.findByPrincipal()));
 
 		result = (Administrator) this.actorService.save(administrator);
+
+		return result;
+	}
+	public void delete(final Administrator administrator) {
+		Assert.notNull(administrator);
+		Assert.isTrue(!administrator.getUserAccount().getUsername().equals("system"));
+		Assert.isTrue(administrator.getId() != 0);
+		Assert.isTrue(this.findByPrincipal().equals(administrator));
+
+		this.actorService.delete(administrator);
+	}
+
+	private Collection<Administrator> findAll() {
+		Collection<Administrator> result;
+
+		result = this.administratorRepository.findAll();
 
 		return result;
 	}

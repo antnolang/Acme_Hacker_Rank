@@ -12,9 +12,6 @@ import domain.SystemTag;
 @Repository
 public interface SystemTagRepository extends JpaRepository<SystemTag, Integer> {
 
-	@Query("select s from SystemTag s where s.actor.id=?1 and s.message.id=?2")
-	SystemTag findByActorAndMessage(int actorId, int messageId);
-
 	@Query("select s from SystemTag s where s.actor.id=?1 and s.message.id=?2 and s.text='DELETED'")
 	SystemTag findMessageTaggedAsDELETED(int actorId, int messageId);
 

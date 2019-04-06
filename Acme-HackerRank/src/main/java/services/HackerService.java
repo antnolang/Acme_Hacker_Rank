@@ -94,6 +94,22 @@ public class HackerService {
 		return result;
 	}
 
+	public void delete(final Hacker hacker) {
+		Assert.notNull(hacker);
+		Assert.isTrue(hacker.getId() != 0);
+		Assert.isTrue(this.findByPrincipal().equals(hacker));
+
+		// Delete applications
+
+		// Delete answers
+
+		// Delete finder
+
+		// Delete curriculums
+
+		this.actorService.delete(hacker);
+	}
+
 	public Collection<Hacker> findAll() {
 		Collection<Hacker> result;
 

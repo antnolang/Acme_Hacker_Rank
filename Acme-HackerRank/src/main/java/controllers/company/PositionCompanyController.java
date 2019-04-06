@@ -124,11 +124,28 @@ public class PositionCompanyController extends AbstractController {
 			redir.addFlashAttribute("messageCode", "position.make.final.error");
 		}
 
-		result = new ModelAndView("redirect:/position/company/list.do");
+		result = new ModelAndView("redirect:/position/list.do?companyId=" + position.getCompany().getId());
 
 		return result;
 	}
 
+	@RequestMapping(value = "/cancel", method = RequestMethod.GET)
+	public ModelAndView cancel(@RequestParam final int positionId, final RedirectAttributes redir) {
+		ModelAndView result;
+		Position position;
+
+		position = this.positionService.findOne(positionId);
+
+		try {
+			this.positionService.cancel(position);
+		} catch (final Throwable oops) {
+			redir.addFlashAttribute("messageCode", "position.cancel.error");
+		}
+
+		result = new ModelAndView("redirect:/position/list.do?companyId=" + position.getCompany().getId());
+
+		return result;
+	}
 	// Arcillary methods --------------------------
 
 	protected ModelAndView createEditModelAndView(final Position position) {
@@ -141,9 +158,13 @@ public class PositionCompanyController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final Position position, final String messageCode) {
 		ModelAndView result;
+		Company principal;
+
+		principal = this.companyService.findByPrincipal();
 
 		result = new ModelAndView("position/edit");
 		result.addObject("position", position);
+		result.addObject("principal", principal);
 		result.addObject("messageCode", messageCode);
 
 		return result;

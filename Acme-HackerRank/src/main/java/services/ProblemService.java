@@ -186,11 +186,19 @@ public class ProblemService {
 		return result;
 	}
 
-	public List<Problem> problemsPosition(final Position position) {
+	protected List<Problem> problemsPosition(final Position position) {
 		List<Problem> problemsPosition;
 
 		problemsPosition = new ArrayList<Problem>(this.problemRepository.problemsPosition(position.getId()));
 
 		return problemsPosition;
+	}
+
+	public Collection<Problem> findProblemByPostion(final int positionId) {
+		Collection<Problem> problems;
+
+		problems = this.problemRepository.problemsPosition(positionId);
+
+		return problems;
 	}
 }

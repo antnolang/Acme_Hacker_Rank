@@ -18,6 +18,7 @@ import org.springframework.util.Assert;
 import utilities.AbstractTest;
 import domain.Actor;
 import domain.Message;
+import domain.SystemTag;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -28,18 +29,21 @@ public class MessageServiceTest extends AbstractTest {
 
 	// Service under testing -----------------------------------
 	@Autowired
-	private MessageService	messageService;
+	private MessageService		messageService;
 
 	// Other services ------------------------------------------
 	@Autowired
-	private ActorService	actorService;
+	private ActorService		actorService;
+
+	@Autowired
+	private SystemTagService	systemTagService;
 
 
 	// Suite test ---------------------------------------------
 
 	/*
-	 * A: level A: requirement 23.2 (An authenticated user can display his or her messages).
-	 * B: The business rule that is intended to be broken: This user try to display a "deleted" message.
+	 * A: Requirement 23.2 (An authenticated user can display his or her messages).
+	 * B: This user try to display a "deleted" message.
 	 * C: Analysis of sentence coverage: 33/34 -> 97.05% of executed lines codes .
 	 * D: Analysis of data coverage: intentionally blank.
 	 */
@@ -59,8 +63,8 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * A: level A: requirement 23.2 (An authenticated user can display his or her messages).
-	 * B: The business rule that is intended to be broken: An user try to display a message that he or she hasn't sent or hasn't received.
+	 * A: Requirement 23.2 (An authenticated user can display his or her messages).
+	 * B: An user try to display a message that he or she hasn't sent or hasn't received.
 	 * C: Analysis of sentence coverage: 18/34 -> 52.94% of executed lines codes .
 	 * D: Analysis of data coverage: intentionally blank.
 	 */
@@ -80,7 +84,7 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * A: level A: requirement 23.2 (An authenticated user can display his or her messages).
+	 * A: Requirement 23.2 (An authenticated user can display his or her messages).
 	 * C: Analysis of sentence coverage: 34/34 -> 100.00% of executed lines codes .
 	 * D: Analysis of data coverage: intentionally blank.
 	 */
@@ -100,12 +104,12 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * A: level A: requirement 23.2 (An authenticated user can list his or her messages).
+	 * A: Requirement 23.2 (An authenticated user can list his or her messages).
 	 * C: Analysis of sentence coverage: 6/6 -> 100.00% of executed lines codes .
 	 * D: Analysis of data coverage: intentionally blank.
 	 */
 	@Test
-	public void findMessageByActor_test() {
+	public void findMessageByActor_positiveTest() {
 		super.authenticate("hacker1");
 
 		int actorId;
@@ -123,12 +127,12 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * A: level A: requirement 23.2 (An authenticated user can send a message).
+	 * A: Requirement 23.2 (An authenticated user can send a message).
 	 * C: Analysis of sentence coverage: 22/22 -> 100.00% of executed lines codes .
 	 * D: Analysis of data coverage: intentionally blank.
 	 */
 	@Test
-	public void createTest() {
+	public void create_positiveTest() {
 		super.authenticate("hacker1");
 
 		Message message;
@@ -148,13 +152,13 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * A: level A: requirement 23.2 (An authenticated user can send a message).
-	 * B: The business rule that is intended to be broken: An user try to edit a message.
+	 * A: Requirement 23.2 (An authenticated user can send a message).
+	 * B: An user try to edit a message.
 	 * C: Analysis of sentence coverage: 16/53 -> 30.18% of executed lines codes .
 	 * D: Analysis of data coverage: intentionally blank.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void negative_sendTest_dos() {
+	public void send_negativeTest() {
 		super.authenticate("hacker1");
 
 		final int messageId = super.getEntityId("message1");
@@ -174,20 +178,92 @@ public class MessageServiceTest extends AbstractTest {
 	@Test
 	public void driverSend() {
 		final Object testingData[][] = {
+			/*
+			 * A: Requirement 23.2 (An authenticated user can send a message).
+			 * B: Invalid data in Message::subject.
+			 * C: Analysis of sentence coverage: 52/53 -> 30.18% of executed lines codes .
+			 * D: Analysis of data coverage: Message::subject is null => 1/12 -> 8.33%.
+			 */
 			{
 				null, "¿Que tal?", "", ConstraintViolationException.class
-			}, {
+			},
+			/*
+			 * A: Requirement 23.2 (An authenticated user can send a message).
+			 * B: Invalid data in Message::subject.
+			 * C: Analysis of sentence coverage: 52/53 -> 30.18% of executed lines codes .
+			 * D: Analysis of data coverage: Message::subject is a empty string => 1/12 -> 8.33%.
+			 */
+			{
 				"", "¿Que tal?", "", ConstraintViolationException.class
-			}, {
+			},
+			/*
+			 * A: Requirement 23.2 (An authenticated user can send a message).
+			 * B: Invalid data in Message::subject.
+			 * C: Analysis of sentence coverage: 52/53 -> 30.18% of executed lines codes .
+			 * D: Analysis of data coverage: Message::subject is a malicious script => 1/12 -> 8.33%.
+			 */
+			{
 				"<script> Alert('HACKED'); </script>", "¿Que tal?", "", ConstraintViolationException.class
-			}, {
+			},
+			/*
+			 * A: Requirement 23.2 (An authenticated user can send a message).
+			 * B: Invalid data in Message::body.
+			 * C: Analysis of sentence coverage: 52/53 -> 30.18% of executed lines codes .
+			 * D: Analysis of data coverage: Message::body is null => 1/12 -> 8.33%.
+			 */
+			{
 				"Saludos", null, "", ConstraintViolationException.class
-			}, {
+			},
+			/*
+			 * A: Requirement 23.2 (An authenticated user can send a message).
+			 * B: Invalid data in Message::body.
+			 * C: Analysis of sentence coverage: 52/53 -> 30.18% of executed lines codes .
+			 * D: Analysis of data coverage: Message::body is a empty string => 1/12 -> 8.33%.
+			 */
+			{
 				"Saludos", "", "", ConstraintViolationException.class
-			}, {
+			},
+			/*
+			 * A: Requirement 23.2 (An authenticated user can send a message).
+			 * B: Invalid data in Message::body.
+			 * C: Analysis of sentence coverage: 52/53 -> 30.18% of executed lines codes .
+			 * D: Analysis of data coverage: Message::body is a malicious script => 1/12 -> 8.33%.
+			 */
+			{
 				"saludos", "<script> Alert('HACKED'); </script>", "", ConstraintViolationException.class
-			}, {
+			},
+			/*
+			 * A: Requirement 23.2 (An authenticated user can send a message).
+			 * B: Invalid data in Message::subject.
+			 * C: Analysis of sentence coverage: 52/53 -> 30.18% of executed lines codes .
+			 * D: Analysis of data coverage: Message::tags is a malicious script => 1/12 -> 8.33%.
+			 */
+			{
 				"saludos", "¿Que tal?", "<script> Alert('HACKED'); </script>", ConstraintViolationException.class
+			},
+			/*
+			 * A: Requirement 23.2 (An authenticated user can send a message).
+			 * C: Analysis of sentence coverage: 52/53 -> 30.18% of executed lines codes .
+			 * D: Analysis of data coverage: Every attribute has a valid value => 12/12 -> 100.00%.
+			 */
+			{
+				"Saludos", "¿Que tal?", "", null
+			},
+			/*
+			 * A: Requirement 23.2 (An authenticated user can send a message).
+			 * C: Analysis of sentence coverage: 52/53 -> 30.18% of executed lines codes .
+			 * D: Analysis of data coverage: Every attribute has a valid value => 12/12 -> 100.00%.
+			 */
+			{
+				"Saludos", "viagra, Sex, etc", "", null
+			},
+			/*
+			 * A: Requirement 23.2 (An authenticated user can send a message).
+			 * C: Analysis of sentence coverage: 52/53 -> 30.18% of executed lines codes .
+			 * D: Analysis of data coverage: Every attribute has a valid value => 12/12 -> 100.00%.
+			 */
+			{
+				"Saludos", "¿Que tal?", "PRIMERIZO", null
 			}
 		};
 
@@ -243,38 +319,166 @@ public class MessageServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * Test negativo: el mensaje no se encuentra en la BD.
+	 * A: Requirement 23.2 (An authenticated user can delete a message).
+	 * B: An user try to delete a message that doesn't belong him/her.
+	 * C: Analysis of sentence coverage: 15/68 -> 20.25% of executed lines codes .
+	 * D: Analysis of data coverage: intentionally blank.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void negative_deleteTest_uno() {
-		super.authenticate("member1");
+	public void delete_negativeTest() {
+		super.authenticate("admin1");
 
-		final List<Actor> recipients = new ArrayList<Actor>();
-		final int recipientId = super.getEntityId("administrator1");
-		final Actor recipient = this.actorService.findOne(recipientId);
-		recipients.add(recipient);
+		Message message, found;
+		int messageId;
 
-		Message message;
+		messageId = this.getEntityId("message1");
+		message = this.messageService.findOne(messageId);
 
-		message = this.messageService.create();
-		message.setRecipients(recipients);
-		message.setSubject("Subject Test");
-		message.setBody("Body Test");
+		this.messageService.delete(message);
+
+		found = this.messageService.findOne(messageId);
+
+		Assert.notNull(found);
 
 		super.unauthenticate();
 	}
 
 	/*
-	 * Test negativo: la bandeja no existe en la BD.
+	 * A: Requirement 23.2 (An authenticated user can delete a message).
+	 * C: Analysis of sentence coverage: 56/68 -> 82.35% of executed lines codes.
+	 * D: Analysis of data coverage: intentionally blank.
 	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void negative_deleteTest_dos() {
-		super.authenticate("member1");
+	@Test
+	public void delete_positiveTest_uno() {
+		super.authenticate("admin1");
 
-		final int messageId = super.getEntityId("message8");
-		final Message message = this.messageService.findOne(messageId);
+		Message message;
+		int messageId, actorId;
+		SystemTag deleted;
+
+		actorId = super.getEntityId("administrator1");
+		messageId = super.getEntityId("message3");
+		message = this.messageService.findOne(messageId);
+
+		deleted = this.systemTagService.findMessageTaggedAsDELETED(actorId, messageId);
+		Assert.isNull(deleted);
+
+		this.messageService.delete(message);
+
+		deleted = this.systemTagService.findMessageTaggedAsDELETED(actorId, messageId);
+		Assert.notNull(deleted);
 
 		super.unauthenticate();
 	}
+
+	/*
+	 * A: Requirement 23.2 (An authenticated user can delete a message).
+	 * C: Analysis of sentence coverage: 43/68 -> 63.23% of executed lines codes.
+	 * D: Analysis of data coverage: intentionally blank.
+	 */
+	@Test
+	public void delete_positiveTest_dos() {
+		super.authenticate("hacker2");
+
+		Message message;
+		int messageId, actorId;
+		SystemTag deleted, hardDeleted;
+
+		actorId = super.getEntityId("hacker2");
+		messageId = super.getEntityId("message3");
+		message = this.messageService.findOne(messageId);
+
+		hardDeleted = this.systemTagService.findMessageTaggedAsHARDDELETED(actorId, messageId);
+		deleted = this.systemTagService.findMessageTaggedAsDELETED(actorId, messageId);
+
+		Assert.notNull(deleted);
+		Assert.isNull(hardDeleted);
+
+		this.messageService.delete(message);
+
+		hardDeleted = this.systemTagService.findMessageTaggedAsHARDDELETED(actorId, messageId);
+		deleted = this.systemTagService.findMessageTaggedAsDELETED(actorId, messageId);
+
+		Assert.isNull(deleted);
+		Assert.notNull(hardDeleted);
+
+		super.unauthenticate();
+	}
+
+	/*
+	 * A: Requirement 24.1 (Broadcast a notification message to the actors of the system).
+	 * B: The message has not tag "SYSTEM".
+	 * C: Analysis of sentence coverage: 1/60 -> 1.66% of executed lines codes .
+	 * D: Analysis of data coverage: Every attribute has a valid value => 12/12 -> 100.00%.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void sendBroadcast_negativeTest() {
+		super.authenticate("admin1");
+
+		Message message, broadcast;
+
+		message = this.messageService.createBroadcast();
+		message.setSubject("Mensaje de difusion");
+		message.setBody("Esto es un mensaje de difusion");
+		message.setTags("HELLO WORLD");
+
+		broadcast = this.messageService.sendBroadcast(message);
+
+		Assert.isNull(broadcast);
+
+		super.unauthenticate();
+	}
+
+	/*
+	 * A: Requirement 24.1 (Broadcast a notification message to the actors of the system).
+	 * C: Analysis of sentence coverage: 1/60 -> 1.66% of executed lines codes .
+	 * D: Analysis of data coverage: Every attribute has a valid value => 12/12 -> 100.00%.
+	 */
+	@Test
+	public void sendBroadcast_positiveTest() {
+		super.authenticate("admin1");
+
+		Message message, broadcast;
+
+		message = this.messageService.createBroadcast();
+		message.setSubject("Mensaje de difusion");
+		message.setBody("Esto es un mensaje de difusion");
+		message.setTags("SYSTEM");
+
+		broadcast = this.messageService.sendBroadcast(message);
+		this.messageService.flush();
+
+		Assert.notNull(broadcast);
+		Assert.isTrue(broadcast.getId() != 0);
+
+		super.unauthenticate();
+	}
+
+	/*
+	 * A: Requirement 27 (An application changes its status).
+	 * C: Analysis of sentence coverage: 35/35 -> 100.00% of executed lines codes .
+	 * D: Analysis of data coverage: Intentionally blank.
+	 */
+	//	@Test
+	//	public void notificationApplication_positiveTest() {
+	//		super.authenticate("company1");
+	//
+	//		Application application;
+	//		final int applicationId = super.getEntityId("application1");
+	//		int actorId;
+	//		Message notification;
+	//		Collection<Message> receivedMessages;
+	//
+	//		application = this.applicationService.findOne(applicationId);
+	//
+	//		notification = this.messageService.notification_applicationStatusChanges(application);
+	//
+	//		actorId = super.getEntityId("hacker1");
+	//		receivedMessages = this.messageService.findReceivedMessagesOrderByTags(actorId);
+	//
+	//		Assert.isTrue(receivedMessages.contains(notification));
+	//
+	//		super.unauthenticate();
+	//	}
 
 }

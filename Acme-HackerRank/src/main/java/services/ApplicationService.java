@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 
 import repositories.ApplicationRepository;
+import domain.Answer;
 import domain.Application;
 import domain.Curriculum;
 import domain.Hacker;
@@ -29,9 +30,6 @@ public class ApplicationService {
 	private ApplicationRepository	applicationRepository;
 
 	// Supporting services -------------------------------------------
-
-	@Autowired
-	private PositionService			positionService;
 
 	@Autowired
 	private ProblemService			problemService;
@@ -139,6 +137,10 @@ public class ApplicationService {
 		application.setStatus("REJECTED");
 	}
 
+	protected void addAnswer(final Application application, final Answer answer) {
+		application.setAnswer(answer);
+	}
+
 	public Application findOne(final int applicationId) {
 		Application result;
 
@@ -178,7 +180,7 @@ public class ApplicationService {
 	}
 
 	// Reconstruct ----------------------------------------------
-	public Application reconstruct(final Application application, final Position position, final BindingResult binding) {
+	public Application reconstruct(final Application application, final BindingResult binding) {
 		Application result, applicationStored;
 
 		if (application.getId() != 0) {
@@ -195,7 +197,7 @@ public class ApplicationService {
 			result.setAnswer(application.getAnswer());
 
 		} else {
-			result = this.create(position);
+			result = this.create(application.getPosition());
 			result.setCurriculum(application.getCurriculum());
 		}
 
@@ -223,6 +225,46 @@ public class ApplicationService {
 		result = this.findApplicationsByProblemHacker(idProblem, idHacker);
 
 		return result;
+	}
+
+	public Collection<Application> findPendingApplicationsByHacker() {
+		Collection<Application> applications;
+		Hacker hacker;
+
+		hacker = this.hackerService.findByPrincipal();
+		applications = this.applicationRepository.findPendingApplicationsByHacker(hacker.getId());
+
+		return applications;
+	}
+
+	public Collection<Application> findSubmittedApplicationsByHacker() {
+		Collection<Application> applications;
+		Hacker hacker;
+
+		hacker = this.hackerService.findByPrincipal();
+		applications = this.applicationRepository.findSubmittedApplicationsByHacker(hacker.getId());
+
+		return applications;
+	}
+
+	public Collection<Application> findAcceptedApplicationsByHacker() {
+		Collection<Application> applications;
+		Hacker hacker;
+
+		hacker = this.hackerService.findByPrincipal();
+		applications = this.applicationRepository.findAcceptedApplicationsByHacker(hacker.getId());
+
+		return applications;
+	}
+
+	public Collection<Application> findRejectedApplicationsByHacker() {
+		Collection<Application> applications;
+		Hacker hacker;
+
+		hacker = this.hackerService.findByPrincipal();
+		applications = this.applicationRepository.findRejectedApplicationsByHacker(hacker.getId());
+
+		return applications;
 	}
 
 }

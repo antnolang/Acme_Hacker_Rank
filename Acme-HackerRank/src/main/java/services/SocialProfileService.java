@@ -164,6 +164,15 @@ public class SocialProfileService {
 		return result;
 	}
 
+	// This method id used when an actor want to delete all his or her data.
+	public void deleteSocialProfiles(final Actor actor) {
+		Collection<SocialProfile> socialProfiles;
+
+		socialProfiles = this.findSocialProfilesByActor(actor.getId());
+
+		this.socialProfileRepository.delete(socialProfiles);
+	}
+
 	protected void flush() {
 		this.socialProfileRepository.flush();
 	}

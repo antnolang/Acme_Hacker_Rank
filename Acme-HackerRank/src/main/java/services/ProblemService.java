@@ -152,7 +152,23 @@ public class ProblemService {
 		problem.setIsFinalMode(true);
 	}
 
-	// Private methods-----------------------------------------------
+	public Collection<Problem> findProblemByPostion(final int positionId) {
+		Collection<Problem> problems;
+
+		problems = this.problemRepository.problemsPosition(positionId);
+
+		return problems;
+	}
+	// This method id used when an actor want to delete all his or her data.
+	public void deleteByCompany(final Company company) {
+		Collection<Problem> problems;
+
+		problems = this.problemRepository.findByCompany(company.getId());
+
+		this.problemRepository.delete(problems);
+
+	}
+
 	private void checkByPrincipal(final Problem problem) {
 		Company owner;
 		Company principal;
@@ -162,6 +178,16 @@ public class ProblemService {
 
 		Assert.isTrue(owner.equals(principal));
 	}
+
+	// Protected methods-----------------------------------------------
+	protected List<Problem> problemsPosition(final Position position) {
+		List<Problem> problemsPosition;
+
+		problemsPosition = new ArrayList<Problem>(this.problemRepository.problemsPosition(position.getId()));
+
+		return problemsPosition;
+	}
+
 	// Reconstruct ----------------------------------------------
 	public Problem reconstruct(final Problem problem, final BindingResult binding) {
 		Problem result, problemStored;
@@ -186,11 +212,4 @@ public class ProblemService {
 		return result;
 	}
 
-	public List<Problem> problemsPosition(final Position position) {
-		List<Problem> problemsPosition;
-
-		problemsPosition = new ArrayList<Problem>(this.problemRepository.problemsPosition(position.getId()));
-
-		return problemsPosition;
-	}
 }

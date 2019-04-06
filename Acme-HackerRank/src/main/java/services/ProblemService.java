@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -56,13 +55,9 @@ public class ProblemService {
 	public Problem create() {
 		Problem result;
 		Company company;
-		Collection<Position> positions;
 
 		result = new Problem();
 		company = this.companyService.findByPrincipal();
-		positions = Collections.<Position> emptySet();
-
-		result.setPositions(positions);
 		result.setCompany(company);
 		result.setIsFinalMode(false);
 
@@ -188,6 +183,10 @@ public class ProblemService {
 		return problemsPosition;
 	}
 
+	protected void flush() {
+		this.problemRepository.flush();
+	}
+
 	// Reconstruct ----------------------------------------------
 	public Problem reconstruct(final Problem problem, final BindingResult binding) {
 		Problem result, problemStored;
@@ -197,7 +196,6 @@ public class ProblemService {
 			problemStored = this.findOne(problem.getId());
 			result.setCompany(problemStored.getCompany());
 			result.setIsFinalMode(problemStored.getIsFinalMode());
-			result.setPositions(problemStored.getPositions());
 
 		} else
 			result = this.create();

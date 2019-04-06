@@ -42,7 +42,6 @@
 			<a href="position/company/cancel.do?positionId=${row.id}"><spring:message code="position.cancel"/></a>
 		</jstl:if>
 	</display:column>
-
 	
 	</security:authorize>
 	

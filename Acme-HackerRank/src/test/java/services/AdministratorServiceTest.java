@@ -1,6 +1,10 @@
 
 package services;
 
+import java.util.Arrays;
+
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +13,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.AdministratorRepository;
+import security.Authority;
 import security.UserAccount;
 import utilities.AbstractTest;
 import domain.Administrator;
+import domain.CreditCard;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+	"classpath:spring/junit.xml"
 })
 @Transactional
 public class AdministratorServiceTest extends AbstractTest {
@@ -24,138 +31,304 @@ public class AdministratorServiceTest extends AbstractTest {
 	@Autowired
 	private AdministratorService	administratorService;
 
-
 	// Supporting test ---------------------------------------
+
+	@Autowired
+	private AdministratorRepository	administratorRepository;
+
 
 	// Test
 
+	/*
+	 * A: An actor who is authenticated as administrator must be able to:
+	 * Create user accounts for new administrators
+	 */
 	@Test
-	public void testCreate() {
-		Administrator admin;
+	public void registerAdministratorDriver() {
+		final Object testingData[][] = {
+			/*
+			 * B: Positive test
+			 * 
+			 * C: Approximately 100% of sentence coverage, since it has been
+			 * covered 18 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"admin1", "AdministratorTEST", "AdministratorTEST", 14, "holderTEST", "makeTEST", "1111222233334444", "04", "22", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", null
+			},
+			/*
+			 * B: Administrator::name is blank
+			 * 
+			 * C: Approximately 67% of sentence coverage, since it has been
+			 * covered 12 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"admin1", "", "AdministratorTEST", 14, "holderTEST", "makeTEST", "1111222233334444", "04", "22", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", ConstraintViolationException.class
+			},
+			/*
+			 * B: Administrator::surname is blank
+			 * 
+			 * C: Approximately 67% of sentence coverage, since it has been
+			 * covered 12 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"admin1", "AdministratorTEST", "", 14, "holderTEST", "makeTEST", "1111222233334444", "04", "22", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", ConstraintViolationException.class
+			},
+			/*
+			 * B: Administrator::email is blank
+			 * 
+			 * C: Approximately 67% of sentence coverage, since it has been
+			 * covered 12 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"admin1", "AdministratorTEST", "AdministratorTEST", 14, "holderTEST", "makeTEST", "1111222233334444", "04", "22", 123, "http://www.instagram.com", "", "63214578", "calle test", IllegalArgumentException.class
+			},
+			/*
+			 * B: Administrator::creditCard::holder is blank
+			 * 
+			 * C: Approximately 67% of sentence coverage, since it has been
+			 * covered 12 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"admin1", "AdministratorTEST", "AdministratorTEST", 14, "", "makeTEST", "1111222233334444", "04", "22", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", ConstraintViolationException.class
+			},
+			/*
+			 * B: Administrator::creditCard::make is blank
+			 * 
+			 * C: Approximately 67% of sentence coverage, since it has been
+			 * covered 12 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"admin1", "AdministratorTEST", "AdministratorTEST", 14, "holderTEST", "", "1111222233334444", "04", "22", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", ConstraintViolationException.class
+			},
+			/*
+			 * B: Administrator::creditCard::number is blank
+			 * 
+			 * C: Approximately 67% of sentence coverage, since it has been
+			 * covered 12 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"admin1", "AdministratorTEST", "AdministratorTEST", 14, "holderTEST", "makeTEST", "", "04", "22", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", ConstraintViolationException.class
+			},
+			/*
+			 * B: Administrator::creditCard::expirationMonth is blank
+			 * 
+			 * C: Approximately 67% of sentence coverage, since it has been
+			 * covered 12 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"admin1", "AdministratorTEST", "AdministratorTEST", 14, "holderTEST", "makeTEST", "1111222233334444", "", "22", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", IllegalArgumentException.class
+			},
+			/*
+			 * B: Administrator::creditCard::expirationYear is blank
+			 * 
+			 * C: Approximately 67% of sentence coverage, since it has been
+			 * covered 12 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"admin1", "AdministratorTEST", "AdministratorTEST", 14, "holderTEST", "makeTEST", "1111222233334444", "04", "", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", IllegalArgumentException.class
+			},
+			/*
+			 * B: Administrator::creditCard is expired
+			 * 
+			 * C: Approximately 39% of sentence coverage, since it has been
+			 * covered 7 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"admin1", "AdministratorTEST", "AdministratorTEST", 14, "holderTEST", "makeTEST", "1111222233334444", "04", "18", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", IllegalArgumentException.class
+			},
+			/*
+			 * B: Actor unauthenticated tries to register an administrator account
+			 * 
+			 * C: Approximately 11% of sentence coverage, since it has been
+			 * covered 2 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				null, "AdministratorTEST", "AdministratorTEST", 14, "holderTEST", "makeTEST", "1111222233334444", "04", "22", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", IllegalArgumentException.class
+			},
+			/*
+			 * B: A company tries to register an administrator
+			 * 
+			 * C: Approximately 17% of sentence coverage, since it has been
+			 * covered 3 lines of code of 18 possible.
+			 * 
+			 * D: Approximately 73% of data coverage, because actors have a lot
+			 * of attributes with several restrictions.
+			 */
+			{
+				"company1", "AdministratorTEST", "AdministratorTEST", 14, "holderTEST", "makeTEST", "1111222233334444", "04", "22", 123, "http://www.instagram.com", "test@us.es", "63214578", "calle test", IllegalArgumentException.class
+			},
 
-		admin = this.administratorService.create();
+		};
 
-		Assert.notNull(admin);
-		Assert.notNull(admin.getUserAccount());
-		Assert.isNull(admin.getAddress());
-		Assert.isNull(admin.getEmail());
-		Assert.isNull(admin.getName());
-		Assert.isNull(admin.getPhoneNumber());
-		Assert.isNull(admin.getPhoto());
-		Assert.isNull(admin.getSurname());
-
-		Assert.isTrue(admin.getIsSpammer() == false);
+		for (int i = 0; i < testingData.length; i++)
+			this.registerAdministratorTemplate((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (int) testingData[i][3], (String) testingData[i][4], (String) testingData[i][5], (String) testingData[i][6],
+				(String) testingData[i][7], (String) testingData[i][8], (int) testingData[i][9], (String) testingData[i][10], (String) testingData[i][11], (String) testingData[i][12], (String) testingData[i][13], (Class<?>) testingData[i][14]);
 	}
 
-	@Test
-	public void testCreate_dos() {
-		Administrator admin, saved;
+	protected void registerAdministratorTemplate(final String username, final String name, final String surname, final int VATnumber, final String holder, final String make, final String number, final String month, final String year, final int cvvCode,
+		final String photo, final String email, final String phoneNumber, final String address, final Class<?> expected) {
+		Class<?> caught;
+		Administrator administrator, saved;
+		UserAccount userAccount;
+		Authority auth;
+		CreditCard creditCard;
 
-		admin = this.administratorService.create();
+		super.startTransaction();
 
-		admin.setEmail("alias@");
-		admin.setName("TEST");
-		admin.setSurname("TEST");
+		caught = null;
 
-		saved = this.administratorService.save(admin);
+		try {
+			super.authenticate(username);
 
-		Assert.isTrue(this.administratorService.findOne(saved.getId()) != null);
+			auth = new Authority();
+			auth.setAuthority("ADMIN");
+			userAccount = new UserAccount();
+
+			userAccount.setAuthorities(Arrays.asList(auth));
+			userAccount.setUsername("testingUsername");
+			userAccount.setPassword("testingPassword");
+
+			administrator = this.administratorService.create();
+			administrator.setName(name);
+			administrator.setSurname(surname);
+			administrator.setAddress(address);
+			administrator.setEmail(email);
+			administrator.setPhoneNumber(phoneNumber);
+			administrator.setVATnumber(VATnumber);
+			administrator.setPhoto(photo);
+
+			creditCard = new CreditCard();
+			creditCard.setHolder(holder);
+			creditCard.setMake(make);
+			creditCard.setNumber(number);
+			creditCard.setExpirationMonth(month);
+			creditCard.setExpirationYear(year);
+			creditCard.setCvvCode(cvvCode);
+
+			administrator.setCreditCard(creditCard);
+
+			saved = this.administratorService.save(administrator);
+			this.administratorRepository.flush();
+
+			administrator = this.administratorService.findOne(saved.getId());
+			Assert.isTrue(saved.equals(administrator));
+
+			super.unauthenticate();
+
+		} catch (final Throwable oops) {
+			caught = oops.getClass();
+		}
+
+		super.rollbackTransaction();
+		super.checkExceptions(expected, caught);
+
 	}
 
 	/*
-	 * Test negativo: brotherhood1 trata de editar los datos personales
-	 * de otro actor, lo cual no debe de poder hacerse.
+	 * A: An actor who is authenticated must be able to:
+	 * Edit his/her personal data
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: Approximately 100% of sentence coverage, since it has been
+	 * covered 18 lines of code of 18 possible.
+	 * 
+	 * D: Approximately 8% of data coverage, because actors have a lot
+	 * of attributes with several restrictions.
 	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void negativeTestSave_uno() {
-		super.authenticate("brotherhood1");
+	@Test
+	public void save_positive_test() {
+		Administrator administrator, saved;
+		String oldName;
 
-		int id;
-		Administrator admin, saved;
+		super.authenticate("admin1");
 
-		id = super.getEntityId("administrator1");
+		this.startTransaction();
 
-		admin = this.administratorService.findOne(id);
-		admin.setName("Rodolfo");
-		admin.setEmail("rodolfo@us.es");
+		administrator = this.administratorService.findOneToDisplayEdit(super.getEntityId("administrator1"));
 
-		saved = this.administratorService.save(admin);
+		oldName = administrator.getName();
 
-		Assert.isNull(saved);
+		administrator.setName("TEST");
+
+		saved = this.administratorService.save(administrator);
+
+		Assert.isTrue(!saved.getName().equals(oldName));
+
+		super.rollbackTransaction();
 
 		super.unauthenticate();
+
 	}
 
-	/* Formato del correo: "identifier@domain" */
-	@Test(expected = IllegalArgumentException.class)
-	public void negativeTestSave_dos() {
-		Administrator admin, saved, showed;
-		UserAccount userAccount;
+	/*
+	 * A: An actor who is authenticated must be able to:
+	 * Edit his/her personal data
+	 * 
+	 * B: Actor::name is blank
+	 * 
+	 * C: Approximately 67% of sentence coverage, since it has been
+	 * covered 10 lines of code of 18 possible.
+	 * 
+	 * D: Approximately 8% of data coverage, because actors have a lot
+	 * of attributes with several restrictions.
+	 */
+	@Test(expected = ConstraintViolationException.class)
+	public void save_negative_test() {
+		Administrator administrator, saved;
+		String oldName;
 
-		admin = this.administratorService.create();
-		admin.setAddress("Calle Viruela");
-		admin.setEmail("hola@gmail.com");
-		admin.setName("admin2");
-		admin.setPhoneNumber("+34 678345611");
-		admin.setSurname("Surname 2");
+		super.authenticate("admin1");
 
-		userAccount = admin.getUserAccount();
-		userAccount.setUsername("admin7");
-		userAccount.setPassword("admin7");
+		this.startTransaction();
 
-		saved = this.administratorService.save(admin);
+		administrator = this.administratorService.findOneToDisplayEdit(super.getEntityId("administrator1"));
 
-		showed = this.administratorService.findOne(saved.getId());
+		oldName = administrator.getName();
 
-		Assert.notNull(showed);
-	}
+		administrator.setName("");
 
-	/* Formato del correo: "alias <identifier@domain>" */
-	@Test
-	public void positiveTestSave_uno() {
-		Administrator admin, saved, showed;
-		UserAccount userAccount;
+		saved = this.administratorService.save(administrator);
 
-		admin = this.administratorService.create();
-		admin.setAddress("Calle Viruela");
-		admin.setEmail("Alvaro <hola@gmail.com>");
-		admin.setName("admin2");
-		admin.setPhoneNumber("+34 678345611");
-		admin.setSurname("Surname 2");
+		Assert.isTrue(!saved.getName().equals(oldName));
 
-		userAccount = admin.getUserAccount();
-		userAccount.setUsername("admin7");
-		userAccount.setPassword("admin77");
+		super.rollbackTransaction();
 
-		saved = this.administratorService.save(admin);
+		super.unauthenticate();
 
-		showed = this.administratorService.findOne(saved.getId());
-
-		Assert.notNull(showed);
-	}
-
-	/* Formato del correo: "identifier@" */
-	@Test
-	public void positiveTestSave_dos() {
-		Administrator admin, saved, showed;
-		UserAccount userAccount;
-
-		admin = this.administratorService.create();
-		admin.setAddress("Calle Viruela");
-		admin.setEmail("Alvcalgon@");
-		admin.setName("admin2");
-		admin.setPhoneNumber("+34 678345611");
-		admin.setSurname("Surname 2");
-
-		userAccount = admin.getUserAccount();
-		userAccount.setUsername("admin7");
-		userAccount.setPassword("admin7");
-
-		saved = this.administratorService.save(admin);
-
-		showed = this.administratorService.findOne(saved.getId());
-
-		Assert.notNull(showed);
 	}
 
 }

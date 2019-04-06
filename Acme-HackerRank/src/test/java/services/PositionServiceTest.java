@@ -96,4 +96,75 @@ public class PositionServiceTest extends AbstractTest {
 
 	}
 
+	/*
+	 * A: An actor who is authenticated as an administrator muest be able to:
+	 * Display a dashboard with the following information:
+	 * The average, the minimum, the maximum, and the standard deviation of the number of positions per company.
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: 100% of sentence coverage
+	 * 
+	 * D: 100% of data coverage
+	 */
+	@Test
+	public void testfindDataNumberPositionsPerCompany() {
+		Double[] data;
+
+		data = this.positionService.findDataNumberPositionsPerCompany();
+
+		Assert.isTrue(data[0] == 3.0);
+		Assert.isTrue(data[1] == 2.0);
+		Assert.isTrue(data[2] == 4.0);
+		Assert.isTrue(data[3] == 0.8165);
+
+	}
+
+	/*
+	 * A: An actor who is authenticated as an administrator muest be able to:
+	 * Display a dashboard with the following information:
+	 * The average, the minimum, the maximum, and the standard deviation of the
+	 * salaries offered.
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: 100% of sentence coverage
+	 * 
+	 * D: 100% of data coverage
+	 */
+	@Test
+	public void findDataSalaryOffered() {
+		Double[] data;
+
+		data = this.positionService.findDataSalaryOffered();
+
+		Assert.isTrue(data[0] == 2908.452222222222);
+		Assert.isTrue(data[1] == 1586.23);
+		Assert.isTrue(data[2] == 3586.23);
+		Assert.isTrue(data[3] == 603.2831982443657);
+
+	}
+
+	/*
+	 * A: An actor who is authenticated as an administrator muest be able to:
+	 * Display a dashboard with the following information:
+	 * The average, the minimum, the maximum, and the standard deviation of the
+	 * salaries offered.
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: 100% of sentence coverage
+	 * 
+	 * D: 100% of data coverage
+	 */
+	@Test
+	public void findPositionsBestWorstSalary() {
+		List<Position> data;
+
+		data = this.positionService.findPositionsBestWorstSalary();
+
+		Assert.isTrue(data.size() == 2.0);
+
+	}
+
 }

@@ -45,6 +45,6 @@
 	<jstl:if test="${position.id != 0}">
 		<acme:submit name="delete" code="position.delete"/>	
 	</jstl:if>
-	<acme:cancel url="position/company/list.do" code="position.cancel"/>
+	<acme:cancel url="position/list.do?companyId=${principal.id}" code="position.cancel"/>
 	<br />
 </form:form>

@@ -38,10 +38,11 @@
 	</display:column>
 	
 	<display:column>	
-		<jstl:if test="${principal == row.company}">
+		<jstl:if test="${principal == row.company && row.isCancelled!=true && row.isFinalMode}">
 			<a href="position/company/cancel.do?positionId=${row.id}"><spring:message code="position.cancel"/></a>
 		</jstl:if>
 	</display:column>
+
 	
 	</security:authorize>
 	

@@ -37,8 +37,12 @@
 			</li>
 		</security:authorize>
 		
+		<!-- ALL USERS START -->
 		<li><a  href="position/availableList.do" class="fNiv"><spring:message	code="master.page.availableposition" /></a>
 		</li>
+		<li><a href="position/search.do" class="fNiv"><spring:message code="master.page.searchposition"/></a>
+		</li>
+		<!-- ALL USERS END -->
 		
 		<security:authorize access="isAnonymous()">
 		
@@ -71,10 +75,6 @@
 				</ul>
 			</li>
 		</security:authorize>
-		
-		
-		
-			
 	</ul>
 </div>
 

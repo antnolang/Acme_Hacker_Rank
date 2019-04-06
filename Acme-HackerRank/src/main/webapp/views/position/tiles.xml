@@ -26,6 +26,11 @@
 		<put-attribute name="body" value="/views/position/list.jsp" />
 	</definition>
 	
+	<definition name="position/search" extends="master.page">	
+		<put-attribute name="title" value="Buscar posiciones" />
+		<put-attribute name="body" value="/views/position/list.jsp" />
+	</definition>
+	
 	<definition name="position/edit" extends="master.page">	
 		<put-attribute name="title" value="Edit a position" />
 		<put-attribute name="body" value="/views/position/edit.jsp" />

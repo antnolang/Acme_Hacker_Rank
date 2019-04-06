@@ -95,12 +95,15 @@ public class PositionCompanyController extends AbstractController {
 	public ModelAndView delete(final Position position, final BindingResult binding) {
 		ModelAndView result;
 		Position positionBbdd;
+		int companyId;
 
 		try {
+
 			positionBbdd = this.positionService.findOneToEditDelete(position.getId());
+			companyId = positionBbdd.getCompany().getId();
 
 			this.positionService.delete(positionBbdd);
-			result = new ModelAndView("redirect:../company/list.do");
+			result = new ModelAndView("redirect:../list.do?companyId=" + companyId);
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(position, "position.delete.error");
 		}

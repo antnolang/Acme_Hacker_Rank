@@ -1,6 +1,8 @@
 
 package controllers.companyhacker;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.ProblemService;
 import controllers.AbstractController;
+import domain.Position;
 import domain.Problem;
 
 @Controller
@@ -37,6 +40,7 @@ public class ProblemCompanyHackerController extends AbstractController {
 		ModelAndView result;
 		Problem problem;
 		UserAccount userPrincipal;
+		Collection<Position> positionsList;
 
 		try {
 
@@ -45,12 +49,17 @@ public class ProblemCompanyHackerController extends AbstractController {
 
 			if (userPrincipal.getAuthorities().toString().equals("[COMPANY]")) {
 				problem = this.problemService.findOneToPrincipal(problemId);
+				positionsList = problem.getPositions();
+
 				result.addObject("problem", problem);
+				result.addObject("positionsList", positionsList);
 			} else if (userPrincipal.getAuthorities().toString().equals("[HACKER]")) {
 				problem = this.problemService.findOneToDisplayHacker(problemId);
-				result.addObject("problem", problem);
-			}
+				positionsList = problem.getPositions();
 
+				result.addObject("problem", problem);
+				result.addObject("positionsList", positionsList);
+			}
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../error.do");
 		}

@@ -23,7 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 @Access(AccessType.PROPERTY)
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {
-	"hacker", "problem"
+	"hacker", "position"
 }))
 public class Application extends DomainEntity {
 

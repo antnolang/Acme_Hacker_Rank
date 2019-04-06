@@ -49,7 +49,41 @@
 	</security:authorize>
 	
 	
-	
+<fieldset>
+	<legend>
+		<spring:message code="problem.positions" />
+	</legend>
+	<display:table name="problem.positions" id="rowPosition"
+		pagesize="5" class="displaytag" requestURI="problem/company,hacker/display.do">
+
+		<security:authorize access="hasRole('COMPANY')">
+			<jstl:if test="${principal == rowPosition.company}">
+				<display:column>
+					<a
+						href="position/company/edit.do?positionId=${rowPosition.id}">
+						<spring:message code="problem.edit" />
+					</a>
+				</display:column>
+			</jstl:if>
+		</security:authorize>
+
+		<display:column>
+			<a href="position/display.do?positionId=${rowPosition.id}"><spring:message
+					code="problem.display" /> </a>
+		</display:column>
+
+		<display:column property="title" titleKey="problem.position.title" />
+		
+		<spring:message code="problem.formatDeadline" var="formatMomentDeadline" />
+		<display:column property="deadline" titleKey="problem.position.deadline" sortable="true" format="${formatMomentDeadline}"/>
+		
+		<display:column property="profile" titleKey="problem.position.profile" />
+		
+		<display:column property="skills" titleKey="problem.position.skills" />
+		
+		<display:column property="technologies" titleKey="problem.position.technologies" />
+	</display:table>
+</fieldset>
 	
 	<!-- Links -->
 		

@@ -38,8 +38,6 @@
 	<acme:textarea code="position.technologies" path="technologies"/>
 	
 	<acme:textbox code="position.salary" path="salary"/>
-	
-	
 
 	<acme:submit name="save" code="position.save"/>	
 	<jstl:if test="${position.id != 0}">

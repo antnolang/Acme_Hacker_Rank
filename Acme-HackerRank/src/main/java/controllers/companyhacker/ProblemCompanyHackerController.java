@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import security.UserAccount;
+import services.PositionService;
 import services.ProblemService;
 import controllers.AbstractController;
 import domain.Position;
@@ -25,6 +26,9 @@ public class ProblemCompanyHackerController extends AbstractController {
 
 	@Autowired
 	private ProblemService	problemService;
+
+	@Autowired
+	private PositionService	positionService;
 
 
 	// Constructor ------------------------------------
@@ -49,16 +53,15 @@ public class ProblemCompanyHackerController extends AbstractController {
 
 			if (userPrincipal.getAuthorities().toString().equals("[COMPANY]")) {
 				problem = this.problemService.findOneToPrincipal(problemId);
-				//		positionsList = problem.getPositions();
-
+				positionsList = this.positionService.findPositionsByProblem(problem);
 				result.addObject("problem", problem);
-				//		result.addObject("positionsList", positionsList);
+				result.addObject("positionsList", positionsList);
 			} else if (userPrincipal.getAuthorities().toString().equals("[HACKER]")) {
 				problem = this.problemService.findOneToDisplayHacker(problemId);
-				//	positionsList = problem.getPositions();
+				positionsList = this.positionService.findPositionsByProblem(problem);
 
 				result.addObject("problem", problem);
-				//	result.addObject("positionsList", positionsList);
+				result.addObject("positionsList", positionsList);
 			}
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../error.do");

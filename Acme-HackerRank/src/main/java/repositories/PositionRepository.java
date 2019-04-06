@@ -24,6 +24,9 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select p from Position p where p.company.id = ?1 and p.isFinalMode = true")
 	Collection<Position> findFinalModePositionsByCompany(int companyId);
 
+	@Query("select p from Position p join p.problems pr where pr.id=?1")
+	Collection<Position> findPositionsByProblem(int id);
+
 	// Query dashboard 11.2.5 The average, the minimum, the maximum, and the standard deviation of the salaries offered.
 	@Query("select avg(p.salary),min(p.salary),max(p.salary),stddev(p.salary) from Position p")
 	Double[] findDataSalaryOffered();
@@ -35,4 +38,5 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	// Query dashboard 11.2.1 The average, the minimum, the maximum, and the standard deviation of the number of positions per company
 	@Query("select avg(1.0 * (select count(p) from Position p where p.company.id = c.id)), min(1.0 * (select count(p) from Position p where p.company.id = c.id)), max(1.0 * (select count(p) from Position p where p.company.id = c.id)),stddev(1.0 * (select count(p) from Position p where p.company.id = c.id)) from Company c)")
 	Double[] findDataNumberPositionsPerCompany();
+
 }

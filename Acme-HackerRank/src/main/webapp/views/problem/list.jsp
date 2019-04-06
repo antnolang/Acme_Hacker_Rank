@@ -40,9 +40,6 @@
 	</display:column>
 	
 	<display:column property="title" titleKey="problem.title" />
-			
-	<display:column property="position.title" titleKey="problem.position.title" />
-
 </display:table>
 
 	<a href="problem/company/create.do"><spring:message code="problem.create"/></a>

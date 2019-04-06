@@ -74,11 +74,19 @@ public class PositionController extends AbstractController {
 	public ModelAndView availableList() {
 		ModelAndView result;
 		Collection<Position> positions;
+		Company principal;
 
 		try {
 			result = new ModelAndView("position/list");
 
 			positions = this.positionService.findAllPositionAvailable();
+			try {
+				principal = this.companyService.findByPrincipal();
+			} catch (final Exception e1) {
+				principal = null;
+			}
+			if (principal != null)
+				result.addObject("principal", principal);
 
 			result.addObject("owner", null);
 			result.addObject("positions", positions);
@@ -109,12 +117,13 @@ public class PositionController extends AbstractController {
 				principal = null;
 			}
 
-			if (principal != null && principal.equals(position.getCompany()))
+			if (principal != null && principal.equals(position.getCompany())) {
+				position = this.positionService.findOne(positionId);
 				result.addObject("principal", principal);
+			}
+
 			else
 				position = this.positionService.findOneToDisplay(positionId);
-
-			position = this.positionService.findOneToDisplay(positionId);
 
 			result.addObject("position", position);
 		} catch (final Throwable oops) {

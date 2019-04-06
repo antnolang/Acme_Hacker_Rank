@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import repositories.ApplicationRepository;
-import security.LoginService;
 import domain.Application;
 import domain.Curriculum;
 import domain.Hacker;
@@ -64,11 +63,11 @@ public class ApplicationService {
 
 		hacker = this.hackerService.findByPrincipal();
 
-		Assert.isTrue(!(this.problemService.problemsWithoutAcceptedApplicationWithoutOwnApplication(position, hacker).isEmpty()));
+		Assert.isTrue(this.applicationRepository.findApplicationsByPositionByHacker(position.getId(), hacker.getId()).isEmpty());
 
 		moment = this.utilityService.current_moment();
 		curriculum = this.hackerService.originalCurricula().get(0);
-		problem = this.getRandomProblem(this.problemService.problemsWithoutAcceptedApplicationWithoutOwnApplication(position, hacker));
+		problem = this.getRandomProblem(this.problemService.problemsPosition(position));
 
 		result = new Application();
 		result.setHacker(hacker);
@@ -80,11 +79,12 @@ public class ApplicationService {
 
 		return result;
 	}
-
 	public Application save(final Application application) {
 		Assert.notNull(application);
 		Assert.isTrue(application.getPosition().getIsFinalMode());
 		Assert.isTrue(!(application.getPosition().getIsCancelled()));
+		Assert.isTrue(this.hackerService.findByPrincipal().equals(application.getHacker()));
+		Assert.isTrue(application.getStatus().equals("PENDING"));
 
 		Application result;
 		Application applicationSaved;
@@ -92,41 +92,25 @@ public class ApplicationService {
 		applicationSaved = this.applicationRepository.findOne(application.getId());
 
 		if (application.getId() == 0) {
-			Assert.isTrue(application.getStatus().equals("PENDING"));
-			Assert.isTrue(!(this.problemService.problemsWithoutAcceptedApplicationWithoutOwnApplication(application.getPosition(), application.getHacker()).isEmpty()));
+			Assert.isTrue(this.applicationRepository.findApplicationsByPositionByHacker(application.getPosition().getId(), application.getHacker().getId()).isEmpty());
 			Assert.isTrue(!(this.hackerService.originalCurricula().isEmpty()));
+			//TODO comprobar copia de curriculum
+			Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
 			Assert.isNull(application.getSubmittedMoment());
 			Assert.isNull(application.getAnswer());
 		} else {
-			Assert.isTrue((applicationSaved.getPosition().equals(application.getPosition())));
-			Assert.isTrue((applicationSaved.getHacker().equals(application.getHacker())));
-			Assert.isTrue((applicationSaved.getCurriculum().equals(application.getCurriculum())));
-			Assert.isTrue((applicationSaved.getApplicationMoment().equals(application.getApplicationMoment())));
+			Assert.isTrue(applicationSaved.getPosition().equals(application.getPosition()));
+			Assert.isTrue(applicationSaved.getHacker().equals(application.getHacker()));
+			Assert.isTrue(applicationSaved.getCurriculum().equals(application.getCurriculum()));
+			Assert.isTrue(applicationSaved.getApplicationMoment().equals(application.getApplicationMoment()));
+			Assert.isNull(application.getSubmittedMoment());
+			Assert.isTrue(!(application.getAnswer().equals(null)));
 
-			if (LoginService.getPrincipal().getAuthorities().toString().equals("[HACKER]")) {
-				Assert.isTrue(this.hackerService.findByPrincipal().equals(application.getHacker()));
-				if (application.getStatus().equals("PENDING")) {
-					Assert.isNull(application.getSubmittedMoment());
-					Assert.isTrue(!(application.getAnswer().equals(null)));
-					Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
+			Date moment;
+			moment = this.utilityService.current_moment();
 
-					Date moment;
-					moment = this.utilityService.current_moment();
-
-					application.setSubmittedMoment(moment);
-					application.setStatus("SUBMITTED");
-				}
-			}
-
-			if (LoginService.getPrincipal().getAuthorities().toString().equals("[COMPANY]")) {
-				Assert.isTrue(this.companyService.findByPrincipal().equals(application.getHacker()));
-				Assert.isTrue((applicationSaved.getSubmittedMoment().equals(application.getSubmittedMoment())));
-				Assert.isTrue((applicationSaved.getAnswer().equals(application.getAnswer())));
-				Assert.isTrue((applicationSaved.getCurriculum().equals(application.getCurriculum())));
-				Assert.isTrue(applicationSaved.getStatus().equals("SUBMITTED"));
-
-			}
-
+			application.setSubmittedMoment(moment);
+			application.setStatus("SUBMITTED");
 		}
 
 		result = this.applicationRepository.save(application);

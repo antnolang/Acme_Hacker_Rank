@@ -32,7 +32,7 @@
 	
 	<security:authorize access="hasRole('COMPANY')">
 	<display:column>
-		<jstl:if test="${principal == row.company && !position.isFinalMode}">
+		<jstl:if test="${principal == row.company && !row.isFinalMode}">
 			<a href="position/company/edit.do?positionId=${row.id}"><spring:message code="position.edit"/></a>
 		</jstl:if>
 	</display:column>
@@ -60,8 +60,10 @@
 
 </display:table>
 
-	<jstl:if test="${principal == owner}">
- 		<a href="position/company/create.do"><spring:message code="position.create"/></a>
- 	</jstl:if>
+	<security:authorize access="hasRole('COMPANY')">
+		<jstl:if test="${principal == owner}">
+ 			<a href="position/company/create.do"><spring:message code="position.create"/></a>
+ 		</jstl:if>
+ 	</security:authorize>
 
 

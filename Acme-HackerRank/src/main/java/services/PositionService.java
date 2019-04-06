@@ -95,7 +95,6 @@ public class PositionService {
 
 		result = this.findOne(positionId);
 		Assert.isTrue(result.getIsFinalMode() == true);
-		Assert.isTrue(result.getIsCancelled() == false);
 
 		return result;
 	}
@@ -209,6 +208,7 @@ public class PositionService {
 		if (position.getId() != 0) {
 			result = new Position();
 			positionStored = this.findOne(position.getId());
+			result.setId(positionStored.getId());
 			result.setCompany(positionStored.getCompany());
 			result.setIsFinalMode(false);
 			result.setIsCancelled(false);
@@ -235,8 +235,9 @@ public class PositionService {
 	}
 
 	private void checkDeadline(final Position position, final BindingResult binding) {
-		if (position.getDeadline().before(this.utilityService.current_moment()))
-			binding.rejectValue("deadline", "position.commit.deadline");
+		if (position.getDeadline() != null)
+			if (position.getDeadline().before(this.utilityService.current_moment()))
+				binding.rejectValue("deadline", "position.commit.deadline");
 	}
 
 }

@@ -20,6 +20,15 @@
 <div>
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
+		<security:authorize access="hasRole('HACKER')">
+			<li><a class="fNiv"><spring:message	code="master.page.application" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="application/hacker/list.do"><spring:message code="master.page.application.list" /></a></li>			
+				</ul>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>

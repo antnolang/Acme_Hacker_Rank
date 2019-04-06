@@ -267,4 +267,28 @@ public class ApplicationService {
 		return applications;
 	}
 
+	public Collection<Application> findSubmittedApplicationsByPosition(final int positionId) {
+		Collection<Application> applications;
+
+		applications = this.applicationRepository.findSubmittedApplicationsByPosition(positionId);
+
+		return applications;
+	}
+
+	public Collection<Application> findAcceptedApplicationsByPosition(final int positionId) {
+		Collection<Application> applications;
+
+		applications = this.applicationRepository.findAcceptedApplicationsByPosition(positionId);
+
+		return applications;
+	}
+
+	public Collection<Application> findRejectedApplicationsByPosition(final int positionId) {
+		Collection<Application> applications;
+
+		applications = this.applicationRepository.findRejectedApplicationsByPosition(positionId);
+
+		return applications;
+	}
+
 }

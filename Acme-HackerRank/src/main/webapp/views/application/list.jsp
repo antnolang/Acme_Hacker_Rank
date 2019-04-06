@@ -41,7 +41,7 @@
 		<security:authorize access="hasRole('HACKER')">
 		<display:column style="background-color:${colorValue }">
 			<a href="application/hacker/edit.do?applicationId=${row.id}"><spring:message
-					code="application.hacker.edit" /></a>
+					code="application.edit" /></a>
 		</display:column>
 		</security:authorize>
 
@@ -168,5 +168,5 @@
 <br>
 <br>
 <input type="button" name="return"
-	value="<spring:message code="request.return" />"
+	value="<spring:message code="application.return" />"
 	onclick="javascript: relativeRedir('welcome/index.do');" />

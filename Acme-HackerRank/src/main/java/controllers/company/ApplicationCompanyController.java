@@ -1,5 +1,5 @@
 
-package controllers.hacker;
+package controllers.company;
 
 import java.util.Collection;
 
@@ -20,8 +20,8 @@ import domain.Hacker;
 import domain.Position;
 
 @Controller
-@RequestMapping(value = "/application/hacker")
-public class ApplicationHackerController extends AbstractController {
+@RequestMapping(value = "/application/company")
+public class ApplicationCompanyController extends AbstractController {
 
 	// Services------------------------------------
 
@@ -37,31 +37,28 @@ public class ApplicationHackerController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public ApplicationHackerController() {
+	public ApplicationCompanyController() {
 		super();
 	}
 
 	// Request List -----------------------------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(@RequestParam final int positionId) {
 		final ModelAndView result;
-		Collection<Application> pendingApplications;
 		Collection<Application> submittedApplications;
 		Collection<Application> acceptedApplications;
 		Collection<Application> rejectedApplications;
 
-		pendingApplications = this.applicationService.findPendingApplicationsByHacker();
-		submittedApplications = this.applicationService.findSubmittedApplicationsByHacker();
-		acceptedApplications = this.applicationService.findAcceptedApplicationsByHacker();
-		rejectedApplications = this.applicationService.findRejectedApplicationsByHacker();
+		submittedApplications = this.applicationService.findSubmittedApplicationsByPosition(positionId);
+		acceptedApplications = this.applicationService.findAcceptedApplicationsByPosition(positionId);
+		rejectedApplications = this.applicationService.findRejectedApplicationsByPosition(positionId);
 
 		result = new ModelAndView("application/list");
-		result.addObject("pendingApplications", pendingApplications);
 		result.addObject("submittedApplications", submittedApplications);
 		result.addObject("acceptedApplications", acceptedApplications);
 		result.addObject("rejectedApplications", rejectedApplications);
 
-		result.addObject("requestURI", "application/hacker/list.do");
+		result.addObject("requestURI", "application/company/list.do?positionId=" + positionId);
 
 		return result;
 	}

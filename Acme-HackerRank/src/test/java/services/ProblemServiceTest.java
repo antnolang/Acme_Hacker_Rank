@@ -12,7 +12,7 @@ import utilities.AbstractTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
+	"classpath:spring/junit.xml"
 })
 @Transactional
 public class ProblemServiceTest extends AbstractTest {
@@ -22,6 +22,8 @@ public class ProblemServiceTest extends AbstractTest {
 	private ProblemService	problemService;
 
 	// Other services ------------------------------------------
+	@Autowired
+	private CompanyService	companyService;
 
 	// Suite test ---------------------------------------------
 

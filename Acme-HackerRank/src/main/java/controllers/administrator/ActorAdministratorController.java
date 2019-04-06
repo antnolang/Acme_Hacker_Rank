@@ -64,9 +64,9 @@ public class ActorAdministratorController extends ActorAbstractController {
 
 		try {
 			this.actorService.changeBan(actor);
-			result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("redirect:/actor/display.do?actorId= " + actorId);
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:list.do");
+			result = new ModelAndView("redirect:/error.do");
 		}
 
 		return result;

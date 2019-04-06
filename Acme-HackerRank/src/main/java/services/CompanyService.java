@@ -91,6 +91,24 @@ public class CompanyService {
 		return result;
 	}
 
+	public void delete(final Company company) {
+		Assert.notNull(company);
+		Assert.isTrue(company.getId() != 0);
+		Assert.isTrue(this.findByPrincipal().equals(company));
+
+		// Delete answers
+
+		// Delete applications
+
+		// Delete problems
+
+		// Delete positions
+
+		// Delete company in finders
+
+		this.actorService.delete(company);
+	}
+
 	public Collection<Company> findAll() {
 		Collection<Company> result;
 

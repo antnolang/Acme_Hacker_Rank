@@ -90,6 +90,15 @@ public class AdministratorService {
 		return result;
 	}
 
+	public void delete(final Administrator administrator) {
+		Assert.notNull(administrator);
+		Assert.isTrue(!administrator.getUserAccount().getUsername().equals("system"));
+		Assert.isTrue(administrator.getId() != 0);
+		Assert.isTrue(this.findByPrincipal().equals(administrator));
+
+		this.actorService.delete(administrator);
+	}
+
 	// Other business methods ---------------------
 	public Administrator findSystem() {
 		Administrator result;

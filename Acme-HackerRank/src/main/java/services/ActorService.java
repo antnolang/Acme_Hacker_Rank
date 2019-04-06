@@ -72,6 +72,15 @@ public class ActorService {
 
 	}
 
+	public void delete(final Actor actor) {
+
+		// Delete messages
+
+		// Delete social profiles
+
+		this.actorRepository.delete(actor);
+	}
+
 	public Collection<Actor> findAll() {
 		Collection<Actor> result;
 

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -66,7 +67,7 @@ public class ApplicationService {
 
 		moment = this.utilityService.current_moment();
 		curriculum = this.hackerService.originalCurricula().get(0);
-		problem = this.getRandomProblem(this.problemService.problemsPosition(position));
+		problem = this.getRandomProblem(position.getProblems());
 
 		result = new Application();
 		result.setHacker(hacker);
@@ -92,7 +93,7 @@ public class ApplicationService {
 
 		if (application.getId() == 0) {
 			Assert.isTrue(this.applicationRepository.findApplicationsByPositionByHacker(application.getPosition().getId(), application.getHacker().getId()).isEmpty());
-			Assert.isTrue(this.problemService.problemsPosition(application.getPosition()).contains(application.getProblem()));
+			Assert.isTrue(application.getPosition().getProblems().contains(application.getProblem()));
 			Assert.isTrue(!(this.hackerService.originalCurricula().isEmpty()));
 			//TODO comprobar copia de curriculum
 			Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
@@ -206,8 +207,14 @@ public class ApplicationService {
 
 	// Other business methods ---------------------
 
-	public Problem getRandomProblem(final List<Problem> problems) {
-		return problems.get(new Random().nextInt(problems.size()));
+	public Problem getRandomProblem(final Collection<Problem> problems) {
+		List<Problem> problemList;
+
+		problemList = new ArrayList<>();
+
+		problemList.addAll(problems);
+
+		return problemList.get(new Random().nextInt(problems.size()));
 	}
 
 	public Double[] findDataNumberApplicationPerHacker() {

@@ -1,9 +1,7 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -17,7 +15,6 @@ import repositories.ProblemRepository;
 import domain.Application;
 import domain.Company;
 import domain.Hacker;
-import domain.Position;
 import domain.Problem;
 
 @Service
@@ -147,13 +144,6 @@ public class ProblemService {
 		problem.setIsFinalMode(true);
 	}
 
-	public Collection<Problem> findProblemByPostion(final int positionId) {
-		Collection<Problem> problems;
-
-		problems = this.problemRepository.problemsPosition(positionId);
-
-		return problems;
-	}
 	// This method id used when an actor want to delete all his or her data.
 	public void deleteByCompany(final Company company) {
 		Collection<Problem> problems;
@@ -175,13 +165,6 @@ public class ProblemService {
 	}
 
 	// Protected methods-----------------------------------------------
-	protected List<Problem> problemsPosition(final Position position) {
-		List<Problem> problemsPosition;
-
-		problemsPosition = new ArrayList<Problem>(this.problemRepository.problemsPosition(position.getId()));
-
-		return problemsPosition;
-	}
 
 	protected void flush() {
 		this.problemRepository.flush();

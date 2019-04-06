@@ -126,7 +126,7 @@ public class PositionService {
 	public void makeFinal(final Position position) {
 		Collection<Problem> problems;
 
-		problems = this.problemService.findProblemByPostion(position.getId());
+		problems = position.getProblems();
 
 		Assert.isTrue(problems.size() >= 2);
 		this.checkByPrincipal(position);

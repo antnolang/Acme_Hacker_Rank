@@ -157,7 +157,7 @@ public class Position extends DomainEntity {
 		return this.problems;
 	}
 
-	public void setPositions(final Collection<Problem> problems) {
+	public void setProblems(final Collection<Problem> problems) {
 		this.problems = problems;
 	}
 

@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
 import repositories.ApplicationRepository;
 import domain.Application;
@@ -93,12 +94,16 @@ public class ApplicationService {
 
 		if (application.getId() == 0) {
 			Assert.isTrue(this.applicationRepository.findApplicationsByPositionByHacker(application.getPosition().getId(), application.getHacker().getId()).isEmpty());
+			Assert.isTrue(this.problemService.problemsPosition(application.getPosition()).contains(application.getProblem()));
 			Assert.isTrue(!(this.hackerService.originalCurricula().isEmpty()));
 			//TODO comprobar copia de curriculum
 			Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
+			Assert.isTrue(!(application.getCurriculum().getIsOriginal()));
 			Assert.isNull(application.getSubmittedMoment());
+			Assert.isTrue(!(application.getApplicationMoment().equals(null)));
 			Assert.isNull(application.getAnswer());
 		} else {
+			Assert.isTrue(applicationSaved.getProblem().equals(application.getProblem()));
 			Assert.isTrue(applicationSaved.getPosition().equals(application.getPosition()));
 			Assert.isTrue(applicationSaved.getHacker().equals(application.getHacker()));
 			Assert.isTrue(applicationSaved.getCurriculum().equals(application.getCurriculum()));
@@ -116,6 +121,22 @@ public class ApplicationService {
 		result = this.applicationRepository.save(application);
 
 		return result;
+	}
+
+	public void acceptedApplication(final Application application) {
+		Assert.isTrue(this.companyService.findByPrincipal().equals(application.getPosition().getCompany()));
+		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
+		Assert.isTrue(!(application.getAnswer().equals(null)));
+		Assert.isTrue(!(application.getSubmittedMoment().equals(null)));
+		application.setStatus("ACCEPTED");
+	}
+
+	public void rejectedApplication(final Application application) {
+		Assert.isTrue(this.companyService.findByPrincipal().equals(application.getPosition().getCompany()));
+		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
+		Assert.isTrue(!(application.getAnswer().equals(null)));
+		Assert.isTrue(!(application.getSubmittedMoment().equals(null)));
+		application.setStatus("REJECTED");
 	}
 
 	public Application findOne(final int applicationId) {
@@ -156,6 +177,31 @@ public class ApplicationService {
 		return results;
 	}
 
+	// Reconstruct ----------------------------------------------
+	public Application reconstruct(final Application application, final Position position, final BindingResult binding) {
+		Application result, applicationStored;
+
+		if (application.getId() != 0) {
+			result = new Application();
+			applicationStored = this.findOne(application.getId());
+			result.setId(applicationStored.getId());
+			result.setApplicationMoment(applicationStored.getApplicationMoment());
+			result.setStatus(applicationStored.getStatus());
+			result.setCurriculum(applicationStored.getCurriculum());
+			result.setPosition(applicationStored.getPosition());
+			result.setProblem(applicationStored.getProblem());
+
+			result.setSubmittedMoment(application.getSubmittedMoment());
+			result.setAnswer(application.getAnswer());
+
+		} else {
+			result = this.create(position);
+			result.setCurriculum(application.getCurriculum());
+		}
+
+		return result;
+	}
+
 	// Other business methods ---------------------
 
 	public Problem getRandomProblem(final List<Problem> problems) {
@@ -178,4 +224,5 @@ public class ApplicationService {
 
 		return result;
 	}
+
 }

@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ApplicationService;
 import services.CompanyService;
 import services.PositionService;
-import services.ProblemService;
 import domain.Company;
 import domain.Position;
 import domain.Problem;
@@ -24,13 +24,13 @@ public class PositionController extends AbstractController {
 	// Services------------------------------------
 
 	@Autowired
-	private PositionService	positionService;
+	private PositionService		positionService;
 
 	@Autowired
-	private CompanyService	companyService;
+	private CompanyService		companyService;
 
 	@Autowired
-	private ProblemService	problemService;
+	private ApplicationService	applicationService;
 
 
 	// Constructor ------------------------------------
@@ -112,6 +112,7 @@ public class PositionController extends AbstractController {
 		Position position;
 		Company principal;
 		Collection<Problem> problemList;
+		Boolean isApplied;
 
 		try {
 			result = new ModelAndView("position/display");
@@ -129,6 +130,9 @@ public class PositionController extends AbstractController {
 
 				result.addObject("principal", principal);
 				result.addObject("problemList", problemList);
+			} else if (principal != null && principal.getUserAccount().getAuthorities().toString().equals("[HACKER]")) {
+				isApplied = this.applicationService.find(principal);
+				result.addObject("isApplied", isApplied);
 			}
 
 			else

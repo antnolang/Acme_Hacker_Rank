@@ -23,7 +23,7 @@
 
 
 <!------------ SEARCH ------------>
-<jstl:if test="${isSearch && !isFinder}">
+<jstl:if test="${isSearch}">
 	<fieldset>
 		<legend><spring:message code="position.search.legend"/></legend>
 		
@@ -43,7 +43,7 @@
 
 
 <!------------ FINDER ------------>
-<jstl:if test="${isFinder && !isSearch}">
+<jstl:if test="${finder ne null}">
 	<fieldset>
 		<legend><spring:message code="position.finder.legend"/></legend>
 		
@@ -76,11 +76,13 @@
 			<a href="finder/hacker/clear.do"><spring:message code="position.finder.clear"/></a>
 		</div>
 	</fieldset>
+	
+	<jstl:set var="positions" value="${finder.positions}"/>
 </jstl:if>
 
 
 <!------------ POSITION LIST ------------>
-<display:table name="positions" id="row" requestURI="${requestURI}" class="displaytag" pagesize="5">
+<display:table name="${positions}" id="row" requestURI="${requestURI}" class="displaytag" pagesize="5">
 
 	<display:column>
 		<a href="position/display.do?positionId=${row.id}"><spring:message code="position.table.display"/></a>

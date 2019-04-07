@@ -39,6 +39,9 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('HACKER')">
+			<li><a href="finder/hacker/display.do" class="fNiv"><spring:message code="master.page.finder"/></a>
+			</li>
+			
 			<jstl:set var="isHacker" value="${true}"/>
 		</security:authorize>
 		
@@ -46,10 +49,6 @@
 		<li><a  href="position/availableList.do" class="fNiv"><spring:message	code="master.page.availableposition" /></a>
 		</li>
 		
-		<jstl:if test="${isHacker}">
-			<li><a href="finder/hacker/display.do" class="fNiv"><spring:message code="master.page.finder"/></a>
-			</li>
-		</jstl:if>
 		<jstl:if test="${!isHacker}">
 			<li><a href="position/search.do" class="fNiv"><spring:message code="master.page.searchposition"/></a>
 			</li>

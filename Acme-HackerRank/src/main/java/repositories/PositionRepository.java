@@ -2,7 +2,10 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.Date;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -24,8 +27,11 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select p from Position p where p.company.id = ?1 and p.isFinalMode = true")
 	Collection<Position> findFinalModePositionsByCompany(int companyId);
 
-	@Query("select p from Position p where p.isFinalMode = true and p.isCancelled = false and ((p.title like concat('%', concat(?1, '%'))) or (p.description like concat('%', concat(?1, '%'))) or (p.profile like concat('%', concat(?1, '%'))) or (p.skills like concat('%', concat(?1, '%'))) or (p.technologies like concat('%', concat(?1, '%'))) or (p.company.name like concat('%', concat(?1, '%'))))")
+	@Query("select p from Position p where (p.isFinalMode = true) and (p.isCancelled = false) and ((p.title like concat('%', concat(?1, '%'))) or (p.description like concat('%', concat(?1, '%'))) or (p.profile like concat('%', concat(?1, '%'))) or (p.skills like concat('%', concat(?1, '%'))) or (p.technologies like concat('%', concat(?1, '%'))) or (p.company.name like concat('%', concat(?1, '%'))))")
 	Collection<Position> findAvailableByKeyword(String keyword);
+
+	@Query("select p from Position p where (p.isFinalMode = true) and (p.isCancelled = false) and ((p.ticker like concat('%', concat(?1, '%'))) or (p.title like concat('%', concat(?1, '%'))) or (p.description like concat('%', concat(?1, '%'))) or (p.profile like concat('%', concat(?1, '%'))) or (p.skills like concat('%', concat(?1, '%'))) or (p.technologies like concat('%', concat(?1, '%')))) and (p.deadline = ?2 or ?2 = NULL) and (p.deadline <= ?3 or ?3 = NULL) and (p.salary >= ?4 or ?4 = NULL)")
+	Page<Position> searchPositionFinder(String keyword, Date deadline, Date maximumDeadline, Double minimumSalary, Pageable pageable);
 
 	// Query dashboard 11.2.5 The average, the minimum, the maximum, and the standard deviation of the salaries offered.
 	@Query("select avg(p.salary),min(p.salary),max(p.salary),stddev(p.salary) from Position p")

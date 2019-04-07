@@ -77,13 +77,13 @@
 		<jstl:if
 			test="${actor.isSpammer == true}">
 			<jstl:if test="${ actor.userAccount.isBanned == false}">
-				<a href="actor/administrator/changeBan.do?actorId=${actor.id}"><spring:message
+				<a href="actor/administrator/ban.do?actorId=${actor.id}"><spring:message
 						code="actor.ban" /></a>
 			</jstl:if>
 		</jstl:if>
 
 		<jstl:if test="${actor.userAccount.isBanned}">
-			<a href="actor/administrator/changeBan.do?actorId=${actor.id}"><spring:message
+			<a href="actor/administrator/unBan.do?actorId=${actor.id}"><spring:message
 					code="actor.unban" /></a>
 		</jstl:if>
 

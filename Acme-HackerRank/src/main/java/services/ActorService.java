@@ -28,18 +28,21 @@ public class ActorService {
 	// Managed repository --------------------------
 
 	@Autowired
-	private ActorRepository	actorRepository;
+	private ActorRepository			actorRepository;
 
 	// Other supporting services -------------------
 
 	@Autowired
-	private UtilityService	utilityService;
+	private UtilityService			utilityService;
 
 	@Autowired
-	private MessageService	messageService;
+	private MessageService			messageService;
 
 	@Autowired
-	private Validator		validator;
+	private Validator				validator;
+
+	@Autowired
+	private SocialProfileService	socialProfileService;
 
 
 	// Constructors -------------------------------
@@ -75,8 +78,10 @@ public class ActorService {
 	public void delete(final Actor actor) {
 
 		// Delete messages
+		this.messageService.deleteMessages(actor);
 
 		// Delete social profiles
+		this.socialProfileService.deleteSocialProfiles(actor);
 
 		this.actorRepository.delete(actor);
 	}
@@ -143,16 +148,30 @@ public class ActorService {
 		return principalId == actor.getUserAccount().getId();
 	}
 
-	public void changeBan(final Actor actor) {
+	public void ban(final Actor actor) {
 		Assert.notNull(actor);
+		Assert.isTrue(actor.getIsSpammer());
 
 		final UserAccount userAccount;
-		boolean isBanned;
 
 		userAccount = actor.getUserAccount();
-		isBanned = userAccount.getIsBanned();
 
-		userAccount.setIsBanned(!isBanned);
+		userAccount.setIsBanned(true);
+
+		Assert.isTrue(actor.getUserAccount().getIsBanned());
+	}
+
+	public void unBan(final Actor actor) {
+		Assert.notNull(actor);
+		Assert.isTrue(actor.getUserAccount().getIsBanned());
+
+		final UserAccount userAccount;
+
+		userAccount = actor.getUserAccount();
+
+		userAccount.setIsBanned(false);
+
+		Assert.isTrue(!actor.getUserAccount().getIsBanned());
 	}
 
 	public void markAsSpammer(final Actor actor, final Boolean bool) {

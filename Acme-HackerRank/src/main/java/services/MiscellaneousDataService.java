@@ -43,9 +43,7 @@ public class MiscellaneousDataService {
 			final MiscellaneousData copy = new MiscellaneousData();
 
 			copy.setAttachments(m.getAttachments());
-			copy.setId(m.getId());
 			copy.setText(m.getText());
-			copy.setVersion(m.getVersion());
 
 			result.add(copy);
 		}

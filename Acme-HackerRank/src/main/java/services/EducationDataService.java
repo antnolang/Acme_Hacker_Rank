@@ -44,11 +44,9 @@ public class EducationDataService {
 
 			copy.setDegree(e.getDegree());
 			copy.setEndDate(e.getEndDate());
-			copy.setId(e.getId());
 			copy.setInstitution(e.getInstitution());
 			copy.setMark(e.getMark());
 			copy.setStartDate(e.getStartDate());
-			copy.setVersion(e.getVersion());
 
 			result.add(copy);
 		}

@@ -44,10 +44,8 @@ public class PositionDataService {
 
 			copy.setDescription(p.getDescription());
 			copy.setEndDate(p.getEndDate());
-			copy.setId(p.getId());
 			copy.setStartDate(p.getStartDate());
 			copy.setTitle(p.getTitle());
-			copy.setVersion(p.getVersion());
 
 			result.add(copy);
 		}

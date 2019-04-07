@@ -9,6 +9,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,7 @@ import org.springframework.validation.Validator;
 
 import repositories.PositionRepository;
 import domain.Company;
+import domain.Finder;
 import domain.Position;
 import domain.Problem;
 
@@ -142,6 +145,16 @@ public class PositionService {
 		position.setIsCancelled(true);
 	}
 	//Other public methods  -----------------------------------------------
+
+	public Collection<Position> searchByKeyword(final String keyword) {
+		Collection<Position> positions;
+
+		positions = this.positionRepository.findAvailableByKeyword(keyword);
+		Assert.notNull(positions);
+
+		return positions;
+	}
+
 	public Collection<Position> findAllPositionAvailable() {
 		Collection<Position> result;
 
@@ -220,6 +233,16 @@ public class PositionService {
 		result = this.positionRepository.existTicker(ticker);
 
 		return result;
+	}
+
+	protected void searchPositionFinder(final Finder finder, final Pageable pageable) {
+		Page<Position> positions;
+
+		positions = this.positionRepository.searchPositionFinder(finder.getKeyword(), finder.getDeadline(), finder.getMaximumDeadline(), finder.getMinimumSalary(), pageable);
+		Assert.notNull(positions);
+
+		finder.setPositions(positions.getContent());
+		finder.setUpdatedMoment(this.utilityService.current_moment());
 	}
 
 	// Private methods-----------------------------------------------

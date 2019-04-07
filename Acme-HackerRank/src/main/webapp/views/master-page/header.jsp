@@ -12,6 +12,7 @@
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div>
 	<a href="#"><img src="${banner}" alt="Acme-HackerRank, Inc." /></a>
@@ -20,6 +21,15 @@
 <div>
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
+		<security:authorize access="hasRole('HACKER')">
+			<li><a class="fNiv"><spring:message	code="master.page.application" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="application/hacker/list.do"><spring:message code="master.page.application.list" /></a></li>			
+				</ul>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
 				<ul>
@@ -37,8 +47,22 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('HACKER')">
+			<li><a href="finder/hacker/display.do" class="fNiv"><spring:message code="master.page.finder"/></a>
+			</li>
+			
+			<jstl:set var="isHacker" value="${true}"/>
+		</security:authorize>
+		
+		<!-- ALL USERS START -->
 		<li><a  href="position/availableList.do" class="fNiv"><spring:message	code="master.page.availableposition" /></a>
 		</li>
+		
+		<jstl:if test="${!isHacker}">
+			<li><a href="position/search.do" class="fNiv"><spring:message code="master.page.searchposition"/></a>
+			</li>
+		</jstl:if>
+		<!-- ALL USERS END -->
 		
 		<security:authorize access="isAnonymous()">
 		
@@ -71,10 +95,6 @@
 				</ul>
 			</li>
 		</security:authorize>
-		
-		
-		
-			
 	</ul>
 </div>
 

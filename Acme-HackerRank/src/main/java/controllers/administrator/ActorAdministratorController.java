@@ -55,15 +55,34 @@ public class ActorAdministratorController extends ActorAbstractController {
 
 	// Ban
 
-	@RequestMapping(value = "/changeBan", method = RequestMethod.GET)
-	public ModelAndView changeBan(@RequestParam final int actorId) {
+	@RequestMapping(value = "/ban", method = RequestMethod.GET)
+	public ModelAndView ban(@RequestParam final int actorId) {
 		ModelAndView result;
 		Actor actor;
 
 		actor = this.actorService.findOne(actorId);
 
 		try {
-			this.actorService.changeBan(actor);
+			this.actorService.ban(actor);
+			result = new ModelAndView("redirect:/actor/display.do?actorId= " + actorId);
+		} catch (final Throwable oops) {
+			result = new ModelAndView("redirect:/error.do");
+		}
+
+		return result;
+	}
+
+	// Unban
+
+	@RequestMapping(value = "/unBan", method = RequestMethod.GET)
+	public ModelAndView unBan(@RequestParam final int actorId) {
+		ModelAndView result;
+		Actor actor;
+
+		actor = this.actorService.findOne(actorId);
+
+		try {
+			this.actorService.unBan(actor);
 			result = new ModelAndView("redirect:/actor/display.do?actorId= " + actorId);
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:/error.do");

@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
+import services.AnswerService;
 import services.ApplicationService;
-import services.HackerService;
-import services.PositionService;
 import controllers.AbstractController;
+import domain.Answer;
 import domain.Application;
 
 @Controller
-@RequestMapping(value = "/application/company,hacker")
-public class ApplicationCompanyHackerController extends AbstractController {
+@RequestMapping(value = "/answer/company,hacker")
+public class AnswerCompanyHackerController extends AbstractController {
 
 	// Services------------------------------------
 
@@ -25,34 +25,34 @@ public class ApplicationCompanyHackerController extends AbstractController {
 	private ApplicationService	applicationService;
 
 	@Autowired
-	private PositionService		positionService;
-
-	@Autowired
-	private HackerService		hackerService;
+	private AnswerService		answerService;
 
 
 	// Constructors -----------------------------------------------------------
 
-	public ApplicationCompanyHackerController() {
+	public AnswerCompanyHackerController() {
 		super();
 	}
 
-	// Application Display -----------------------------------------------------------
+	// Answer Display -----------------------------------------------------------
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int applicationId) {
+	public ModelAndView display(@RequestParam final int answerId) {
 		ModelAndView result;
-		Application application;
+		final Application application;
+		final Answer answer;
 		String rolActor;
 
 		try {
-			result = new ModelAndView("application/display");
+			result = new ModelAndView("answer/display");
+			application = this.applicationService.findApplicationByAnswer(answerId);
 			if (LoginService.getPrincipal().getAuthorities().toString().equals("[HACKER]")) {
-				application = this.applicationService.findOneToHacker(applicationId);
+				answer = this.answerService.findOneToHackerDisplay(answerId);
 				rolActor = "hacker";
 			} else {
-				application = this.applicationService.findOneToCompany(applicationId);
+				answer = this.answerService.findOneToCompanyDisplay(answerId);
 				rolActor = "company";
 			}
+			result.addObject("answer", answer);
 			result.addObject("application", application);
 			result.addObject("rolActor", rolActor);
 		} catch (final Exception e) {
@@ -61,5 +61,4 @@ public class ApplicationCompanyHackerController extends AbstractController {
 
 		return result;
 	}
-
 }

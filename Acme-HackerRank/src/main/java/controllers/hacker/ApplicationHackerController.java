@@ -2,6 +2,7 @@
 package controllers.hacker;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ import services.HackerService;
 import services.PositionService;
 import controllers.AbstractController;
 import domain.Application;
-import domain.Hacker;
+import domain.Curriculum;
 import domain.Position;
 
 @Controller
@@ -44,24 +45,28 @@ public class ApplicationHackerController extends AbstractController {
 	// Request List -----------------------------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
-		final ModelAndView result;
+		ModelAndView result;
 		Collection<Application> pendingApplications;
 		Collection<Application> submittedApplications;
 		Collection<Application> acceptedApplications;
 		Collection<Application> rejectedApplications;
 
-		pendingApplications = this.applicationService.findPendingApplicationsByHacker();
-		submittedApplications = this.applicationService.findSubmittedApplicationsByHacker();
-		acceptedApplications = this.applicationService.findAcceptedApplicationsByHacker();
-		rejectedApplications = this.applicationService.findRejectedApplicationsByHacker();
+		try {
+			pendingApplications = this.applicationService.findPendingApplicationsByHacker();
+			submittedApplications = this.applicationService.findSubmittedApplicationsByHacker();
+			acceptedApplications = this.applicationService.findAcceptedApplicationsByHacker();
+			rejectedApplications = this.applicationService.findRejectedApplicationsByHacker();
 
-		result = new ModelAndView("application/list");
-		result.addObject("pendingApplications", pendingApplications);
-		result.addObject("submittedApplications", submittedApplications);
-		result.addObject("acceptedApplications", acceptedApplications);
-		result.addObject("rejectedApplications", rejectedApplications);
+			result = new ModelAndView("application/list");
+			result.addObject("pendingApplications", pendingApplications);
+			result.addObject("submittedApplications", submittedApplications);
+			result.addObject("acceptedApplications", acceptedApplications);
+			result.addObject("rejectedApplications", rejectedApplications);
 
-		result.addObject("requestURI", "application/hacker/list.do");
+			result.addObject("requestURI", "application/hacker/list.do");
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:../../error.do");
+		}
 
 		return result;
 	}
@@ -95,7 +100,7 @@ public class ApplicationHackerController extends AbstractController {
 
 		try {
 
-			application = this.applicationService.findOneToHacker(applicationId);
+			application = this.applicationService.findOneToHackerEdit(applicationId);
 			result = this.createEditModelAndView(application);
 
 		} catch (final Exception e) {
@@ -110,17 +115,14 @@ public class ApplicationHackerController extends AbstractController {
 	public ModelAndView save(final Application application, final BindingResult binding) {
 		ModelAndView result;
 		Application applicationRec;
-		final Hacker principal;
 
 		applicationRec = this.applicationService.reconstruct(application, binding);
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(application);
 		else
 			try {
-
-				principal = this.hackerService.findByPrincipal();
 				this.applicationService.save(applicationRec);
-				result = new ModelAndView("redirect:../list.do?hackerId=" + principal.getId());
+				result = new ModelAndView("redirect:../hacker/list.do");
 			}
 
 			catch (final Throwable oops) {
@@ -142,14 +144,14 @@ public class ApplicationHackerController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final Application application, final String messageCode) {
 		ModelAndView result;
-		int hackerId;
+		List<Curriculum> curricula;
 
-		hackerId = this.hackerService.findByPrincipal().getId();
+		curricula = this.hackerService.originalCurricula();
 
 		result = new ModelAndView("application/edit");
 		result.addObject("application", application);
 		result.addObject("messageCode", messageCode);
-		result.addObject("hackerId", hackerId);
+		result.addObject("curricula", curricula);
 
 		return result;
 

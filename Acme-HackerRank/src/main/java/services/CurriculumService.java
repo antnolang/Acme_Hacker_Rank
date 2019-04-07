@@ -102,7 +102,7 @@ public class CurriculumService {
 
 		result.setHacker(curriculum.getHacker());
 		result.setIsOriginal(false);
-		result.setTitle(curriculum.getTitle());
+		result.setTitle(curriculum.getTitle() + "copy");
 		result.setEducationDatas(educationDatas);
 		result.setMiscellaneousDatas(miscellaneousDatas);
 		result.setPersonalData(personalData);

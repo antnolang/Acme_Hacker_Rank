@@ -85,19 +85,22 @@ public class ApplicationService {
 		Assert.isTrue(!(application.getPosition().getIsCancelled()));
 		Assert.isTrue(this.hackerService.findByPrincipal().equals(application.getHacker()));
 		Assert.isTrue(application.getStatus().equals("PENDING"));
-
 		Application result;
 		Application applicationSaved;
 
 		applicationSaved = this.applicationRepository.findOne(application.getId());
 
 		if (application.getId() == 0) {
+
 			Assert.isTrue(this.applicationRepository.findApplicationsByPositionByHacker(application.getPosition().getId(), application.getHacker().getId()).isEmpty());
 			Assert.isTrue(application.getPosition().getProblems().contains(application.getProblem()));
 			Assert.isTrue(!(this.hackerService.originalCurricula().isEmpty()));
-
 			Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
+			//Curriculum curriculumCopy;
+			//curriculumCopy = this.curriculumService.saveCopy(application.getCurriculum());
+			//application.setCurriculum(curriculumCopy);
 			Assert.isNull(application.getSubmittedMoment());
+			//Assert.isTrue(!(application.getCurriculum().getIsOriginal()));
 			Assert.isTrue(!(application.getApplicationMoment().equals(null)));
 			Assert.isNull(application.getAnswer());
 
@@ -208,7 +211,7 @@ public class ApplicationService {
 
 		} else {
 			result = this.create(application.getPosition());
-			result.setCurriculum(this.curriculumService.saveCopy(application.getCurriculum()));
+			result.setCurriculum(application.getCurriculum());
 		}
 
 		return result;

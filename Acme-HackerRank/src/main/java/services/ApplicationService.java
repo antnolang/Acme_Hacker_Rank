@@ -39,6 +39,9 @@ public class ApplicationService {
 	private CompanyService			companyService;
 
 	@Autowired
+	private CurriculumService		curriculumService;
+
+	@Autowired
 	private UtilityService			utilityService;
 
 
@@ -82,22 +85,25 @@ public class ApplicationService {
 		Assert.isTrue(!(application.getPosition().getIsCancelled()));
 		Assert.isTrue(this.hackerService.findByPrincipal().equals(application.getHacker()));
 		Assert.isTrue(application.getStatus().equals("PENDING"));
-
 		Application result;
 		Application applicationSaved;
 
 		applicationSaved = this.applicationRepository.findOne(application.getId());
 
 		if (application.getId() == 0) {
+
 			Assert.isTrue(this.applicationRepository.findApplicationsByPositionByHacker(application.getPosition().getId(), application.getHacker().getId()).isEmpty());
 			Assert.isTrue(application.getPosition().getProblems().contains(application.getProblem()));
 			Assert.isTrue(!(this.hackerService.originalCurricula().isEmpty()));
-			//TODO comprobar copia de curriculum
 			Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
-			//Assert.isTrue(!(application.getCurriculum().getIsOriginal()));
+			//Curriculum curriculumCopy;
+			//curriculumCopy = this.curriculumService.saveCopy(application.getCurriculum());
+			//application.setCurriculum(curriculumCopy);
 			Assert.isNull(application.getSubmittedMoment());
+			//Assert.isTrue(!(application.getCurriculum().getIsOriginal()));
 			Assert.isTrue(!(application.getApplicationMoment().equals(null)));
 			Assert.isNull(application.getAnswer());
+
 		} else {
 			Assert.isTrue(applicationSaved.getProblem().equals(application.getProblem()));
 			Assert.isTrue(applicationSaved.getPosition().equals(application.getPosition()));
@@ -118,7 +124,6 @@ public class ApplicationService {
 
 		return result;
 	}
-
 	public void acceptedApplication(final Application application) {
 		Assert.isTrue(this.companyService.findByPrincipal().equals(application.getPosition().getCompany()));
 		Assert.isTrue(application.getStatus().equals("SUBMITTED"));

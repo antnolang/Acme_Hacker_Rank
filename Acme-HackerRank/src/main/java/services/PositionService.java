@@ -127,6 +127,15 @@ public class PositionService {
 
 		return result;
 	}
+	public Position findOneFinalByPrincipal(final int positionId) {
+		Position result;
+
+		result = this.positionRepository.findOne(positionId);
+		this.checkByPrincipal(result);
+		Assert.isTrue(result.getIsFinalMode());
+
+		return result;
+	}
 
 	public void makeFinal(final Position position) {
 		Collection<Problem> problems;

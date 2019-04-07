@@ -101,7 +101,7 @@ public class CurriculumService {
 		positionDatas = this.positionDataService.copy(curriculum.getPositionDatas());
 
 		result.setHacker(curriculum.getHacker());
-		result.setIsOriginal(curriculum.getIsOriginal());
+		result.setIsOriginal(false);
 		result.setTitle(curriculum.getTitle());
 		result.setEducationDatas(educationDatas);
 		result.setMiscellaneousDatas(miscellaneousDatas);

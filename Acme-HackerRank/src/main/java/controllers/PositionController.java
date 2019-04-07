@@ -12,8 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ApplicationService;
 import services.CompanyService;
+import services.HackerService;
 import services.PositionService;
 import domain.Company;
+import domain.Hacker;
 import domain.Position;
 import domain.Problem;
 
@@ -31,6 +33,9 @@ public class PositionController extends AbstractController {
 
 	@Autowired
 	private ApplicationService	applicationService;
+
+	@Autowired
+	private HackerService		hackerService;
 
 
 	// Constructor ------------------------------------
@@ -129,6 +134,7 @@ public class PositionController extends AbstractController {
 		Company principal;
 		Collection<Problem> problemList;
 		Boolean isApplied;
+		Hacker hackerPrincipal;
 
 		try {
 			result = new ModelAndView("position/display");
@@ -146,8 +152,9 @@ public class PositionController extends AbstractController {
 
 				result.addObject("principal", principal);
 				result.addObject("problemList", problemList);
-			} else if (principal != null && principal.getUserAccount().getAuthorities().toString().equals("[HACKER]")) {
-				isApplied = this.applicationService.find(principal);
+			} else if (principal == null && this.hackerService.findByPrincipal().getUserAccount().getAuthorities().toString().equals("[HACKER]")) {
+				hackerPrincipal = this.hackerService.findByPrincipal();
+				isApplied = this.applicationService.isApplied(position, hackerPrincipal);
 				result.addObject("isApplied", isApplied);
 			}
 

@@ -146,13 +146,20 @@ public class PositionController extends AbstractController {
 				principal = null;
 			}
 
+			try {
+				hackerPrincipal = this.hackerService.findByPrincipal();
+			} catch (final Exception e1) {
+				hackerPrincipal = null;
+			}
+
 			if (principal != null && principal.equals(position.getCompany())) {
 				position = this.positionService.findOne(positionId);
 				problemList = position.getProblems();
 
 				result.addObject("principal", principal);
 				result.addObject("problemList", problemList);
-			} else if (principal == null && this.hackerService.findByPrincipal().getUserAccount().getAuthorities().toString().equals("[HACKER]")) {
+			} else if (hackerPrincipal != null && hackerPrincipal.getUserAccount().getAuthorities().toString().equals("[HACKER]")) {
+				position = this.positionService.findOne(positionId);
 				hackerPrincipal = this.hackerService.findByPrincipal();
 				isApplied = this.applicationService.isApplied(position, hackerPrincipal);
 				result.addObject("isApplied", isApplied);

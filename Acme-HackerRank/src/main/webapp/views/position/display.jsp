@@ -101,15 +101,6 @@
 			<a href="problem/company,hacker/display.do?problemId=${rowPoroblem.id}"><spring:message
 					code="position.display" /> </a>
 		</display:column>
-		
-		
-		<display:column>
-			<jstl:if test="${rowProblem.isFinalMode}">
-				<a href="problem/company/edit.do?problemId=${rowPoroblem.id}">
-					<spring:message code="position.edit" />
-				</a>
-			</jstl:if>
-		</display:column>
 
 		<display:column property="title" titleKey="position.title" />
 	</display:table>

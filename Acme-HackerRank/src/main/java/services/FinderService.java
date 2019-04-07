@@ -159,14 +159,12 @@ public class FinderService {
 	}
 
 	private boolean isFinderOutdated(final Date updatedUpdate, final int timeCache) {
-		final Boolean result;
 		Long diff, milisTimeCache;
 
 		diff = this.utilityService.current_moment().getTime() - updatedUpdate.getTime();
 		milisTimeCache = TimeUnit.HOURS.toMillis(timeCache);
-		result = diff >= milisTimeCache;
 
-		return result;
+		return diff >= milisTimeCache;
 	}
 
 	private void checkOwner(final Finder finder) {

@@ -94,6 +94,11 @@
 			href="actor/administrator,company,hacker/edit.do?actorId=${actor.id}"><spring:message
 				code="actor.edit" /></a>
 	</jstl:if>
+	
+	<jstl:if test="${isAuthorized == true}">
+		<a href="exportData/administrator,company,hacker/export.do"><spring:message code="actor.exportData" /> </a>
+	</jstl:if>
+	
 </fieldset>
 
 <jstl:if test="${actor.userAccount.authorities=='[COMPANY]'}">

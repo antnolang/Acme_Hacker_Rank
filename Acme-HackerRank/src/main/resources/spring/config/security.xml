@@ -88,6 +88,8 @@
 		<security:intercept-url pattern="/socialProfile/administrator,company,hacker/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/socialProfile/**" access="permitAll" />
 		
+		<security:intercept-url pattern="/exportData/administrator,company,hacker/export.do" access="isAuthenticated()" />
+		
 		<security:intercept-url pattern="/error.do" access="permitAll" />
 		
 		

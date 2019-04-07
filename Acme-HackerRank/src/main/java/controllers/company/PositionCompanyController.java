@@ -1,6 +1,8 @@
 
 package controllers.company;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,9 +14,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import services.CompanyService;
 import services.PositionService;
+import services.ProblemService;
 import controllers.AbstractController;
 import domain.Company;
 import domain.Position;
+import domain.Problem;
 
 @Controller
 @RequestMapping(value = "/position/company")
@@ -27,6 +31,9 @@ public class PositionCompanyController extends AbstractController {
 
 	@Autowired
 	private CompanyService	companyService;
+
+	@Autowired
+	private ProblemService	problemService;
 
 
 	// Constructor ------------------------------------
@@ -159,16 +166,18 @@ public class PositionCompanyController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Position position, final String messageCode) {
 		ModelAndView result;
 		Company principal;
+		Collection<Problem> problems;
 
 		principal = this.companyService.findByPrincipal();
+		problems = this.problemService.findFinalByCompany();
 
 		result = new ModelAndView("position/edit");
 		result.addObject("position", position);
 		result.addObject("principal", principal);
 		result.addObject("messageCode", messageCode);
+		result.addObject("problems", problems);
 
 		return result;
 
 	}
-
 }

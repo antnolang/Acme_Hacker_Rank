@@ -21,9 +21,17 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 	<jstl:if test="${position.isCancelled == true}">
-		<strong><h2><spring:message code="position.isCancelled"/></h2></strong>
+		<h2><strong><spring:message code="position.isCancelled"/></strong></h2>
 		<br/>
 	</jstl:if>
+	
+	<security:authorize access="hasRole('HACKER')">
+	<jstl:if test="${!position.isCancelled && position.isFinalMode && isApplied}">
+		<h2>
+			<a href="application/hacker/create.do?positionId=${position.id}"><spring:message code="position.apply" /></a>
+		</h2>
+	</jstl:if>
+	</security:authorize>
 	
 	<strong><spring:message code="position.company"/>:</strong>
 		<a href="actor/display.do?actorId=${position.company.id}"><jstl:out value="${position.company.commercialName}"/></a>
@@ -76,6 +84,12 @@
 
 <security:authorize access="hasRole('COMPANY')">
 <jstl:if test="${principal == position.company}">	
+
+	<p>
+		<strong><spring:message code="position.applications" />:</strong>
+			<a href="application/company/list.do?positionId=${position.id}"><spring:message code="position.applications" /></a>
+	</p>
+
 <fieldset>
 	<legend>
 		<spring:message code="position.problems" />
@@ -86,15 +100,6 @@
 		<display:column>
 			<a href="problem/company,hacker/display.do?problemId=${rowPoroblem.id}"><spring:message
 					code="position.display" /> </a>
-		</display:column>
-		
-		
-		<display:column>
-			<jstl:if test="${rowProblem.isFinalMode}">
-				<a href="problem/company/edit.do?problemId=${rowPoroblem.id}">
-					<spring:message code="position.edit" />
-				</a>
-			</jstl:if>
 		</display:column>
 
 		<display:column property="title" titleKey="position.title" />

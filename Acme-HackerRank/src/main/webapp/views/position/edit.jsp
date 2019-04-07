@@ -38,6 +38,9 @@
 	<acme:textarea code="position.technologies" path="technologies"/>
 	
 	<acme:textbox code="position.salary" path="salary"/>
+	
+	<acme:selectMandatory items="${problems}" multiple="true" 
+		 itemLabel="title" code="position.problems" path="problems"/>
 
 	<acme:submit name="save" code="position.save"/>	
 	<jstl:if test="${position.id != 0}">

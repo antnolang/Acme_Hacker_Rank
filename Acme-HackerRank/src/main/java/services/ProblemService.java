@@ -138,6 +138,18 @@ public class ProblemService {
 
 		return problems;
 	}
+
+	public Collection<Problem> findFinalByCompany() {
+		final Collection<Problem> problems;
+		Company principal;
+
+		principal = this.companyService.findByPrincipal();
+		problems = this.problemRepository.findFinalByCompany(principal.getId());
+
+		Assert.notNull(problems);
+
+		return problems;
+	}
 	public void makeFinal(final Problem problem) {
 		this.checkByPrincipal(problem);
 

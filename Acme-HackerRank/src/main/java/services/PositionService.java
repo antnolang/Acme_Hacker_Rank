@@ -140,6 +140,16 @@ public class PositionService {
 		position.setIsCancelled(true);
 	}
 	//Other public methods  -----------------------------------------------
+
+	public Collection<Position> searchByKeyword(final String keyword) {
+		Collection<Position> positions;
+
+		positions = this.positionRepository.findAvailableByKeyword(keyword);
+		Assert.notNull(positions);
+
+		return positions;
+	}
+
 	public Collection<Position> findAllPositionAvailable() {
 		Collection<Position> result;
 

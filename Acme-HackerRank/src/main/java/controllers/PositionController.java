@@ -104,6 +104,22 @@ public class PositionController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public ModelAndView search(@RequestParam(value = "keyword", defaultValue = "") final String keyword) {
+		ModelAndView result;
+		Collection<Position> positions;
+
+		positions = this.positionService.searchByKeyword(keyword);
+
+		result = new ModelAndView("position/search");
+		result.addObject("keyword", keyword);
+		result.addObject("positions", positions);
+		result.addObject("isSearch", true);
+		result.addObject("requestURI", "position/search.do");
+
+		return result;
+	}
+
 	// Display------------------------------------
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)

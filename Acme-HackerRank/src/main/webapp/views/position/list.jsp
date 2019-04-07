@@ -27,13 +27,17 @@
 	<fieldset>
 		<legend><spring:message code="position.search.legend"/></legend>
 		
-		<form:form action="position/search.do" modelAttribute="searchForm">
-			<acme:textbox path="keyword" code="position.search.keyword"/>
-			<acme:submit name="save" code="position.search.submit"/>
-		</form:form>
+		<form action="position/search.do" method="get">
+			<div>
+				<label for="keyword">
+					<spring:message code="position.search.keyword"/>
+				</label>
+				<input type="text" name="keyword" id="keyword" value="${keyword}"/>
+				
+				<acme:submit name="save" code="position.search.submit"/>
+			</div>
+		</form> 
 	</fieldset>
-	
-	<jstl:set var="positions" value="${searchForm.positions}"/>
 </jstl:if>
 
 
@@ -71,8 +75,6 @@
 			<a href="finder/hacker/clear.do"><spring:message code="position.finder.clear"/></a>
 		</div>
 	</fieldset>
-
-	<jstl:set var="positions" value="${finder.positions}"/>
 </jstl:if>
 
 

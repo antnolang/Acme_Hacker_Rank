@@ -268,6 +268,9 @@ public class PositionService {
 		finder.setUpdatedMoment(this.utilityService.current_moment());
 	}
 
+	protected void flush() {
+	}
+
 	// Private methods-----------------------------------------------
 	private void checkByPrincipal(final Position position) {
 		Company owner;

@@ -53,7 +53,7 @@
 	<legend>
 		<spring:message code="problem.positions" />
 	</legend>
-	<display:table name="problem.positions" id="rowPosition"
+	<display:table name="positionsList" id="rowPosition"
 		pagesize="5" class="displaytag" requestURI="problem/company,hacker/display.do">
 
 		<security:authorize access="hasRole('COMPANY')">

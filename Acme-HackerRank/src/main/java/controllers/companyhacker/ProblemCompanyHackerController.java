@@ -19,7 +19,7 @@ import domain.Position;
 import domain.Problem;
 
 @Controller
-@RequestMapping(value = "problem/company,hacker")
+@RequestMapping(value = "/problem/company,hacker")
 public class ProblemCompanyHackerController extends AbstractController {
 
 	// Services------------------------------------

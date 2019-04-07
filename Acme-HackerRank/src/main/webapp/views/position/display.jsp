@@ -25,6 +25,14 @@
 		<br/>
 	</jstl:if>
 	
+	<security:authorize access="hasRole('COMPANY')">
+	<jstl:if test="${principal == position.company && !position.isFinalMode && hasProblem}">
+		<h2>
+			<a href="position/company/makeFinal.do?positionId=${position.id}"><spring:message code="position.makeFinal" /></a>
+		</h2>
+	</jstl:if>
+	</security:authorize>
+	
 	<security:authorize access="hasRole('HACKER')">
 	<jstl:if test="${!position.isCancelled && position.isFinalMode && isApplied}">
 		<h2>

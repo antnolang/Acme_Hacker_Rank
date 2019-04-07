@@ -235,6 +235,20 @@ public class PositionService {
 
 		return positions;
 	}
+
+	public Boolean hasProblem(final Position position) {
+		Collection<Problem> problems;
+		Boolean result;
+
+		if (position.getId() == 0)
+			result = false;
+		else {
+			problems = this.problemService.findProblemsByPrincipal();
+			result = problems.size() >= 2;
+		}
+
+		return result;
+	}
 	// Protected methods -----------------------------------------------
 	protected String existTicker(final String ticker) {
 		String result;
@@ -277,6 +291,7 @@ public class PositionService {
 			result.setIsFinalMode(false);
 			result.setIsCancelled(false);
 			result.setTicker(positionStored.getTicker());
+			result.setVersion(positionStored.getVersion());
 
 		} else {
 			result = this.create();
@@ -302,7 +317,7 @@ public class PositionService {
 	private void checkDeadline(final Position position, final BindingResult binding) {
 		if (position.getDeadline() != null)
 			if (position.getDeadline().before(this.utilityService.current_moment()))
-				binding.rejectValue("deadline", "position.commit.deadline");
+				binding.rejectValue("deadline", "position.commit.deadline", "Deadline must be in the future");
 	}
 
 }

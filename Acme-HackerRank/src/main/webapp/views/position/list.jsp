@@ -103,6 +103,8 @@
 	
 	</security:authorize>
 	
+	<display:column property="company.name" titleKey="position.company" />
+	
 	<display:column property="ticker" titleKey="position.ticker" />
 	
 	<display:column property="title" titleKey="position.title" />

@@ -135,6 +135,7 @@ public class PositionController extends AbstractController {
 		Collection<Problem> problemList;
 		Boolean isApplied;
 		Hacker hackerPrincipal;
+		Boolean hasProblem;
 
 		try {
 			result = new ModelAndView("position/display");
@@ -155,7 +156,9 @@ public class PositionController extends AbstractController {
 			if (principal != null && principal.equals(position.getCompany())) {
 				position = this.positionService.findOne(positionId);
 				problemList = position.getProblems();
+				hasProblem = this.positionService.hasProblem(position);
 
+				result.addObject("hasProblem", hasProblem);
 				result.addObject("principal", principal);
 				result.addObject("problemList", problemList);
 			} else if (hackerPrincipal != null && hackerPrincipal.getUserAccount().getAuthorities().toString().equals("[HACKER]")) {

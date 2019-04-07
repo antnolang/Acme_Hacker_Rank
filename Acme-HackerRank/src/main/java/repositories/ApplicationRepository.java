@@ -19,4 +19,25 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
 	@Query("select avg(1 * (select count(a) from Application a where a.hacker.id = h.id)), min(1 * (select count(a) from Application a where a.hacker.id = h.id)), max(1 * (select count(a) from Application a where a.hacker.id = h.id)), stddev(1 * (select count(a) from Application a where a.hacker.id = h.id)) from Hacker h")
 	Double[] findDataNumberApplicationPerHacker();
 
+	@Query("select a from Application a where a.hacker.id = ?1 and a.status='SUBMITTED'")
+	Collection<Application> findSubmittedApplicationsByHacker(int id);
+
+	@Query("select a from Application a where a.hacker.id = ?1 and a.status='ACCEPTED'")
+	Collection<Application> findAcceptedApplicationsByHacker(int id);
+
+	@Query("select a from Application a where a.hacker.id = ?1 and a.status='REJECTED'")
+	Collection<Application> findRejectedApplicationsByHacker(int id);
+
+	@Query("select a from Application a where a.hacker.id = ?1 and a.status='PENDING'")
+	Collection<Application> findPendingApplicationsByHacker(int id);
+
+	@Query("select a from Application a where a.position.id = ?1 and a.status='SUBMITTED'")
+	Collection<Application> findSubmittedApplicationsByPosition(int positionId);
+
+	@Query("select a from Application a where a.position.id = ?1 and a.status='ACCEPTED'")
+	Collection<Application> findAcceptedApplicationsByPosition(int positionId);
+
+	@Query("select a from Application a where a.position.id = ?1 and a.status='REJECTED'")
+	Collection<Application> findRejectedApplicationsByPosition(int positionId);
+
 }

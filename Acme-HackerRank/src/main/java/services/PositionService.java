@@ -129,7 +129,7 @@ public class PositionService {
 	public void makeFinal(final Position position) {
 		Collection<Problem> problems;
 
-		problems = this.problemService.findProblemByPostion(position.getId());
+		problems = position.getProblems();
 
 		Assert.isTrue(problems.size() >= 2);
 		this.checkByPrincipal(position);
@@ -208,7 +208,15 @@ public class PositionService {
 
 		return result;
 	}
+	// This method id used when an actor want to delete all his or her data.
+	public void deleteByCompany(final Company company) {
+		Collection<Position> positions;
 
+		positions = this.positionRepository.findPositionByCompany(company.getId());
+
+		this.positionRepository.delete(positions);
+
+	}
 	// Protected methods -----------------------------------------------
 	protected String existTicker(final String ticker) {
 		String result;

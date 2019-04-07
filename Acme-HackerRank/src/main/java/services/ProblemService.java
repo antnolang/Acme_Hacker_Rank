@@ -1,10 +1,7 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -18,7 +15,6 @@ import repositories.ProblemRepository;
 import domain.Application;
 import domain.Company;
 import domain.Hacker;
-import domain.Position;
 import domain.Problem;
 
 @Service
@@ -56,13 +52,9 @@ public class ProblemService {
 	public Problem create() {
 		Problem result;
 		Company company;
-		Collection<Position> positions;
 
 		result = new Problem();
 		company = this.companyService.findByPrincipal();
-		positions = Collections.<Position> emptySet();
-
-		result.setPositions(positions);
 		result.setCompany(company);
 		result.setIsFinalMode(false);
 
@@ -152,7 +144,16 @@ public class ProblemService {
 		problem.setIsFinalMode(true);
 	}
 
-	// Private methods-----------------------------------------------
+	// This method id used when an actor want to delete all his or her data.
+	public void deleteByCompany(final Company company) {
+		Collection<Problem> problems;
+
+		problems = this.problemRepository.findByCompany(company.getId());
+
+		this.problemRepository.delete(problems);
+
+	}
+
 	private void checkByPrincipal(final Problem problem) {
 		Company owner;
 		Company principal;
@@ -162,6 +163,13 @@ public class ProblemService {
 
 		Assert.isTrue(owner.equals(principal));
 	}
+
+	// Protected methods-----------------------------------------------
+
+	protected void flush() {
+		this.problemRepository.flush();
+	}
+
 	// Reconstruct ----------------------------------------------
 	public Problem reconstruct(final Problem problem, final BindingResult binding) {
 		Problem result, problemStored;
@@ -171,7 +179,6 @@ public class ProblemService {
 			problemStored = this.findOne(problem.getId());
 			result.setCompany(problemStored.getCompany());
 			result.setIsFinalMode(problemStored.getIsFinalMode());
-			result.setPositions(problemStored.getPositions());
 
 		} else
 			result = this.create();
@@ -186,19 +193,4 @@ public class ProblemService {
 		return result;
 	}
 
-	protected List<Problem> problemsPosition(final Position position) {
-		List<Problem> problemsPosition;
-
-		problemsPosition = new ArrayList<Problem>(this.problemRepository.problemsPosition(position.getId()));
-
-		return problemsPosition;
-	}
-
-	public Collection<Problem> findProblemByPostion(final int positionId) {
-		Collection<Problem> problems;
-
-		problems = this.problemRepository.problemsPosition(positionId);
-
-		return problems;
-	}
 }

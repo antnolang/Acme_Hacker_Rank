@@ -141,7 +141,7 @@ public class PositionController extends AbstractController {
 
 			if (principal != null && principal.equals(position.getCompany())) {
 				position = this.positionService.findOne(positionId);
-				problemList = this.problemService.findProblemByPostion(positionId);
+				problemList = position.getProblems();
 
 				result.addObject("principal", principal);
 				result.addObject("problemList", problemList);

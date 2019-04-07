@@ -40,7 +40,7 @@ public class ProblemCompanyHackerController extends AbstractController {
 		ModelAndView result;
 		Problem problem;
 		UserAccount userPrincipal;
-		Collection<Position> positionsList;
+		final Collection<Position> positionsList;
 
 		try {
 
@@ -49,16 +49,16 @@ public class ProblemCompanyHackerController extends AbstractController {
 
 			if (userPrincipal.getAuthorities().toString().equals("[COMPANY]")) {
 				problem = this.problemService.findOneToPrincipal(problemId);
-				positionsList = problem.getPositions();
+				//		positionsList = problem.getPositions();
 
 				result.addObject("problem", problem);
-				result.addObject("positionsList", positionsList);
+				//		result.addObject("positionsList", positionsList);
 			} else if (userPrincipal.getAuthorities().toString().equals("[HACKER]")) {
 				problem = this.problemService.findOneToDisplayHacker(problemId);
-				positionsList = problem.getPositions();
+				//	positionsList = problem.getPositions();
 
 				result.addObject("problem", problem);
-				result.addObject("positionsList", positionsList);
+				//	result.addObject("positionsList", positionsList);
 			}
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../error.do");

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -11,8 +12,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.validation.BindingResult;
 
 import repositories.ApplicationRepository;
+import domain.Answer;
 import domain.Application;
 import domain.Curriculum;
 import domain.Hacker;
@@ -28,9 +31,6 @@ public class ApplicationService {
 	private ApplicationRepository	applicationRepository;
 
 	// Supporting services -------------------------------------------
-
-	@Autowired
-	private PositionService			positionService;
 
 	@Autowired
 	private ProblemService			problemService;
@@ -67,7 +67,7 @@ public class ApplicationService {
 
 		moment = this.utilityService.current_moment();
 		curriculum = this.hackerService.originalCurricula().get(0);
-		problem = this.getRandomProblem(this.problemService.problemsPosition(position));
+		problem = this.getRandomProblem(position.getProblems());
 
 		result = new Application();
 		result.setHacker(hacker);
@@ -93,12 +93,16 @@ public class ApplicationService {
 
 		if (application.getId() == 0) {
 			Assert.isTrue(this.applicationRepository.findApplicationsByPositionByHacker(application.getPosition().getId(), application.getHacker().getId()).isEmpty());
+			Assert.isTrue(application.getPosition().getProblems().contains(application.getProblem()));
 			Assert.isTrue(!(this.hackerService.originalCurricula().isEmpty()));
 			//TODO comprobar copia de curriculum
 			Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
+			Assert.isTrue(!(application.getCurriculum().getIsOriginal()));
 			Assert.isNull(application.getSubmittedMoment());
+			Assert.isTrue(!(application.getApplicationMoment().equals(null)));
 			Assert.isNull(application.getAnswer());
 		} else {
+			Assert.isTrue(applicationSaved.getProblem().equals(application.getProblem()));
 			Assert.isTrue(applicationSaved.getPosition().equals(application.getPosition()));
 			Assert.isTrue(applicationSaved.getHacker().equals(application.getHacker()));
 			Assert.isTrue(applicationSaved.getCurriculum().equals(application.getCurriculum()));
@@ -116,6 +120,26 @@ public class ApplicationService {
 		result = this.applicationRepository.save(application);
 
 		return result;
+	}
+
+	public void acceptedApplication(final Application application) {
+		Assert.isTrue(this.companyService.findByPrincipal().equals(application.getPosition().getCompany()));
+		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
+		Assert.isTrue(!(application.getAnswer().equals(null)));
+		Assert.isTrue(!(application.getSubmittedMoment().equals(null)));
+		application.setStatus("ACCEPTED");
+	}
+
+	public void rejectedApplication(final Application application) {
+		Assert.isTrue(this.companyService.findByPrincipal().equals(application.getPosition().getCompany()));
+		Assert.isTrue(application.getStatus().equals("SUBMITTED"));
+		Assert.isTrue(!(application.getAnswer().equals(null)));
+		Assert.isTrue(!(application.getSubmittedMoment().equals(null)));
+		application.setStatus("REJECTED");
+	}
+
+	protected void addAnswer(final Application application, final Answer answer) {
+		application.setAnswer(answer);
 	}
 
 	public Application findOne(final int applicationId) {
@@ -156,10 +180,41 @@ public class ApplicationService {
 		return results;
 	}
 
+	// Reconstruct ----------------------------------------------
+	public Application reconstruct(final Application application, final BindingResult binding) {
+		Application result, applicationStored;
+
+		if (application.getId() != 0) {
+			result = new Application();
+			applicationStored = this.findOne(application.getId());
+			result.setId(applicationStored.getId());
+			result.setApplicationMoment(applicationStored.getApplicationMoment());
+			result.setStatus(applicationStored.getStatus());
+			result.setCurriculum(applicationStored.getCurriculum());
+			result.setPosition(applicationStored.getPosition());
+			result.setProblem(applicationStored.getProblem());
+
+			result.setSubmittedMoment(application.getSubmittedMoment());
+			result.setAnswer(application.getAnswer());
+
+		} else {
+			result = this.create(application.getPosition());
+			result.setCurriculum(application.getCurriculum());
+		}
+
+		return result;
+	}
+
 	// Other business methods ---------------------
 
-	public Problem getRandomProblem(final List<Problem> problems) {
-		return problems.get(new Random().nextInt(problems.size()));
+	public Problem getRandomProblem(final Collection<Problem> problems) {
+		List<Problem> problemList;
+
+		problemList = new ArrayList<>();
+
+		problemList.addAll(problems);
+
+		return problemList.get(new Random().nextInt(problems.size()));
 	}
 
 	public Double[] findDataNumberApplicationPerHacker() {
@@ -178,4 +233,69 @@ public class ApplicationService {
 
 		return result;
 	}
+
+	public Collection<Application> findPendingApplicationsByHacker() {
+		Collection<Application> applications;
+		Hacker hacker;
+
+		hacker = this.hackerService.findByPrincipal();
+		applications = this.applicationRepository.findPendingApplicationsByHacker(hacker.getId());
+
+		return applications;
+	}
+
+	public Collection<Application> findSubmittedApplicationsByHacker() {
+		Collection<Application> applications;
+		Hacker hacker;
+
+		hacker = this.hackerService.findByPrincipal();
+		applications = this.applicationRepository.findSubmittedApplicationsByHacker(hacker.getId());
+
+		return applications;
+	}
+
+	public Collection<Application> findAcceptedApplicationsByHacker() {
+		Collection<Application> applications;
+		Hacker hacker;
+
+		hacker = this.hackerService.findByPrincipal();
+		applications = this.applicationRepository.findAcceptedApplicationsByHacker(hacker.getId());
+
+		return applications;
+	}
+
+	public Collection<Application> findRejectedApplicationsByHacker() {
+		Collection<Application> applications;
+		Hacker hacker;
+
+		hacker = this.hackerService.findByPrincipal();
+		applications = this.applicationRepository.findRejectedApplicationsByHacker(hacker.getId());
+
+		return applications;
+	}
+
+	public Collection<Application> findSubmittedApplicationsByPosition(final int positionId) {
+		Collection<Application> applications;
+
+		applications = this.applicationRepository.findSubmittedApplicationsByPosition(positionId);
+
+		return applications;
+	}
+
+	public Collection<Application> findAcceptedApplicationsByPosition(final int positionId) {
+		Collection<Application> applications;
+
+		applications = this.applicationRepository.findAcceptedApplicationsByPosition(positionId);
+
+		return applications;
+	}
+
+	public Collection<Application> findRejectedApplicationsByPosition(final int positionId) {
+		Collection<Application> applications;
+
+		applications = this.applicationRepository.findRejectedApplicationsByPosition(positionId);
+
+		return applications;
+	}
+
 }

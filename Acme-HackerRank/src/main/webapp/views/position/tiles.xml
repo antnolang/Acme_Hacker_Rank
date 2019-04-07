@@ -41,5 +41,4 @@
 		<put-attribute name="body" value="/views/position/edit.jsp" />
 	</definition>
 		
-	
 </tiles-definitions>

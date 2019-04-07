@@ -48,6 +48,8 @@ public class SystemTagService {
 		return result;
 	}
 
+	// This method is used when a message is deleted from the system or an actor
+	// decide to drop out the system
 	public void deleteByMessage(final Message message) {
 		Collection<SystemTag> systemTags;
 
@@ -57,14 +59,6 @@ public class SystemTagService {
 	}
 
 	// Other business methods -------------------
-	protected SystemTag findByActorAndMessage(final int actorId, final int messageId) {
-		SystemTag result;
-
-		result = this.findByActorAndMessage(actorId, messageId);
-
-		return result;
-	}
-
 	protected SystemTag findMessageTaggedAsDELETED(final int actorId, final int messageId) {
 		SystemTag result;
 

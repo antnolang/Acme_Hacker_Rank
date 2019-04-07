@@ -1967,6 +1967,12 @@
 		<property name="isFinalMode" value="true" />
 		<property name="isCancelled" value="false" />
 		<property name="company" ref="company1" />
+		<property name="problems">
+			<list>
+				<ref bean="problem1" />
+				<ref bean="problem2" />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="position2" class="domain.Position">
@@ -1981,6 +1987,12 @@
 		<property name="isFinalMode" value="true" />
 		<property name="isCancelled" value="false" />
 		<property name="company" ref="company1" />
+		<property name="problems">
+			<list>
+				<ref bean="problem1" />
+				<ref bean="problem3" />
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="position3" class="domain.Position">
@@ -1995,6 +2007,11 @@
 		<property name="isFinalMode" value="false" />
 		<property name="isCancelled" value="false" />
 		<property name="company" ref="company1" />
+		<property name="problems">
+			<list>
+				<null></null>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="position4" class="domain.Position">
@@ -2009,6 +2026,11 @@
 		<property name="isFinalMode" value="true" />
 		<property name="isCancelled" value="true" />
 		<property name="company" ref="company1" />
+		<property name="problems">
+			<list>
+				<null></null>
+			</list>
+		</property>
 	</bean>
 
 	<bean id="position5" class="domain.Position">
@@ -2023,6 +2045,11 @@
 		<property name="isFinalMode" value="false" />
 		<property name="isCancelled" value="false" />
 		<property name="company" ref="company2" />
+		<property name="problems">
+			<list>
+				<null></null>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="position6" class="domain.Position">
@@ -2037,6 +2064,13 @@
 		<property name="isFinalMode" value="true" />
 		<property name="isCancelled" value="false" />
 		<property name="company" ref="company2" />
+		<property name="problems">
+			<list>
+				<ref bean="problem5" />
+				<ref bean="problem7" />
+				<ref bean="problem9" />
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="position7" class="domain.Position">
@@ -2051,6 +2085,13 @@
 		<property name="isFinalMode" value="true" />
 		<property name="isCancelled" value="false" />
 		<property name="company" ref="company2" />
+		<property name="problems">
+			<list>
+				<ref bean="problem6" />
+				<ref bean="problem7" />
+				<ref bean="problem8" />
+			</list>
+		</property>
 	</bean>
 
 	<bean id="position8" class="domain.Position">
@@ -2065,6 +2106,12 @@
 		<property name="isFinalMode" value="true" />
 		<property name="isCancelled" value="false" />
 		<property name="company" ref="company3" />
+		<property name="problems">
+			<list>
+				<ref bean="problem12" />
+				<ref bean="problem13" />
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="position9" class="domain.Position">
@@ -2079,6 +2126,11 @@
 		<property name="isFinalMode" value="true" />
 		<property name="isCancelled" value="false" />
 		<property name="company" ref="company3" />
+		<property name="problems">
+			<list>
+				<ref bean="problem13" />
+			</list>
+		</property>
 	</bean>
 
 
@@ -2213,12 +2265,6 @@
 		<property name="hint" value="Propongo que el hacker esté cualificado" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<ref bean="position1" />
-				<ref bean="position2" />
-			</list>
-		</property>
 		<property name="company" ref="company1" />
 	</bean>
 
@@ -2229,11 +2275,6 @@
 		<property name="hint" value="Que el hacker viva en Sevilla" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<ref bean="position1" />
-			</list>
-		</property>
 		<property name="company" ref="company1" />
 	</bean>
 
@@ -2244,11 +2285,6 @@
 		<property name="hint" value="Que el hacker viva en Sevilla" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<ref bean="position2" />
-			</list>
-		</property>
 		<property name="company" ref="company1" />
 	</bean>
 	
@@ -2259,11 +2295,6 @@
 		<property name="hint" value="Que el hacker viva en Sevilla" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="false" />
-		<property name="positions">
-			<list>
-				<null></null>
-			</list>
-		</property>
 		<property name="company" ref="company1" />
 	</bean>
 
@@ -2274,11 +2305,6 @@
 		<property name="hint" value="Necesito que trabaje los fines de semana" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<ref bean="position6" />
-			</list>
-		</property>
 		<property name="company" ref="company2" />
 	</bean>
 
@@ -2289,11 +2315,6 @@
 		<property name="hint" value="Necesito que trabaje los fines de semana" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<ref bean="position7" />
-			</list>
-		</property>
 		<property name="company" ref="company2" />
 	</bean>
 	
@@ -2304,12 +2325,6 @@
 		<property name="hint" value="Necesito que trabaje los fines de semana" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<ref bean="position6" />
-				<ref bean="position7" />
-			</list>
-		</property>
 		<property name="company" ref="company2" />
 	</bean>
 	
@@ -2320,11 +2335,6 @@
 		<property name="hint" value="Necesito que trabaje los fines de semana" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<ref bean="position7" />
-			</list>
-		</property>
 		<property name="company" ref="company2" />
 	</bean>
 	
@@ -2335,11 +2345,6 @@
 		<property name="hint" value="Necesito que trabaje los fines de semana" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<ref bean="position6" />
-			</list>
-		</property>
 		<property name="company" ref="company2" />
 	</bean>
 	
@@ -2350,11 +2355,6 @@
 		<property name="hint" value="Necesito que trabaje los fines de semana" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="false" />
-		<property name="positions">
-			<list>
-				<null></null>
-			</list>
-		</property>
 		<property name="company" ref="company3" />
 	</bean>
 	
@@ -2365,11 +2365,6 @@
 		<property name="hint" value="Necesito que trabaje los fines de semana" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<null></null>
-			</list>
-		</property>
 		<property name="company" ref="company3" />
 	</bean>
 	
@@ -2380,11 +2375,6 @@
 		<property name="hint" value="Necesito que trabaje los fines de semana" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<ref bean="position8" />
-			</list>
-		</property>
 		<property name="company" ref="company3" />
 	</bean>
 	
@@ -2395,13 +2385,57 @@
 		<property name="hint" value="Necesito que trabaje los fines de semana" />
 		<property name="attachments" value="" />
 		<property name="isFinalMode" value="true" />
-		<property name="positions">
-			<list>
-				<ref bean="position8" />
-				<ref bean="position9" />
-			</list>
-		</property>
 		<property name="company" ref="company3" />
+	</bean>
+	
+	<bean id="problem14" class="domain.Problem">
+		<property name="title" value="Problem 14 - Company 1" />
+		<property name="statement"
+			value="Statement" />
+		<property name="hint" value="Necesito que trabaje los fines de semana" />
+		<property name="attachments" value="" />
+		<property name="isFinalMode" value="true" />
+		<property name="company" ref="company1" />
+	</bean>
+	
+	<bean id="problem15" class="domain.Problem">
+		<property name="title" value="Problem 15 - Company 2" />
+		<property name="statement"
+			value="Statement" />
+		<property name="hint" value="Necesito que trabaje los fines de semana" />
+		<property name="attachments" value="" />
+		<property name="isFinalMode" value="true" />
+		<property name="company" ref="company2" />
+	</bean>
+	
+	<bean id="problem16" class="domain.Problem">
+		<property name="title" value="Problem 16 - Company 3" />
+		<property name="statement"
+			value="Statement" />
+		<property name="hint" value="Necesito que trabaje los fines de semana" />
+		<property name="attachments" value="" />
+		<property name="isFinalMode" value="true" />
+		<property name="company" ref="company3" />
+	</bean>
+	
+	<bean id="problem17" class="domain.Problem">
+		<property name="title" value="Problem 17 - Company 1" />
+		<property name="statement"
+			value="Statement" />
+		<property name="hint" value="Necesito que trabaje los fines de semana" />
+		<property name="attachments" value="" />
+		<property name="isFinalMode" value="false" />
+		<property name="company" ref="company1" />
+	</bean>
+	
+	<bean id="problem18" class="domain.Problem">
+		<property name="title" value="Problem 18 - Company 2" />
+		<property name="statement"
+			value="Statement" />
+		<property name="hint" value="Necesito que trabaje los fines de semana" />
+		<property name="attachments" value="" />
+		<property name="isFinalMode" value="false" />
+		<property name="company" ref="company2" />
 	</bean>
 
 </beans>

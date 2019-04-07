@@ -24,7 +24,7 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select p from Position p where p.company.id = ?1 and p.isFinalMode = true")
 	Collection<Position> findFinalModePositionsByCompany(int companyId);
 
-	@Query("select p from Position p where ((p.title like concat('%', concat(?1, '%'))) or (p.description like concat('%', concat(?1, '%'))) or (p.profile like concat('%', concat(?1, '%'))) or (p.skills like concat('%', concat(?1, '%'))) or (p.technologies like concat('%', concat(?1, '%'))) or (p.company.name like concat('%', concat(?1, '%'))))")
+	@Query("select p from Position p where p.isFinalMode = true and p.isCancelled = false and ((p.title like concat('%', concat(?1, '%'))) or (p.description like concat('%', concat(?1, '%'))) or (p.profile like concat('%', concat(?1, '%'))) or (p.skills like concat('%', concat(?1, '%'))) or (p.technologies like concat('%', concat(?1, '%'))) or (p.company.name like concat('%', concat(?1, '%'))))")
 	Collection<Position> findAvailableByKeyword(String keyword);
 
 	// Query dashboard 11.2.5 The average, the minimum, the maximum, and the standard deviation of the salaries offered.

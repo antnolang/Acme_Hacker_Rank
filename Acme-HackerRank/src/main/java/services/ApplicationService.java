@@ -33,9 +33,6 @@ public class ApplicationService {
 	// Supporting services -------------------------------------------
 
 	@Autowired
-	private ProblemService			problemService;
-
-	@Autowired
 	private HackerService			hackerService;
 
 	@Autowired
@@ -63,7 +60,7 @@ public class ApplicationService {
 
 		hacker = this.hackerService.findByPrincipal();
 
-		Assert.isTrue(this.applicationRepository.findApplicationsByPositionByHacker(position.getId(), hacker.getId()).isEmpty());
+		Assert.isTrue(this.isApplied(position, hacker));
 
 		moment = this.utilityService.current_moment();
 		curriculum = this.hackerService.originalCurricula().get(0);
@@ -312,6 +309,16 @@ public class ApplicationService {
 		Application result;
 
 		result = this.applicationRepository.findApplicationByAnswer(answerId);
+
+		return result;
+	}
+
+	public boolean isApplied(final Position position, final Hacker hacker) {
+		boolean result;
+
+		result = false;
+		if ((this.applicationRepository.findApplicationsByPositionByHacker(position.getId(), hacker.getId()).isEmpty()))
+			result = true;
 
 		return result;
 	}

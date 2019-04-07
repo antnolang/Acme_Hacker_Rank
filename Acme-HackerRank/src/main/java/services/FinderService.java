@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +18,7 @@ import repositories.FinderRepository;
 import domain.Customisation;
 import domain.Finder;
 import domain.Hacker;
+import domain.Position;
 
 @Service
 @Transactional
@@ -174,5 +176,21 @@ public class FinderService {
 			principal = this.hackerService.findByPrincipal();
 			Assert.isTrue(finder.getHacker().equals(principal));
 		}
+	}
+
+	protected void deleteFinder(final Hacker hacker) {
+		Finder finder;
+
+		finder = this.finderRepository.findByHackerId(hacker.getId());
+		this.finderRepository.delete(finder);
+	}
+
+	protected void deleteFromFinders(final Position position) {
+		Collection<Finder> finders;
+
+		finders = this.finderRepository.findAllByPosition(position.getId());
+
+		for (final Finder f : finders)
+			f.getPositions().remove(position);
 	}
 }

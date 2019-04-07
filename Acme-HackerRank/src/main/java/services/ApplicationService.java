@@ -97,7 +97,7 @@ public class ApplicationService {
 			Assert.isTrue(!(this.hackerService.originalCurricula().isEmpty()));
 			//TODO comprobar copia de curriculum
 			Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
-			Assert.isTrue(!(application.getCurriculum().getIsOriginal()));
+			//Assert.isTrue(!(application.getCurriculum().getIsOriginal()));
 			Assert.isNull(application.getSubmittedMoment());
 			Assert.isTrue(!(application.getApplicationMoment().equals(null)));
 			Assert.isNull(application.getAnswer());
@@ -157,6 +157,16 @@ public class ApplicationService {
 
 		Assert.notNull(result);
 		Assert.isTrue(this.hackerService.findByPrincipal().equals(result.getHacker()));
+
+		return result;
+	}
+
+	public Application findOneToHackerEdit(final int applicationId) {
+		Application result;
+
+		result = this.findOneToHacker(applicationId);
+
+		Assert.isTrue(result.getCurriculum().equals(null));
 
 		return result;
 	}
@@ -296,6 +306,14 @@ public class ApplicationService {
 		applications = this.applicationRepository.findRejectedApplicationsByPosition(positionId);
 
 		return applications;
+	}
+
+	public Application findApplicationByAnswer(final int answerId) {
+		Application result;
+
+		result = this.applicationRepository.findApplicationByAnswer(answerId);
+
+		return result;
 	}
 
 }

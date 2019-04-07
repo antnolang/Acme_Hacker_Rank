@@ -52,6 +52,10 @@
 		<security:intercept-url pattern="/actor/display.do**" access="permitAll" />  
 		<security:intercept-url pattern="/actor/display.do" access="hasAnyRole('ADMIN')" /> 
 		
+		<security:intercept-url pattern="/answer/hacker/**" access="hasRole('HACKER')" /> 
+		<security:intercept-url pattern="/answer/company,hacker/**" access="hasAnyRole('COMPANY','HACKER')" />
+		
+		
 		<security:intercept-url pattern="/application/company,hacker/**" access="hasAnyRole('COMPANY','HACKER')" />
 		<security:intercept-url pattern="/application/company/**" access="hasRole('COMPANY')" /> 
 		<security:intercept-url pattern="/application/hacker/**" access="hasRole('HACKER')" /> 

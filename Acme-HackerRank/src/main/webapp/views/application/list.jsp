@@ -38,13 +38,6 @@
 					code="application.display" /></a>
 		</display:column>
 
-		<security:authorize access="hasRole('HACKER')">
-		<display:column style="background-color:${colorValue }">
-			<a href="application/hacker/edit.do?applicationId=${row.id}"><spring:message
-					code="application.edit" /></a>
-		</display:column>
-		</security:authorize>
-
 		<display:column style="background-color:${colorValue }"
 			property="problem.title" titleKey="application.problem" />
 			

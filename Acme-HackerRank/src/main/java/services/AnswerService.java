@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.AnswerRepository;
 import domain.Answer;
+import domain.Application;
 
 @Service
 @Transactional
@@ -20,8 +21,17 @@ public class AnswerService {
 	@Autowired
 	private AnswerRepository	answerRepository;
 
-
 	// Supporting services -------------------------------------------
+
+	@Autowired
+	private HackerService		hackerService;
+
+	@Autowired
+	private CompanyService		companyService;
+
+	@Autowired
+	private ApplicationService	applicationService;
+
 
 	//Constructor ----------------------------------------------------
 	public AnswerService() {
@@ -51,6 +61,31 @@ public class AnswerService {
 		Answer result;
 
 		result = this.answerRepository.findOne(answerId);
+
+		return result;
+	}
+
+	public Answer findOneToHackerDisplay(final int answerId) {
+		Application application;
+		Answer result;
+
+		application = this.applicationService.findApplicationByAnswer(answerId);
+		result = this.findOne(answerId);
+
+		Assert.notNull(result);
+		Assert.isTrue(this.hackerService.findByPrincipal().equals(application.getHacker()));
+
+		return result;
+	}
+	public Answer findOneToCompanyDisplay(final int answerId) {
+		Application application;
+		Answer result;
+
+		application = this.applicationService.findApplicationByAnswer(answerId);
+		result = this.findOne(answerId);
+
+		Assert.notNull(result);
+		Assert.isTrue(this.companyService.findByPrincipal().equals(application.getPosition().getCompany()));
 
 		return result;
 	}

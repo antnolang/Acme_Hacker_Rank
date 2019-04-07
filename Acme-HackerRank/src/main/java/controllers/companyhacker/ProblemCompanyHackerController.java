@@ -1,5 +1,5 @@
 
-package controllers.companyhacker;
+package controllers.companyHacker;
 
 import java.util.Collection;
 

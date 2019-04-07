@@ -78,11 +78,9 @@
 		<security:intercept-url pattern="/message/administrator/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" />
 		
-		<security:intercept-url pattern="/position/list.do" access="permitAll" /> 
-		<security:intercept-url pattern="/position/display.do" access="permitAll" /> 
-		<security:intercept-url pattern="/position/availableList.do" access="permitAll" />
-		<security:intercept-url pattern="/position/search.do" access="permitAll" />
+		
 		<security:intercept-url pattern="/position/company/**" access="hasRole('COMPANY')" /> 
+		<security:intercept-url pattern="/position/**" access="permitAll" /> 
 		
 		<security:intercept-url pattern="/problem/company,hacker/**" access="hasAnyRole('COMPANY','HACKER')" />
 		<security:intercept-url pattern="/problem/company/**" access="hasRole('COMPANY')" /> 

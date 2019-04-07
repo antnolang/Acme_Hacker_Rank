@@ -34,7 +34,8 @@
 				</label>
 				<input type="text" name="keyword" id="keyword" value="${keyword}"/>
 				
-				<acme:submit name="save" code="position.search.submit"/>
+				<spring:message code="position.search.submit" var="submitText"/>
+				<input type="submit" value="${submitText}">
 			</div>
 		</form> 
 	</fieldset>

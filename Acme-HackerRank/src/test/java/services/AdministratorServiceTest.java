@@ -18,6 +18,7 @@ import security.Authority;
 import security.UserAccount;
 import utilities.AbstractTest;
 import domain.Administrator;
+import domain.Company;
 import domain.CreditCard;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,6 +36,12 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Autowired
 	private AdministratorRepository	administratorRepository;
+
+	@Autowired
+	private CompanyService			companyService;
+
+	@Autowired
+	private ActorService			actorService;
 
 
 	// Test
@@ -329,6 +336,120 @@ public class AdministratorServiceTest extends AbstractTest {
 
 		super.unauthenticate();
 
+	}
+
+	/*
+	 * A: An actor who is authenticated as an administrator must be able to:
+	 * Ban an actor with the spammer flag
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: Approximately 100% of sentence coverage, since it has been
+	 * covered 6 lines of code of 6 possible.
+	 * 
+	 * D: 100% of data coverage
+	 */
+	@Test
+	public void banActor_positive_test() {
+		Company company;
+
+		super.authenticate("admin1");
+
+		company = this.companyService.findOne(super.getEntityId("company1"));
+
+		company.setIsSpammer(true);
+
+		this.actorService.ban(company);
+
+		Assert.isTrue(company.getUserAccount().getIsBanned());
+
+		super.unauthenticate();
+	}
+
+	/*
+	 * A: An actor who is authenticated as an administrator must be able to:
+	 * Ban an actor with the spammer flag
+	 * 
+	 * B: Ban an actor that doesn't have spammer flag
+	 * 
+	 * C: Approximately 33% of sentence coverage, since it has been
+	 * covered 2 lines of code of 6 possible.
+	 * 
+	 * D: 100% of data coverage
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void banActor_negative_test() {
+		Company company;
+
+		super.authenticate("admin1");
+
+		company = this.companyService.findOne(super.getEntityId("company1"));
+
+		company.setIsSpammer(false);
+
+		this.actorService.ban(company);
+
+		Assert.isTrue(company.getUserAccount().getIsBanned());
+
+		super.unauthenticate();
+	}
+
+	/*
+	 * A: An actor who is authenticated as an administrator must be able to:
+	 * Unban an actor who was banned previously
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: Approximately 100% of sentence coverage, since it has been
+	 * covered 6 lines of code of 6 possible.
+	 * 
+	 * D: 100% of data coverage
+	 */
+	@Test
+	public void unBanActor_positive_test() {
+		Company company;
+
+		super.authenticate("admin1");
+
+		company = this.companyService.findOne(super.getEntityId("company1"));
+
+		company.setIsSpammer(true);
+		company.getUserAccount().setIsBanned(true);
+
+		this.actorService.unBan(company);
+
+		Assert.isTrue(!company.getUserAccount().getIsBanned());
+
+		super.unauthenticate();
+	}
+
+	/*
+	 * A: An actor who is authenticated as an administrator must be able to:
+	 * Unban an actor who was banned previously
+	 * 
+	 * B: Unban an actor who wasn't banned previously
+	 * 
+	 * C: Approximately 33% of sentence coverage, since it has been
+	 * covered 2 lines of code of 6 possible.
+	 * 
+	 * D: 100% of data coverage
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void unBanActor_negative_test() {
+		Company company;
+
+		super.authenticate("admin1");
+
+		company = this.companyService.findOne(super.getEntityId("company1"));
+
+		company.setIsSpammer(true);
+		company.getUserAccount().setIsBanned(false);
+
+		this.actorService.unBan(company);
+
+		Assert.isTrue(!company.getUserAccount().getIsBanned());
+
+		super.unauthenticate();
 	}
 
 }

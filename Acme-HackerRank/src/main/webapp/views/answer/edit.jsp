@@ -21,26 +21,20 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="application/hacker/edit.do"
-	modelAttribute="application">
+<form:form action="answer/hacker/edit.do" modelAttribute="answer">
 	<form:hidden path="id" />
-	<form:hidden path="hacker" />
-	<form:hidden path="applicationMoment" />
-	<form:hidden path="submittedMoment" />
-	<form:hidden path="status" />
-	<form:hidden path="position" />
-	<form:hidden path="problem" />
-	<form:hidden path="answer" />
+	
+	<acme:textbox code="answer.text" path="text" />
+	<br />
+	
+	<acme:textbox code="answer.codeLink" path="codeLink" />
+	<br />
 
-		<acme:selectMandatory items="${curricula}" multiple="false" 
-		 itemLabel="title" code="application.curriculum" path="curriculum"/>
+	<div>
+		<acme:submit name="save" code="answer.save" />
+		&nbsp;
+		<acme:cancel code="answer.cancel"
+			url="application/hacker/list.do" />
+	</div>
 
-		<br />
-		
-		<div>
-			<acme:submit name="save" code="application.save" />
-			&nbsp;
-			<acme:cancel code="application.cancel" url="application/hacker/list.do" />
-		</div>
-		
 </form:form>

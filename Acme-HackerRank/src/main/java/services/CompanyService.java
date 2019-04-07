@@ -43,6 +43,12 @@ public class CompanyService {
 	@Autowired
 	private Validator			validator;
 
+	@Autowired
+	private PositionService		positionService;
+
+	@Autowired
+	private ProblemService		problemService;
+
 
 	// Constructors -------------------------------
 
@@ -101,8 +107,10 @@ public class CompanyService {
 		// Delete applications
 
 		// Delete problems
+		this.problemService.deleteByCompany(company);
 
 		// Delete positions
+		this.positionService.deleteByCompany(company);
 
 		// Delete company in finders
 

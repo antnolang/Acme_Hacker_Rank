@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,11 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ApplicationService;
 import services.HackerService;
-import services.PositionService;
 import controllers.AbstractController;
 import domain.Application;
-import domain.Hacker;
-import domain.Position;
 
 @Controller
 @RequestMapping(value = "/application/company")
@@ -27,9 +23,6 @@ public class ApplicationCompanyController extends AbstractController {
 
 	@Autowired
 	private ApplicationService	applicationService;
-
-	@Autowired
-	private PositionService		positionService;
 
 	@Autowired
 	private HackerService		hackerService;
@@ -44,56 +37,22 @@ public class ApplicationCompanyController extends AbstractController {
 	// Request List -----------------------------------------------------------
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final int positionId) {
-		final ModelAndView result;
+		ModelAndView result;
 		Collection<Application> submittedApplications;
 		Collection<Application> acceptedApplications;
 		Collection<Application> rejectedApplications;
 
-		submittedApplications = this.applicationService.findSubmittedApplicationsByPosition(positionId);
-		acceptedApplications = this.applicationService.findAcceptedApplicationsByPosition(positionId);
-		rejectedApplications = this.applicationService.findRejectedApplicationsByPosition(positionId);
-
-		result = new ModelAndView("application/list");
-		result.addObject("submittedApplications", submittedApplications);
-		result.addObject("acceptedApplications", acceptedApplications);
-		result.addObject("rejectedApplications", rejectedApplications);
-
-		result.addObject("requestURI", "application/company/list.do?positionId=" + positionId);
-
-		return result;
-	}
-
-	// Request create -----------------------------------------------------------
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create(@RequestParam final int positionId) {
-		ModelAndView result;
-
 		try {
-			final Position position;
-			final Application application;
+			submittedApplications = this.applicationService.findSubmittedApplicationsByPosition(positionId);
+			acceptedApplications = this.applicationService.findAcceptedApplicationsByPosition(positionId);
+			rejectedApplications = this.applicationService.findRejectedApplicationsByPosition(positionId);
 
-			position = this.positionService.findOneToDisplay(positionId);
-			application = this.applicationService.create(position);
+			result = new ModelAndView("application/list");
+			result.addObject("submittedApplications", submittedApplications);
+			result.addObject("acceptedApplications", acceptedApplications);
+			result.addObject("rejectedApplications", rejectedApplications);
 
-			result = this.createEditModelAndView(application);
-
-		} catch (final Throwable oops) {
-
-			result = new ModelAndView("redirect:../../error.do");
-		}
-		return result;
-	}
-
-	//Edit
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int applicationId) {
-		ModelAndView result;
-		Application application;
-
-		try {
-
-			application = this.applicationService.findOneToHacker(applicationId);
-			result = this.createEditModelAndView(application);
+			result.addObject("requestURI", "application/company/list.do?positionId=" + positionId);
 
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:../../error.do");
@@ -102,27 +61,44 @@ public class ApplicationCompanyController extends AbstractController {
 		return result;
 	}
 
-	//Save
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Application application, final BindingResult binding) {
+	//Accept
+	@RequestMapping(value = "/accept", method = RequestMethod.GET)
+	public ModelAndView accept(@RequestParam final int applicationId) {
 		ModelAndView result;
-		Application applicationRec;
-		final Hacker principal;
+		Application application;
+		try {
+			application = this.applicationService.findOneToCompany(applicationId);
 
-		applicationRec = this.applicationService.reconstruct(application, binding);
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(application);
-		else
 			try {
-
-				principal = this.hackerService.findByPrincipal();
-				this.applicationService.save(applicationRec);
-				result = new ModelAndView("redirect:../list.do?hackerId=" + principal.getId());
-			}
-
-			catch (final Throwable oops) {
+				this.applicationService.acceptedApplication(application);
+				result = new ModelAndView("redirect:../../application/company/list.do?positionId=" + application.getPosition().getId());
+			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(application, "application.commit.error");
 			}
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:../../error.do");
+		}
+
+		return result;
+	}
+
+	//Reject
+	@RequestMapping(value = "/reject", method = RequestMethod.GET)
+	public ModelAndView reject(@RequestParam final int applicationId) {
+		ModelAndView result;
+		Application application;
+		try {
+			application = this.applicationService.findOneToCompany(applicationId);
+
+			try {
+				this.applicationService.rejectedApplication(application);
+				result = new ModelAndView("redirect:../../application/company/list.do?positionId=" + application.getPosition().getId());
+			} catch (final Throwable oops) {
+				result = this.createEditModelAndView(application, "application.commit.error");
+			}
+		} catch (final Exception e) {
+			result = new ModelAndView("redirect:../../error.do");
+		}
 
 		return result;
 	}

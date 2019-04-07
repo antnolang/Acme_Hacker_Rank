@@ -1,7 +1,6 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -85,16 +84,6 @@ public class PositionServiceTest extends AbstractTest {
 	//
 	//		Assert.isTrue(!results.contains(position));
 	//	}
-
-	@Test
-	public void test_findPositionsBestWorstSalary() {
-
-		final List<Position> positions = new ArrayList<>(this.positionService.findPositionsBestWorstSalary());
-
-		Assert.notNull(positions);
-		Assert.isTrue(positions.size() == 2);
-
-	}
 
 	/*
 	 * A: An actor who is authenticated as an administrator muest be able to:

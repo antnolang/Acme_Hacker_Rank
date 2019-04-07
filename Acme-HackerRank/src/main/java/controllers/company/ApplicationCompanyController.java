@@ -12,8 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ApplicationService;
 import services.HackerService;
+import services.PositionService;
 import controllers.AbstractController;
 import domain.Application;
+import domain.Position;
 
 @Controller
 @RequestMapping(value = "/application/company")
@@ -23,6 +25,9 @@ public class ApplicationCompanyController extends AbstractController {
 
 	@Autowired
 	private ApplicationService	applicationService;
+
+	@Autowired
+	private PositionService		positionService;
 
 	@Autowired
 	private HackerService		hackerService;
@@ -38,11 +43,13 @@ public class ApplicationCompanyController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list(@RequestParam final int positionId) {
 		ModelAndView result;
-		Collection<Application> submittedApplications;
+		final Collection<Application> submittedApplications;
 		Collection<Application> acceptedApplications;
 		Collection<Application> rejectedApplications;
+		Position checkPosition;
 
 		try {
+			checkPosition = this.positionService.findOneFinalByPrincipal(positionId);
 			submittedApplications = this.applicationService.findSubmittedApplicationsByPosition(positionId);
 			acceptedApplications = this.applicationService.findAcceptedApplicationsByPosition(positionId);
 			rejectedApplications = this.applicationService.findRejectedApplicationsByPosition(positionId);
@@ -52,7 +59,7 @@ public class ApplicationCompanyController extends AbstractController {
 			result.addObject("acceptedApplications", acceptedApplications);
 			result.addObject("rejectedApplications", rejectedApplications);
 
-			result.addObject("requestURI", "application/company/list.do?positionId=" + positionId);
+			result.addObject("requestURI", "application/company/list.do?positionId=" + checkPosition.getId());
 
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:../../error.do");

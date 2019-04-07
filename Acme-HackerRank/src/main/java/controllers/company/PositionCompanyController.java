@@ -83,6 +83,7 @@ public class PositionCompanyController extends AbstractController {
 		final Company principal;
 
 		positionRec = this.positionService.reconstruct(position, binding);
+		this.positionService.checkDeadline(position, binding);
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(position);
 		else

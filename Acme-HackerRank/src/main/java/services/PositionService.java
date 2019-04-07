@@ -314,7 +314,7 @@ public class PositionService {
 		return result;
 	}
 
-	private void checkDeadline(final Position position, final BindingResult binding) {
+	public void checkDeadline(final Position position, final BindingResult binding) {
 		if (position.getDeadline() != null)
 			if (position.getDeadline().before(this.utilityService.current_moment()))
 				binding.rejectValue("deadline", "position.commit.deadline", "Deadline must be in the future");

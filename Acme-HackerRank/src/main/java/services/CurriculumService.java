@@ -11,7 +11,11 @@ import org.springframework.util.Assert;
 import repositories.CurriculumRepository;
 import domain.Application;
 import domain.Curriculum;
+import domain.EducationData;
 import domain.Hacker;
+import domain.MiscellaneousData;
+import domain.PersonalData;
+import domain.PositionData;
 
 @Service
 @Transactional
@@ -20,10 +24,22 @@ public class CurriculumService {
 	// Managed repository ------------------------------------------------
 
 	@Autowired
-	private CurriculumRepository	curriculumRepository;
-
+	private CurriculumRepository		curriculumRepository;
 
 	// Other supporting services -----------------------------------------
+
+	@Autowired
+	private PersonalDataService			personalDataService;
+
+	@Autowired
+	private PositionDataService			positionDataService;
+
+	@Autowired
+	private EducationDataService		educationDataService;
+
+	@Autowired
+	private MiscellaneousDataService	miscellaneousDataService;
+
 
 	// Constructors ------------------------------------------------------
 
@@ -46,6 +62,15 @@ public class CurriculumService {
 
 	// Ancillary methods -------------------------------------------------
 
+	protected Curriculum saveCopy(final Curriculum curriculum) {
+		Curriculum saved, copy;
+
+		copy = this.copy(curriculum);
+		saved = this.curriculumRepository.save(copy);
+
+		return saved;
+	}
+
 	protected void deleteCurriculum(final Application application) {
 		Curriculum curriculum;
 
@@ -60,6 +85,30 @@ public class CurriculumService {
 		curriculums = this.curriculumRepository.findAllByHacker(hacker.getId());
 
 		this.curriculumRepository.deleteInBatch(curriculums);
+	}
+
+	private Curriculum copy(final Curriculum curriculum) {
+		Curriculum result;
+		PersonalData personalData;
+		Collection<EducationData> educationDatas;
+		Collection<MiscellaneousData> miscellaneousDatas;
+		Collection<PositionData> positionDatas;
+
+		result = new Curriculum();
+		personalData = this.personalDataService.copy(curriculum.getPersonalData());
+		educationDatas = this.educationDataService.copy(curriculum.getEducationDatas());
+		miscellaneousDatas = this.miscellaneousDataService.copy(curriculum.getMiscellaneousDatas());
+		positionDatas = this.positionDataService.copy(curriculum.getPositionDatas());
+
+		result.setHacker(curriculum.getHacker());
+		result.setIsOriginal(curriculum.getIsOriginal());
+		result.setTitle(curriculum.getTitle());
+		result.setEducationDatas(educationDatas);
+		result.setMiscellaneousDatas(miscellaneousDatas);
+		result.setPersonalData(personalData);
+		result.setPositionDatas(positionDatas);
+
+		return result;
 	}
 
 }

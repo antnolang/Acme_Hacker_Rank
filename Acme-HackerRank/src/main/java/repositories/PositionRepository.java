@@ -27,6 +27,10 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	@Query("select p from Position p where p.company.id = ?1 and p.isFinalMode = true")
 	Collection<Position> findFinalModePositionsByCompany(int companyId);
 
+
+	@Query("select p from Position p join p.problems pr where pr.id=?1")
+	Collection<Position> findPositionsByProblem(int id);
+
 	@Query("select p from Position p where (p.isFinalMode = true) and (p.isCancelled = false) and ((p.title like concat('%', concat(?1, '%'))) or (p.description like concat('%', concat(?1, '%'))) or (p.profile like concat('%', concat(?1, '%'))) or (p.skills like concat('%', concat(?1, '%'))) or (p.technologies like concat('%', concat(?1, '%'))) or (p.company.name like concat('%', concat(?1, '%'))))")
 	Collection<Position> findAvailableByKeyword(String keyword);
 
@@ -44,4 +48,5 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	// Query dashboard 11.2.1 The average, the minimum, the maximum, and the standard deviation of the number of positions per company
 	@Query("select avg(1.0 * (select count(p) from Position p where p.company.id = c.id)), min(1.0 * (select count(p) from Position p where p.company.id = c.id)), max(1.0 * (select count(p) from Position p where p.company.id = c.id)),stddev(1.0 * (select count(p) from Position p where p.company.id = c.id)) from Company c)")
 	Double[] findDataNumberPositionsPerCompany();
+
 }

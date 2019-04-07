@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -64,6 +65,7 @@ public class PositionService {
 		result.setCompany(company);
 		result.setIsFinalMode(false);
 		result.setIsCancelled(false);
+		result.setProblems(Collections.<Problem> emptySet());
 
 		return result;
 	}
@@ -217,6 +219,13 @@ public class PositionService {
 		this.positionRepository.delete(positions);
 
 	}
+	public Collection<Position> findPositionsByProblem(final Problem problem) {
+		Collection<Position> positions;
+
+		positions = this.positionRepository.findPositionsByProblem(problem.getId());
+
+		return positions;
+	}
 	// Protected methods -----------------------------------------------
 	protected String existTicker(final String ticker) {
 		String result;
@@ -272,6 +281,7 @@ public class PositionService {
 		result.setSkills(position.getSkills());
 		result.setTechnologies(position.getTechnologies());
 		result.setTitle(position.getTitle());
+		result.setProblems(position.getProblems());
 
 		this.checkDeadline(result, binding);
 

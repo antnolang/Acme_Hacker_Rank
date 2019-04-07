@@ -19,12 +19,70 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
+<!------------ SEARCH ------------>
+<jstl:if test="${isSearch}">
+	<fieldset>
+		<legend><spring:message code="position.search.legend"/></legend>
+		
+		<form action="position/search.do" method="get">
+			<div>
+				<label for="keyword">
+					<spring:message code="position.search.keyword"/>
+				</label>
+				<input type="text" name="keyword" id="keyword" value="${keyword}"/>
+				
+				<spring:message code="position.search.submit" var="submitText"/>
+				<input type="submit" value="${submitText}">
+			</div>
+		</form> 
+	</fieldset>
+</jstl:if>
 
 
-<display:table name="positions" id="row" requestURI="${requestURI}" class="displaytag" pagesize="5">
+<!------------ FINDER ------------>
+<jstl:if test="${finder ne null}">
+	<fieldset>
+		<legend><spring:message code="position.finder.legend"/></legend>
+		
+		<p style="color:blue;">
+			<spring:message code="position.finder.warning"/><jstl:out value="${numberOfResults}"/>
+		</p>
+		
+		<ul>
+			<li>
+				<strong><spring:message code="position.finder.keyword"/>:</strong>
+				<jstl:out value="${finder.keyword}"/>
+			</li>
+			<li>
+				<strong><spring:message code="position.finder.deadline"/>:</strong>
+				<jstl:out value="${finder.deadline}"/>
+			</li>
+			<li>
+				<strong><spring:message code="position.finder.maximum.deadline"/>:</strong>
+				<jstl:out value="${finder.maximumDeadline}"/>
+			</li>
+			<li>
+				<strong><spring:message code="position.finder.minimum.salary"/>:</strong>
+				<jstl:out value="${finder.minimumSalary}"/>
+			</li>
+		</ul>
+		
+		<div>
+			<a href="finder/hacker/edit.do"><spring:message code="position.finder.edit"/></a>
+			&nbsp;
+			<a href="finder/hacker/clear.do"><spring:message code="position.finder.clear"/></a>
+		</div>
+	</fieldset>
+	
+	<jstl:set var="positions" value="${finder.positions}"/>
+</jstl:if>
+
+
+<!------------ POSITION LIST ------------>
+<display:table name="${positions}" id="row" requestURI="${requestURI}" class="displaytag" pagesize="5">
 
 	<display:column>
 		<a href="position/display.do?positionId=${row.id}"><spring:message code="position.table.display"/></a>

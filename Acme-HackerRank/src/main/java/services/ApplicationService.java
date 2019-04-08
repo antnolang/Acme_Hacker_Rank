@@ -44,6 +44,9 @@ public class ApplicationService {
 	@Autowired
 	private UtilityService			utilityService;
 
+	@Autowired
+	private MessageService			messageService;
+
 
 	//Constructor ----------------------------------------------------
 	public ApplicationService() {
@@ -130,6 +133,7 @@ public class ApplicationService {
 		Assert.isTrue(!(application.getAnswer().equals(null)));
 		Assert.isTrue(!(application.getSubmittedMoment().equals(null)));
 		application.setStatus("ACCEPTED");
+		this.messageService.notification_applicationStatusChanges(application);
 	}
 
 	public void rejectedApplication(final Application application) {
@@ -138,6 +142,7 @@ public class ApplicationService {
 		Assert.isTrue(!(application.getAnswer().equals(null)));
 		Assert.isTrue(!(application.getSubmittedMoment().equals(null)));
 		application.setStatus("REJECTED");
+		this.messageService.notification_applicationStatusChanges(application);
 	}
 
 	protected void addAnswer(final Application application, final Answer answer) {

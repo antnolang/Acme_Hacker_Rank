@@ -50,6 +50,8 @@
 		<security:authorize access="hasRole('HACKER')">
 			<li><a href="finder/hacker/display.do" class="fNiv"><spring:message code="master.page.finder"/></a>
 			</li>
+			<li><a href="curriculum/hacker/list.do" class="fNiv"><spring:message code="master.page.curriculum.list"/></a>
+			</li>
 			
 			<jstl:set var="isHacker" value="${true}"/>
 		</security:authorize>

@@ -29,6 +29,8 @@
 	
 	<acme:textarea code="problem.hint" path="hint" />
 	
+	
+	<p style="color:blue;"><spring:message code="problem.info.attachments"/></p>
 	<acme:textarea code="problem.attachments" path="attachments" />
 
 	<acme:submit name="save" code="problem.save"/>	

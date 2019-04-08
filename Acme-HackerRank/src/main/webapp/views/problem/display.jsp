@@ -42,6 +42,16 @@
 		<jstl:out value="${problem.attachments}"/>
 	<br/>
 	
+	<jstl:if test="${not empty attachments}">
+		<strong><spring:message code="problem.attachments"/>:</strong>
+		<br>
+		<ul>
+			<jstl:forEach var="attachment" items="${attachments}">
+				<li> <a href="${attachment}"><jstl:out value="${attachment}"/></a> </li>			
+			</jstl:forEach>
+		</ul>
+	</jstl:if>
+	
 	<security:authorize access="hasRole('COMPANY')">
 		<strong><spring:message code="problem.finalMode"/>:</strong>
 			<jstl:out value="${problem.isFinalMode}"/>

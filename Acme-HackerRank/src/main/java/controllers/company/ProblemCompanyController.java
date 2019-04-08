@@ -4,6 +4,7 @@ package controllers.company;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -96,6 +97,8 @@ public class ProblemCompanyController extends AbstractController {
 
 				this.problemService.save(problemRec);
 				result = new ModelAndView("redirect:../company/list.do");
+			} catch (final DataIntegrityViolationException e1) {
+				result = this.createEditModelAndView(problem, "problem.commit.url");
 			}
 
 			catch (final Throwable oops) {

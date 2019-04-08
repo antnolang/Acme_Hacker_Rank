@@ -276,7 +276,7 @@ public class PositionServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			/*
 			 * A:Req 9.1 Create a position, all datas
-			 * C:
+			 * C: 32/34-> 94% of executed lines codes
 			 * D:
 			 */
 			{
@@ -284,7 +284,8 @@ public class PositionServiceTest extends AbstractTest {
 			},
 
 			/*
-			 * A:Req 9.1 Create a position, title in blank
+			 * A:Req 9.1 Create a position,
+			 * B: title in blank
 			 * C:
 			 * D:
 			 */
@@ -292,7 +293,7 @@ public class PositionServiceTest extends AbstractTest {
 				"company1", "position3", "", "", "2020-02-02", "", "", "", 2.2, null
 			},
 		/*
-		 * A:Req 9.1 Create a position, description in blank
+		 * A:Req 9.1 Create a position,
 		 * C:
 		 * D:
 		 */

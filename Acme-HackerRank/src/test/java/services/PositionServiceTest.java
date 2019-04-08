@@ -278,7 +278,7 @@ public class PositionServiceTest extends AbstractTest {
 			 * D:
 			 */
 			{
-				"company1", "position1", "titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
+				"company1", "position3", "titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
 			},
 
 			/*
@@ -287,7 +287,7 @@ public class PositionServiceTest extends AbstractTest {
 			 * D:
 			 */
 			{
-				"company1", "position1", "", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
+				"company1", "position3", "", "", "2020-02-02", "", "", "", 2.2, null
 			},
 		/*
 		 * A:Req 9.1 Create a position, description in blank
@@ -393,7 +393,7 @@ public class PositionServiceTest extends AbstractTest {
 		int positionId;
 		Position position;
 
-		positionId = super.getEntityId("position4");
+		positionId = super.getEntityId("position3");
 		position = this.positionService.findOneToEditDelete(positionId);
 
 		this.positionService.delete(position);
@@ -413,7 +413,7 @@ public class PositionServiceTest extends AbstractTest {
 		int positionId;
 		Position position;
 
-		positionId = super.getEntityId("position4");
+		positionId = super.getEntityId("position8");
 		position = this.positionService.findOneToEditDelete(positionId);
 
 		this.positionService.delete(position);
@@ -449,7 +449,7 @@ public class PositionServiceTest extends AbstractTest {
 
 		int positionId;
 
-		positionId = super.getEntityId("position4");
+		positionId = super.getEntityId("position5");
 		this.positionService.findOneToDisplay(positionId);
 
 		super.unauthenticate();

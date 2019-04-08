@@ -85,7 +85,7 @@
 	
 	<spring:message code="position.vat" var="vatTag"/>
 	<strong><spring:message code="position.salary"/>:</strong>
-	<fmt:formatNumber type="number" maxFractionDigits="2" value="${position.salary * (1 + position.company.VATnumber)}"/> &#8364; <jstl:out value="(${position.company.VATnumber}% ${vatTag} Inc.)"/>
+	<fmt:formatNumber type="number" maxFractionDigits="2" value="${position.salary * (1 + position.company.VATnumber/100)}"/> &#8364; <jstl:out value="(${position.company.VATnumber}% ${vatTag} Inc.)"/>
 
 	<br/>
 	

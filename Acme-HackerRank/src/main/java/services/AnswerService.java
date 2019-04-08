@@ -12,6 +12,8 @@ import org.springframework.util.Assert;
 import repositories.AnswerRepository;
 import domain.Answer;
 import domain.Application;
+import domain.Company;
+import domain.Hacker;
 
 @Service
 @Transactional
@@ -101,6 +103,20 @@ public class AnswerService {
 		results = this.answerRepository.findAll();
 
 		return results;
+	}
+
+	public void deleteAnswerByCompany(final Company company) {
+		Collection<Answer> answers;
+
+		answers = this.answerRepository.findAnswerByCompany(company.getId());
+		this.answerRepository.deleteInBatch(answers);
+	}
+
+	public void deleteAnswerByHacker(final Hacker hacker) {
+		Collection<Answer> answers;
+
+		answers = this.answerRepository.findAnswerByHacker(hacker.getId());
+		this.answerRepository.deleteInBatch(answers);
 	}
 
 	// Other business methods ---------------------

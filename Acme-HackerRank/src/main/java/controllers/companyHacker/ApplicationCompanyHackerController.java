@@ -10,8 +10,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import security.LoginService;
 import services.ApplicationService;
-import services.HackerService;
-import services.PositionService;
 import controllers.AbstractController;
 import domain.Application;
 
@@ -23,12 +21,6 @@ public class ApplicationCompanyHackerController extends AbstractController {
 
 	@Autowired
 	private ApplicationService	applicationService;
-
-	@Autowired
-	private PositionService		positionService;
-
-	@Autowired
-	private HackerService		hackerService;
 
 
 	// Constructors -----------------------------------------------------------

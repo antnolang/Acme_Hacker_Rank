@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.AnswerService;
 import services.ApplicationService;
-import services.HackerService;
 import controllers.AbstractController;
 import domain.Answer;
 import domain.Application;
@@ -30,9 +29,6 @@ public class AnswerHackerController extends AbstractController {
 
 	@Autowired
 	private AnswerService		answerService;
-
-	@Autowired
-	private HackerService		hackerService;
 
 
 	// Constructors -----------------------------------------------------------

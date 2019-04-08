@@ -358,20 +358,21 @@ public class MessageService {
 		for (final Hacker h : all) {
 			finder = this.finderService.findByHacker(h.getId());
 
-			this.positionService.searchPositionFinder(finder, null);
-
 			returned_positions = this.positionService.matchCriteria(finder);
 
 			if (returned_positions.contains(position))
 				recipients.add(h);
 		}
 
-		subject = "A new offer / Una nueva oferta";
-		body = "A new published position matches with your finder search criteria / Una nueva oferta recien publicada coincide con tu criterio de búsqueda.";
+		if (!recipients.isEmpty()) {
+			subject = "A new offer / Una nueva oferta";
+			body = "A new published position matches with your finder search criteria / Una nueva oferta recien publicada coincide con tu criterio de búsqueda.";
 
-		notification = this.createNotification(recipients, subject, body);
+			notification = this.createNotification(recipients, subject, body);
 
-		result = this.send(notification);
+			result = this.messageRepository.save(notification);
+		} else
+			result = null;
 
 		return result;
 	}

@@ -17,7 +17,9 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Actor;
+import domain.Application;
 import domain.Message;
+import domain.Position;
 import domain.SystemTag;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -37,6 +39,12 @@ public class MessageServiceTest extends AbstractTest {
 
 	@Autowired
 	private SystemTagService	systemTagService;
+
+	@Autowired
+	private PositionService		positionService;
+
+	@Autowired
+	private ApplicationService	applicationService;
 
 
 	// Suite test ---------------------------------------------
@@ -459,26 +467,62 @@ public class MessageServiceTest extends AbstractTest {
 	 * C: Analysis of sentence coverage: 35/35 -> 100.00% of executed lines codes .
 	 * D: Analysis of data coverage: Intentionally blank.
 	 */
-	//	@Test
-	//	public void notificationApplication_positiveTest() {
-	//		super.authenticate("company1");
-	//
-	//		Application application;
-	//		final int applicationId = super.getEntityId("application1");
-	//		int actorId;
-	//		Message notification;
-	//		Collection<Message> receivedMessages;
-	//
-	//		application = this.applicationService.findOne(applicationId);
-	//
-	//		notification = this.messageService.notification_applicationStatusChanges(application);
-	//
-	//		actorId = super.getEntityId("hacker1");
-	//		receivedMessages = this.messageService.findReceivedMessagesOrderByTags(actorId);
-	//
-	//		Assert.isTrue(receivedMessages.contains(notification));
-	//
-	//		super.unauthenticate();
-	//	}
+	@Test
+	public void notificationApplication_positiveTest() {
+		int applicationId, actorId;
+		Application application;
+		Message notification;
+		Collection<Message> receivedMessages;
+
+		applicationId = super.getEntityId("application1");
+		application = this.applicationService.findOne(applicationId);
+
+		notification = this.messageService.notification_applicationStatusChanges(application);
+
+		actorId = super.getEntityId("hacker1");
+		receivedMessages = this.messageService.findReceivedMessagesOrderByTags(actorId);
+
+		Assert.isTrue(receivedMessages.contains(notification));
+	}
+
+	/*
+	 * A: Requirement 27 (A new offer that matches a hacker's finder search criteria is published).
+	 * B: The position is not published
+	 * C: Analysis of sentence coverage: 2/52 -> 3.85% of executed lines codes .
+	 * D: Analysis of data coverage: Intentionally blank.
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void notification_newOffer_negativeTest() {
+		int positionId;
+		Position position;
+		Message notification;
+
+		positionId = super.getEntityId("position3");
+		position = this.positionService.findOne(positionId);
+
+		notification = this.messageService.notification_newOfferPublished(position);
+
+		Assert.isNull(notification);
+	}
+
+	/*
+	 * A: Requirement 27 (A new offer that matches a hacker's finder search criteria is published).
+	 * C: Analysis of sentence coverage: 49/52 -> 94.23% of executed lines codes .
+	 * D: Analysis of data coverage: Intentionally blank.
+	 */
+	@Test
+	public void notification_newOffer_positiveTest() {
+		int positionId;
+		Position position;
+		Message notification;
+
+		positionId = super.getEntityId("position1");
+		position = this.positionService.findOne(positionId);
+
+		notification = this.messageService.notification_newOfferPublished(position);
+
+		Assert.notNull(notification);
+		Assert.notEmpty(notification.getRecipients());
+	}
 
 }

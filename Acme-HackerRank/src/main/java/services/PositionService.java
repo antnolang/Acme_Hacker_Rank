@@ -44,6 +44,9 @@ public class PositionService {
 	@Autowired
 	private Validator			validator;
 
+	@Autowired
+	private MessageService		messageService;
+
 
 	// Other supporting services -------------------
 
@@ -147,7 +150,10 @@ public class PositionService {
 		this.checkByPrincipal(position);
 
 		position.setIsFinalMode(true);
+
+		this.messageService.notification_newOfferPublished(position);
 	}
+
 	public void cancel(final Position position) {
 		this.checkByPrincipal(position);
 		Assert.isTrue(position.getIsFinalMode());

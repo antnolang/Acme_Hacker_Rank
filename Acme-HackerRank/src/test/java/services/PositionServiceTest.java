@@ -6,10 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -164,62 +166,75 @@ public class PositionServiceTest extends AbstractTest {
 			/*
 			 * A:Req 9.1 Create a position, all datas
 			 * C: 36/38 -> 95% of executed lines codes
-			 * D: 128
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
 			 */
 			{
-				"company1", "titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
+				"company1", "titleNuevo", "descriptionNuevo", "2020/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
 			},
 
 			/*
 			 * A:Req 9.1 Create a position,
 			 * B: title in blank
-			 * C:
-			 * D:
+			 * C: 35/38 -> 92% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
 			 */
 			{
-				"company1", "", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
+				"company1", "", "descriptionNuevo", "2020/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
 			},
-		/*
-		 * A:Req 9.1 Create a position,
-		 * B: description in blank
-		 * C:
-		 * D:
-		 */
-		//			{
-		//				"company1", "titleNuevo", "", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
-		//			},
-		//			/*
-		//			 * A:Req 9.1 Create a position, profile in blank
-		//			 * C:
-		//			 * D:
-		//			 */
-		//			{
-		//				"company1", "titleNuevo", "descriptionNuevo", "2020-02-02", "", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
-		//			},
-		//			/*
-		//			 * A:Req 9.1 Create a position, skills in blank
-		//			 * C:
-		//			 * D:
-		//			 */
-		//			{
-		//				"company1", "titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "", "technologiesNuevo", 22.3, ConstraintViolationException.class
-		//			},
-		//			/*
-		//			 * A:Req 9.1 Create a position, technologies in blank
-		//			 * C:
-		//			 * D:
-		//			 */
-		//			{
-		//				"company1", "titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
-		//			},
-		//			/*
-		//			 * A:Req 9.1 Create a position, negative salary
-		//			 * C:
-		//			 * D:
-		//			 */
-		//			{
-		//				"company1", "titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", -22.3, ConstraintViolationException.class
-		//			},
+			/*
+			 * A:Req 9.1 Create a position,
+			 * B: description in blank
+			 * C: 35/38 -> 92% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "titleNuevo", "", "2020/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
+			},
+			/*
+			 * A:Req 9.1 Create a position
+			 * B: profile in blank
+			 * C: 35/38 -> 92% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "titleNuevo", "descriptionNuevo", "2020/02/02", "", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
+			},
+			/*
+			 * A:Req 9.1 Create a position
+			 * B: skills in blank
+			 * C: 35/38 -> 92% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "titleNuevo", "descriptionNuevo", "2020/02/02", "profileNuevo", "", "technologiesNuevo", 22.3, ConstraintViolationException.class
+			},
+			/*
+			 * A:Req 9.1 Create a position
+			 * B: technologies in blank
+			 * C: 35/38 -> 92% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "titleNuevo", "descriptionNuevo", "2020/02/02", "profileNuevo", "skillsNuevo", "", 22.3, ConstraintViolationException.class
+			},
+			/*
+			 * A:Req 9.1 Create a position
+			 * B: negative salary
+			 * C: 35/38 -> 92% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "titleNuevo", "descriptionNuevo", "2020/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", -22.3, ConstraintViolationException.class
+			},
+			/*
+			 * A:Req 9.1 Create a position
+			 * B: Past deadline
+			 * C: 33/38 -> 86% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "titleNuevo", "descriptionNuevo", "2018/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, DataIntegrityViolationException.class
+			},
 
 		};
 
@@ -275,63 +290,68 @@ public class PositionServiceTest extends AbstractTest {
 	public void driverEdit() {
 		final Object testingData[][] = {
 			/*
-			 * A:Req 9.1 Create a position, all datas
+			 * A:Req 9.1 Edit a position, all datas
 			 * C: 32/34-> 94% of executed lines codes
 			 * D:
 			 */
 			{
-				"company1", "position3", "titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
+				"company1", "position3", "titleNuevo", "descriptionNuevo", "2020/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
 			},
 
 			/*
-			 * A:Req 9.1 Create a position,
+			 * A:Req 9.1 Edit a position,
 			 * B: title in blank
-			 * C:
-			 * D:
+			 * C: 31/34-> 91% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
 			 */
 			{
-				"company1", "position3", "", "", "2020-02-02", "", "", "", 2.2, null
+				"company1", "position3", "", "descriptionNuevo", "2020/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.2, ConstraintViolationException.class
 			},
-		/*
-		 * A:Req 9.1 Create a position,
-		 * C:
-		 * D:
-		 */
-		//			{
-		//				"company1","position1", "titleNuevo", "", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
-		//			},
-		//			/*
-		//			 * A:Req 9.1 Create a position, profile in blank
-		//			 * C:
-		//			 * D:
-		//			 */
-		//			{
-		//				"company1","position1", "titleNuevo", "descriptionNuevo", "2020-02-02", "", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
-		//			},
-		//			/*
-		//			 * A:Req 9.1 Create a position, skills in blank
-		//			 * C:
-		//			 * D:
-		//			 */
-		//			{
-		//				"company1", "position1","titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "", "technologiesNuevo", 22.3, ConstraintViolationException.class
-		//			},
-		//			/*
-		//			 * A:Req 9.1 Create a position, technologies in blank
-		//			 * C:
-		//			 * D:
-		//			 */
-		//			{
-		//				"company1", "position1","titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
-		//			},
-		//			/*
-		//			 * A:Req 9.1 Create a position, negative salary
-		//			 * C:
-		//			 * D:
-		//			 */
-		//			{
-		//				"company1", "position1","titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", -22.3, ConstraintViolationException.class
-		//			},
+			/*
+			 * A:Req 9.1 Edit a position,
+			 * B: description in blank
+			 * C: 31/34-> 91% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "position3", "titleNuevo", "", "2020/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
+			},
+			/*
+			 * A:Req 9.1 Create a position
+			 * B: profile in blank
+			 * C: 31/34-> 91% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "position3", "titleNuevo", "descriptionNuevo", "2020/02/02", "", "skillsNuevo", "technologiesNuevo", 22.3, ConstraintViolationException.class
+			},
+			/*
+			 * A:Req 9.1 Create a position
+			 * B: skills in blank
+			 * C: 31/34-> 91% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "position3", "titleNuevo", "descriptionNuevo", "2020/02/02", "profileNuevo", "", "technologiesNuevo", 22.3, ConstraintViolationException.class
+			},
+			/*
+			 * A:Req 9.1 Create a position
+			 * B: technologies in blank
+			 * C: 31/34-> 91% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "position3", "titleNuevo", "descriptionNuevo", "2020/02/02", "profileNuevo", "skillsNuevo", "", 22.3, ConstraintViolationException.class
+			},
+			/*
+			 * A:Req 9.1 Create a position
+			 * B: negative salary
+			 * C: 31/34-> 91% of executed lines codes
+			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
+			 */
+			{
+				"company1", "position3", "titleNuevo", "descriptionNuevo", "2020/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", -22.3, ConstraintViolationException.class
+			},
 
 		};
 
@@ -357,7 +377,7 @@ public class PositionServiceTest extends AbstractTest {
 
 			position = this.positionService.findOneToEditDelete(positionId);
 
-			formatter = new SimpleDateFormat("yyyy-MM-dd");
+			formatter = new SimpleDateFormat("yyyy/MM/dd");
 			deadline = formatter.parse(deadlineString);
 
 			position.setTitle(title);

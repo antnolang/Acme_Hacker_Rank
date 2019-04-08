@@ -244,7 +244,7 @@ public class PositionService {
 		if (position.getId() == 0)
 			result = false;
 		else {
-			problems = this.problemService.findProblemsByPrincipal();
+			problems = position.getProblems();
 			result = problems.size() >= 2;
 		}
 
@@ -324,7 +324,9 @@ public class PositionService {
 		result.setSkills(position.getSkills());
 		result.setTechnologies(position.getTechnologies());
 		result.setTitle(position.getTitle());
-		result.setProblems(position.getProblems());
+
+		if (position.getProblems() != null)
+			result.setProblems(position.getProblems());
 
 		this.validator.validate(result, binding);
 

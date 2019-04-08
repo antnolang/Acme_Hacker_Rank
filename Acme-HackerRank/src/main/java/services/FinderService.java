@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -54,6 +55,17 @@ public class FinderService {
 	}
 
 	// Simple CRUD methods -----------------------------------------------
+
+	private Finder create() {
+		Finder result;
+
+		result = new Finder();
+		result.setKeyword("");
+		result.setUpdatedMoment(new Date(Integer.MIN_VALUE));
+		result.setPositions(Collections.<Position> emptySet());
+
+		return result;
+	}
 
 	public void save(final Finder finder) {
 		Assert.notNull(finder);
@@ -176,6 +188,14 @@ public class FinderService {
 			principal = this.hackerService.findByPrincipal();
 			Assert.isTrue(finder.getHacker().equals(principal));
 		}
+	}
+
+	protected void assignNewFinder(final Hacker hacker) {
+		Finder finder;
+
+		finder = this.create();
+		finder.setHacker(hacker);
+		this.save(finder);
 	}
 
 	protected Finder findByHacker(final int hackerId) {

@@ -25,10 +25,8 @@ public class ProblemServiceTest extends AbstractTest {
 	@Autowired
 	private ProblemService	problemService;
 
-	// Other services ------------------------------------------
-	@Autowired
-	private CompanyService	companyService;
 
+	// Other services ------------------------------------------
 
 	// Suite test ---------------------------------------------
 
@@ -37,7 +35,7 @@ public class ProblemServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			/*
 			 * A:Req 9.2 Create a problem, all datas
-			 * C:
+			 * C:33/33 -> 100% of executed lines codes
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
@@ -46,7 +44,7 @@ public class ProblemServiceTest extends AbstractTest {
 
 			/*
 			 * A:Req 9.2 Create a problem, without hint (hint is optional)
-			 * C:
+			 * C: 33/33 -> 100% of executed lines codes
 			 * D: 6.25% ((1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
@@ -55,7 +53,7 @@ public class ProblemServiceTest extends AbstractTest {
 			/*
 			 * A: Req 9.2 Create a problem
 			 * B: Title in blank
-			 * C:
+			 * C: 32/33 -> 97% of executed lines codes
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
@@ -64,7 +62,7 @@ public class ProblemServiceTest extends AbstractTest {
 			/*
 			 * A: Req 9.2 Create a problem
 			 * B: Statement in blank
-			 * C:
+			 * C: 32/33 -> 97% of executed lines codes
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
@@ -117,7 +115,7 @@ public class ProblemServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			/*
 			 * A:Req 9.2 Edit a problem, all datas
-			 * C:
+			 * C: 29/29 -> 100% of executed lines codes
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
@@ -126,7 +124,7 @@ public class ProblemServiceTest extends AbstractTest {
 
 			/*
 			 * A:Req 9.2 Edit a problem, without hint (hint is optional)
-			 * C:
+			 * C:29/29 -> 100% of executed lines codes
 			 * D: 6.25% ((1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
@@ -135,7 +133,7 @@ public class ProblemServiceTest extends AbstractTest {
 			/*
 			 * A: Req 9.2 Edit a problem
 			 * B: Title in blank
-			 * C:
+			 * C: 28/29 -> 96.5% of executed lines codes
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
@@ -144,7 +142,7 @@ public class ProblemServiceTest extends AbstractTest {
 			/*
 			 * A: Req 9.2 Edit a problem
 			 * B: Statement in blank
-			 * C:
+			 * C: 28/29 -> 96.5% of executed lines codes
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
@@ -153,7 +151,7 @@ public class ProblemServiceTest extends AbstractTest {
 			/*
 			 * A: Req 9.2 Edit a problem
 			 * B: Edit a problem in final mode
-			 * C:
+			 * C: 9/29 -> 31% of executed lines codes
 			 * D:intentionally blank.there's nothing to check
 			 */
 			{
@@ -162,7 +160,7 @@ public class ProblemServiceTest extends AbstractTest {
 			/*
 			 * A: Req 9.2 Edit a problem
 			 * B: Edit a problem from another user
-			 * C:
+			 * C: 8/29 -> 27% of executed lines codes
 			 * D:intentionally blank.there's nothing to check
 			 */
 			{
@@ -212,7 +210,7 @@ public class ProblemServiceTest extends AbstractTest {
 
 	/*
 	 * A: Req 9.2 Delete a problem
-	 * C:
+	 * C: 21/21 -> 100% of executed lines codes
 	 * D:intentionally blank.there's nothing to check
 	 */
 	@Test
@@ -233,7 +231,7 @@ public class ProblemServiceTest extends AbstractTest {
 	/*
 	 * A: Req 9.2 Delete a problem
 	 * B: Delete a problem from another user
-	 * C:
+	 * C: 9/21 -> 42% of executed lines codes
 	 * D:intentionally blank.there's nothing to check
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -254,7 +252,7 @@ public class ProblemServiceTest extends AbstractTest {
 	/*
 	 * A: Req 9.2 Delete a problem
 	 * B: Delete a problem in final mode
-	 * C:
+	 * C: 10/21 -> 47% of executed lines codes
 	 * D:intentionally blank.there's nothing to check
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -274,7 +272,7 @@ public class ProblemServiceTest extends AbstractTest {
 
 	/*
 	 * A: Req 9.2 Display a problem
-	 * C:
+	 * C: 10/10 -> 100% of executed lines codes
 	 * D:intentionally blank.there's nothing to check
 	 */
 	@Test
@@ -292,7 +290,7 @@ public class ProblemServiceTest extends AbstractTest {
 	/*
 	 * A: Req 9.2 Display a problem
 	 * B: Display a from from another user
-	 * C:
+	 * C: 8/10 -> 80% of executed lines codes
 	 * D:intentionally blank.there's nothing to check
 	 */
 	@Test(expected = IllegalArgumentException.class)

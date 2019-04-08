@@ -163,15 +163,16 @@ public class PositionServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			/*
 			 * A:Req 9.1 Create a position, all datas
-			 * C:
-			 * D:
+			 * C: 36/38 -> 95% of executed lines codes
+			 * D: 128
 			 */
 			{
 				"company1", "titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
 			},
 
 			/*
-			 * A:Req 9.1 Create a position, title in blank
+			 * A:Req 9.1 Create a position,
+			 * B: title in blank
 			 * C:
 			 * D:
 			 */
@@ -179,7 +180,8 @@ public class PositionServiceTest extends AbstractTest {
 				"company1", "", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
 			},
 		/*
-		 * A:Req 9.1 Create a position, description in blank
+		 * A:Req 9.1 Create a position,
+		 * B: description in blank
 		 * C:
 		 * D:
 		 */
@@ -274,23 +276,24 @@ public class PositionServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 			/*
 			 * A:Req 9.1 Create a position, all datas
-			 * C:
+			 * C: 32/34-> 94% of executed lines codes
 			 * D:
 			 */
 			{
-				"company1", "position1", "titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
+				"company1", "position3", "titleNuevo", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
 			},
 
 			/*
-			 * A:Req 9.1 Create a position, title in blank
+			 * A:Req 9.1 Create a position,
+			 * B: title in blank
 			 * C:
 			 * D:
 			 */
 			{
-				"company1", "position1", "", "descriptionNuevo", "2020-02-02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, null
+				"company1", "position3", "", "", "2020-02-02", "", "", "", 2.2, null
 			},
 		/*
-		 * A:Req 9.1 Create a position, description in blank
+		 * A:Req 9.1 Create a position,
 		 * C:
 		 * D:
 		 */
@@ -382,8 +385,8 @@ public class PositionServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * A: Req 9.2 Delete a problem
-	 * C:
+	 * A: Req 9.1 Delete a position
+	 * C: 33/33 -> 100% of executed lines codes
 	 * D:intentionally blank.there's nothing to check
 	 */
 	@Test
@@ -393,7 +396,7 @@ public class PositionServiceTest extends AbstractTest {
 		int positionId;
 		Position position;
 
-		positionId = super.getEntityId("position4");
+		positionId = super.getEntityId("position3");
 		position = this.positionService.findOneToEditDelete(positionId);
 
 		this.positionService.delete(position);
@@ -402,8 +405,9 @@ public class PositionServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * A: Req 9.2 Delete a problem
-	 * C:
+	 * A: Req 9.1 Delete a position
+	 * B: Delete a position to another user
+	 * C: 17/33 -> 51.5% of executed lines codes
 	 * D:intentionally blank.there's nothing to check
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -413,7 +417,7 @@ public class PositionServiceTest extends AbstractTest {
 		int positionId;
 		Position position;
 
-		positionId = super.getEntityId("position4");
+		positionId = super.getEntityId("position8");
 		position = this.positionService.findOneToEditDelete(positionId);
 
 		this.positionService.delete(position);
@@ -422,8 +426,8 @@ public class PositionServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * A: Req 9.2 Display a problem
-	 * C:
+	 * A: Req 9.1 Display a position
+	 * C:4/4 -> 100% of executed lines codes
 	 * D:intentionally blank.there's nothing to check
 	 */
 	@Test
@@ -439,8 +443,9 @@ public class PositionServiceTest extends AbstractTest {
 	}
 
 	/*
-	 * A: Req 9.2 Display a problem
-	 * C:
+	 * A: Req 9.1 Display a position
+	 * B: Display a position in draft mode to another user
+	 * C: 3/4 -> 75% of executed lines codes
 	 * D:intentionally blank.there's nothing to check
 	 */
 	@Test(expected = IllegalArgumentException.class)
@@ -449,7 +454,7 @@ public class PositionServiceTest extends AbstractTest {
 
 		int positionId;
 
-		positionId = super.getEntityId("position4");
+		positionId = super.getEntityId("position5");
 		this.positionService.findOneToDisplay(positionId);
 
 		super.unauthenticate();

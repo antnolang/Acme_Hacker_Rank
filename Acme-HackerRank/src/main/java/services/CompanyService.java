@@ -112,8 +112,6 @@ public class CompanyService {
 		// Delete positions
 		this.positionService.deleteByCompany(company);
 
-		// Delete company in finders
-
 		this.actorService.delete(company);
 	}
 

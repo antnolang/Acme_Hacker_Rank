@@ -44,6 +44,9 @@ public class PositionService {
 	@Autowired
 	private Validator			validator;
 
+	@Autowired
+	private FinderService		finderService;
+
 
 	// Other supporting services -------------------
 
@@ -225,6 +228,8 @@ public class PositionService {
 		Collection<Position> positions;
 
 		positions = this.positionRepository.findPositionByCompany(company.getId());
+		for (final Position p : positions)
+			this.finderService.deleteFromFinders(p);
 
 		this.positionRepository.delete(positions);
 

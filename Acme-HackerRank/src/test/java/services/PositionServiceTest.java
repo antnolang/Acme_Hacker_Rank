@@ -244,7 +244,7 @@ public class PositionServiceTest extends AbstractTest {
 
 			position = this.positionService.create();
 
-			formatter = new SimpleDateFormat("yyyy-MM-dd");
+			formatter = new SimpleDateFormat("yyyy/MM/dd");
 			deadline = formatter.parse(deadlineString);
 
 			position.setTitle(title);

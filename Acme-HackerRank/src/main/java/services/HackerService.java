@@ -46,6 +46,12 @@ public class HackerService {
 	@Autowired
 	private UtilityService		utilityService;
 
+	@Autowired
+	private FinderService		finderService;
+
+	@Autowired
+	private CurriculumService	curriculumService;
+
 
 	// Constructors -------------------------------
 
@@ -90,6 +96,7 @@ public class HackerService {
 		Hacker result;
 
 		result = (Hacker) this.actorService.save(hacker);
+		this.finderService.assignNewFinder(result);
 
 		return result;
 	}
@@ -104,8 +111,10 @@ public class HackerService {
 		// Delete answers
 
 		// Delete finder
+		this.finderService.deleteFinder(hacker);
 
 		// Delete curriculums
+		this.curriculumService.deleteCurriculums(hacker);
 
 		this.actorService.delete(hacker);
 	}
@@ -183,6 +192,7 @@ public class HackerService {
 			userAccount.setPassword(registrationForm.getUserAccount().getPassword());
 
 			this.validateRegistration(result, registrationForm, binding);
+
 		} else {
 			result = new Hacker();
 			hackerStored = this.findOneToDisplayEdit(registrationForm.getId());

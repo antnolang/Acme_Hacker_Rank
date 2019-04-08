@@ -11,6 +11,7 @@ import java.util.Random;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
@@ -225,6 +226,20 @@ public class UtilityService {
 		if (!email.matches("[A-Za-z0-9]+@[a-zA-Z0-9.-]+|[\\w\\s]+[\\<][A-Za-z0-9]+@[a-zA-Z0-9.-]+[\\>]"))
 			binding.rejectValue("email", "actor.email.error", "Invalid email pattern");
 
+	}
+
+	public void checkAttachments(final String attachments) {
+		final List<String> attachmentsList;
+
+		Assert.notNull(attachments);
+		attachmentsList = this.getSplittedString(attachments);
+
+		for (final String at : attachmentsList)
+			try {
+				new URL(at);
+			} catch (final MalformedURLException e) {
+				throw new DataIntegrityViolationException("Invalid URL");
+			}
 	}
 
 }

@@ -14,6 +14,7 @@ import security.LoginService;
 import security.UserAccount;
 import services.PositionService;
 import services.ProblemService;
+import services.UtilityService;
 import controllers.AbstractController;
 import domain.Position;
 import domain.Problem;
@@ -30,6 +31,9 @@ public class ProblemCompanyHackerController extends AbstractController {
 	@Autowired
 	private PositionService	positionService;
 
+	@Autowired
+	private UtilityService	utilityService;
+
 
 	// Constructor ------------------------------------
 
@@ -45,6 +49,7 @@ public class ProblemCompanyHackerController extends AbstractController {
 		Problem problem;
 		UserAccount userPrincipal;
 		final Collection<Position> positionsList;
+		Collection<String> attachments;
 
 		try {
 
@@ -54,11 +59,15 @@ public class ProblemCompanyHackerController extends AbstractController {
 			if (userPrincipal.getAuthorities().toString().equals("[COMPANY]")) {
 				problem = this.problemService.findOneToPrincipal(problemId);
 				positionsList = this.positionService.findPositionsByProblem(problem);
+				attachments = this.utilityService.getSplittedString(problem.getAttachments());
+
+				result.addObject("attachments", attachments);
 				result.addObject("problem", problem);
 				result.addObject("positionsList", positionsList);
 			} else if (userPrincipal.getAuthorities().toString().equals("[HACKER]")) {
 				problem = this.problemService.findOneToDisplayHacker(problemId);
 				positionsList = this.positionService.findPositionsByProblem(problem);
+				attachments = this.utilityService.getSplittedString(problem.getAttachments());
 
 				result.addObject("problem", problem);
 				result.addObject("positionsList", positionsList);

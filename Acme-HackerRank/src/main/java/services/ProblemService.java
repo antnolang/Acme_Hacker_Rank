@@ -38,6 +38,9 @@ public class ProblemService {
 	private HackerService		hackerService;
 
 	@Autowired
+	private UtilityService		utilityService;
+
+	@Autowired
 	private Validator			validator;
 
 
@@ -65,6 +68,7 @@ public class ProblemService {
 		Assert.notNull(problem);
 		this.checkByPrincipal(problem);
 		Assert.isTrue(!problem.getIsFinalMode());
+		this.utilityService.checkAttachments(problem.getAttachments());
 
 		final Problem result;
 

@@ -37,11 +37,9 @@ public class PersonalDataService {
 
 		res.setFullname(personalData.getFullname());
 		res.setGithubProfile(personalData.getGithubProfile());
-		res.setId(personalData.getId());
 		res.setLinkedInProfile(personalData.getLinkedInProfile());
 		res.setPhoneNumber(personalData.getPhoneNumber());
 		res.setStatement(personalData.getStatement());
-		res.setVersion(personalData.getVersion());
 
 		return res;
 	}

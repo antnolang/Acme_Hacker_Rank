@@ -82,21 +82,21 @@ public class PositionCompanyController extends AbstractController {
 		Position positionRec;
 		final Company principal;
 
-		positionRec = this.positionService.reconstruct(position, binding);
-		this.positionService.checkDeadline(position, binding);
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(position);
-		else
-			try {
-
-				principal = this.companyService.findByPrincipal();
-				this.positionService.save(positionRec);
-				result = new ModelAndView("redirect:../list.do?companyId=" + principal.getId());
-			} catch (final DataIntegrityViolationException oops) {
-				result = this.createEditModelAndView(positionRec, "position.commit.deadline");
-			} catch (final Throwable oops) {
+		try {
+			positionRec = this.positionService.reconstruct(position, binding);
+			if (binding.hasErrors())
+				result = this.createEditModelAndView(position);
+			principal = this.companyService.findByPrincipal();
+			this.positionService.save(positionRec);
+			result = new ModelAndView("redirect:../list.do?companyId=" + principal.getId());
+		} catch (final DataIntegrityViolationException invalidDeadline) {
+			if (invalidDeadline.getMessage().equals("Invalid date"))
+				result = this.createEditModelAndView(position, "position.commit.deadline");
+			else
 				result = this.createEditModelAndView(position, "position.commit.error");
-			}
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(position, "position.commit.error");
+		}
 
 		return result;
 	}

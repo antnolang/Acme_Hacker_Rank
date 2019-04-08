@@ -9,6 +9,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -73,7 +74,7 @@ public class PositionService {
 	public Position save(final Position position) {
 		Assert.notNull(position);
 		this.checkByPrincipal(position);
-		Assert.isTrue(position.getDeadline().after(this.utilityService.current_moment()));
+		this.checkDeadline(position);
 
 		final Position result;
 
@@ -281,7 +282,12 @@ public class PositionService {
 
 		Assert.isTrue(owner.equals(principal));
 	}
-
+	private void checkDeadline(final Position position) {
+		if (position.getDeadline() == null)
+			throw new DataIntegrityViolationException("Invalid date");
+		else if (position.getDeadline().before(this.utilityService.current_moment()))
+			throw new DataIntegrityViolationException("Invalid date");
+	}
 	// Reconstruct ----------------------------------------------
 	public Position reconstruct(final Position position, final BindingResult binding) {
 		Position result, positionStored;
@@ -310,17 +316,9 @@ public class PositionService {
 		result.setTitle(position.getTitle());
 		result.setProblems(position.getProblems());
 
-		this.checkDeadline(result, binding);
-
 		this.validator.validate(result, binding);
 
 		return result;
-	}
-
-	public void checkDeadline(final Position position, final BindingResult binding) {
-		if (position.getDeadline() != null)
-			if (position.getDeadline().before(this.utilityService.current_moment()))
-				binding.rejectValue("deadline", "position.commit.deadline", "Deadline must be in the future");
 	}
 
 }

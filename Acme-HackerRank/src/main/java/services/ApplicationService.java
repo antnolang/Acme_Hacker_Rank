@@ -142,6 +142,7 @@ public class ApplicationService {
 
 	protected void addAnswer(final Application application, final Answer answer) {
 		application.setAnswer(answer);
+		this.save(application);
 	}
 
 	public Application findOne(final int applicationId) {

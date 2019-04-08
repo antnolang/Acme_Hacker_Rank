@@ -39,20 +39,25 @@ public class AnswerService {
 	}
 
 	//Simple CRUD methods -------------------------------------------
-	public Answer create() {
+	public Answer create(final int applicationId) {
+		Application application;
+		application = this.applicationService.findOne(applicationId);
+		Assert.isTrue(application.getHacker().equals(this.hackerService.findByPrincipal()));
+		Assert.isTrue(application.getStatus().equals("PENDING"));
 		Answer result;
 
 		result = new Answer();
 
 		return result;
 	}
-	public Answer save(final Answer answer) {
+	public Answer save(final Answer answer, final Application application) {
 		Assert.isTrue(!(answer.getCodeLink().equals(null)));
 		Assert.isTrue(!(answer.getText().equals(null)));
 		Assert.isTrue(!(answer.getText().equals("")));
 		Answer result;
 
 		result = this.answerRepository.save(answer);
+		this.applicationService.addAnswer(application, result);
 
 		return result;
 	}

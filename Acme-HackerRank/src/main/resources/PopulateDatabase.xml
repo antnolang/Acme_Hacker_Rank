@@ -2319,7 +2319,7 @@
 	</bean>
 	
 	<bean id="problem7" class="domain.Problem">
-		<property name="title" value="Problem 6 - Company 2" />
+		<property name="title" value="Problem 7 - Company 2" />
 		<property name="statement"
 			value="Statement" />
 		<property name="hint" value="Necesito que trabaje los fines de semana" />

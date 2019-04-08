@@ -1,6 +1,8 @@
 
 package controllers.hacker;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,7 @@ import services.ApplicationService;
 import services.HackerService;
 import controllers.AbstractController;
 import domain.Answer;
+import domain.Application;
 
 @Controller
 @RequestMapping(value = "/answer/hacker")
@@ -39,15 +42,15 @@ public class AnswerHackerController extends AbstractController {
 
 	// Request create -----------------------------------------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	public ModelAndView create(@RequestParam final int applicationId) {
 		ModelAndView result;
 
 		try {
 			final Answer answer;
 
-			answer = this.answerService.create();
+			answer = this.answerService.create(applicationId);
 
-			result = this.createEditModelAndView(answer);
+			result = this.createEditModelAndView(answer, applicationId);
 
 		} catch (final Throwable oops) {
 
@@ -76,19 +79,26 @@ public class AnswerHackerController extends AbstractController {
 
 	//Save
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Answer answer, final BindingResult binding) {
+	public ModelAndView save(final Answer answer, final BindingResult binding, final HttpServletRequest request) {
 		ModelAndView result;
+		Integer applicationId;
+		String paramApplicationId;
+		final Application application;
+
+		paramApplicationId = request.getParameter("applicationId");
+		applicationId = paramApplicationId.isEmpty() ? null : Integer.parseInt(paramApplicationId);
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(answer);
+			result = this.createEditModelAndView(answer, applicationId);
 		else
 			try {
-				this.answerService.save(answer);
-				result = new ModelAndView("redirect:../application/hacker/list.do");
+				application = this.applicationService.findOneToHacker(applicationId);
+				this.answerService.save(answer, application);
+				result = new ModelAndView("redirect:../../application/hacker/list.do");
 			}
 
 			catch (final Throwable oops) {
-				result = this.createEditModelAndView(answer, "answer.commit.error");
+				result = this.createEditModelAndView(answer, applicationId, "answer.commit.error");
 			}
 
 		return result;
@@ -99,16 +109,27 @@ public class AnswerHackerController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Answer answer) {
 		ModelAndView result;
 
-		result = this.createEditModelAndView(answer, null);
+		result = this.createEditModelAndView(answer, null, null);
+
+		return result;
+
+	}
+
+	protected ModelAndView createEditModelAndView(final Answer answer, final int applicationId) {
+		ModelAndView result;
+
+		result = this.createEditModelAndView(answer, applicationId, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Answer answer, final String messageCode) {
+	protected ModelAndView createEditModelAndView(final Answer answer, final Integer applicationId, final String messageCode) {
 		ModelAndView result;
 
 		result = new ModelAndView("answer/edit");
 		result.addObject("messageCode", messageCode);
+		result.addObject("answer", answer);
+		result.addObject("applicationId", applicationId);
 		return result;
 
 	}

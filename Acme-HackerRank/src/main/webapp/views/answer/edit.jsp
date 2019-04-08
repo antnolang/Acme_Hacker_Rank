@@ -23,11 +23,12 @@
 
 <form:form action="answer/hacker/edit.do" modelAttribute="answer">
 	<form:hidden path="id" />
+	<input type="hidden" name="applicationId" value="${applicationId}"/>
 	
-	<acme:textbox code="answer.text" path="text" />
+	<acme:textarea code="answer.text" path="text" />
 	<br />
 	
-	<acme:textbox code="answer.codeLink" path="codeLink" />
+	<acme:textarea code="answer.codeLink" path="codeLink" />
 	<br />
 
 	<div>

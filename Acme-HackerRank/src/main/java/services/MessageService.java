@@ -21,7 +21,10 @@ import repositories.MessageRepository;
 import domain.Actor;
 import domain.Application;
 import domain.Customisation;
+import domain.Finder;
+import domain.Hacker;
 import domain.Message;
+import domain.Position;
 import domain.SystemTag;
 
 @Service
@@ -51,6 +54,9 @@ public class MessageService {
 
 	@Autowired
 	private SystemTagService		systemTagService;
+
+	@Autowired
+	private PositionService			positionService;
 
 	@Autowired
 	private FinderService			finderService;
@@ -336,25 +342,39 @@ public class MessageService {
 		return result;
 	}
 
-	//	protected Message notification_newOfferPublished(Position position) {
-	//		Assert.notNull(position);
-	//		Assert.isTrue(position.getIsFinalMode() && !position.getIsCancelled());
-	//		
-	//		Message notification, result;
-	//		List<Hacker> all, hackers;
-	//		Collection<Position>  returned_positions;
-	//		String subject, body;
-	//		
-	//		all = this.hackerService.findAll();
-	//		
-	//		for (Hacker h: all) {
-	//			thi
-	//		}
-	//		
-	//		notification = this.createNotification(hackers, subject, body);
-	//	
-	//	
-	//	}
+	protected Message notification_newOfferPublished(final Position position) {
+		Assert.notNull(position);
+		Assert.isTrue(position.getIsFinalMode() && !position.getIsCancelled());
+
+		Message notification, result;
+		List<Hacker> all;
+		List<Actor> recipients;
+		Collection<Position> returned_positions;
+		final String subject, body;
+		Finder finder;
+
+		all = new ArrayList<>(this.hackerService.findAll());
+		recipients = new ArrayList<>();
+		for (final Hacker h : all) {
+			finder = this.finderService.findByHacker(h.getId());
+
+			this.positionService.searchPositionFinder(finder, null);
+
+			returned_positions = this.positionService.matchCriteria(finder);
+
+			if (returned_positions.contains(position))
+				recipients.add(h);
+		}
+
+		subject = "A new offer / Una nueva oferta";
+		body = "A new published position matches with your finder search criteria / Una nueva oferta recien publicada coincide con tu criterio de búsqueda.";
+
+		notification = this.createNotification(recipients, subject, body);
+
+		result = this.send(notification);
+
+		return result;
+	}
 
 	// Protected methods ------------------------------------
 	protected Double numberMessagesSentByActor(final int actorId) {

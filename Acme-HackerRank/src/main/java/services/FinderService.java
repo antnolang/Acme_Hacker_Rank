@@ -178,6 +178,14 @@ public class FinderService {
 		}
 	}
 
+	protected Finder findByHacker(final int hackerId) {
+		Finder result;
+
+		result = this.finderRepository.findByHackerId(hackerId);
+
+		return result;
+	}
+
 	protected void deleteFinder(final Hacker hacker) {
 		Finder finder;
 

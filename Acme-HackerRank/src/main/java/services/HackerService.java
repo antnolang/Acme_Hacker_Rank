@@ -52,6 +52,12 @@ public class HackerService {
 	@Autowired
 	private CurriculumService	curriculumService;
 
+	@Autowired
+	private AnswerService		answerService;
+
+	@Autowired
+	private ApplicationService	applicationService;
+
 
 	// Constructors -------------------------------
 
@@ -106,9 +112,11 @@ public class HackerService {
 		Assert.isTrue(hacker.getId() != 0);
 		Assert.isTrue(this.findByPrincipal().equals(hacker));
 
-		// Delete applications
+		// Delete answer
+		this.answerService.deleteAnswerByHacker(hacker);
 
-		// Delete answers
+		// Delete application
+		this.applicationService.deleteApplicationByHacker(hacker);
 
 		// Delete finder
 		this.finderService.deleteFinder(hacker);

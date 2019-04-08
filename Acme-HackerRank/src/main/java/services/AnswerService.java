@@ -109,14 +109,14 @@ public class AnswerService {
 		Collection<Answer> answers;
 
 		answers = this.answerRepository.findAnswerByCompany(company.getId());
-		this.answerRepository.deleteInBatch(answers);
+		this.answerRepository.delete(answers);
 	}
 
 	public void deleteAnswerByHacker(final Hacker hacker) {
 		Collection<Answer> answers;
 
 		answers = this.answerRepository.findAnswerByHacker(hacker.getId());
-		this.answerRepository.deleteInBatch(answers);
+		this.answerRepository.delete(answers);
 	}
 
 	// Other business methods ---------------------

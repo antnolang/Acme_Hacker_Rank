@@ -203,6 +203,9 @@ public class ApplicationService {
 		Collection<Application> applications;
 
 		applications = this.applicationRepository.findApplicationByCompany(company.getId());
+		for (final Application a : applications)
+			this.curriculumService.deleteCurriculum(a);
+
 		this.applicationRepository.deleteInBatch(applications);
 	}
 

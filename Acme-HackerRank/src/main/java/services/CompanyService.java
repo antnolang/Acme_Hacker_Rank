@@ -49,6 +49,12 @@ public class CompanyService {
 	@Autowired
 	private ProblemService		problemService;
 
+	@Autowired
+	private AnswerService		answerService;
+
+	@Autowired
+	private ApplicationService	applicationService;
+
 
 	// Constructors -------------------------------
 
@@ -102,15 +108,17 @@ public class CompanyService {
 		Assert.isTrue(company.getId() != 0);
 		Assert.isTrue(this.findByPrincipal().equals(company));
 
-		// Delete answers
+		// Delete positions's answers
+		this.answerService.deleteAnswerByCompany(company);
 
 		// Delete applications
-
-		// Delete problems
-		this.problemService.deleteByCompany(company);
+		this.applicationService.deleteApplicationByCompany(company);
 
 		// Delete positions
 		this.positionService.deleteByCompany(company);
+
+		// Delete problems
+		this.problemService.deleteByCompany(company);
 
 		this.actorService.delete(company);
 	}

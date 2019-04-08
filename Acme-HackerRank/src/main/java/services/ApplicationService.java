@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import repositories.ApplicationRepository;
 import domain.Answer;
 import domain.Application;
+import domain.Company;
 import domain.Curriculum;
 import domain.Hacker;
 import domain.Position;
@@ -196,6 +197,20 @@ public class ApplicationService {
 		results = this.applicationRepository.findAll();
 
 		return results;
+	}
+
+	public void deleteApplicationByCompany(final Company company) {
+		Collection<Application> applications;
+
+		applications = this.applicationRepository.findApplicationByCompany(company.getId());
+		this.applicationRepository.deleteInBatch(applications);
+	}
+
+	public void deleteApplicationByHacker(final Hacker hacker) {
+		Collection<Application> applications;
+
+		applications = this.applicationRepository.findApplicationByHacker(hacker.getId());
+		this.applicationRepository.deleteInBatch(applications);
 	}
 
 	// Reconstruct ----------------------------------------------

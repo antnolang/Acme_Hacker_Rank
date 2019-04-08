@@ -111,4 +111,12 @@ public class CurriculumService {
 		return result;
 	}
 
+	public Curriculum findOne(final int curriculumId) {
+		Curriculum result;
+
+		result = this.curriculumRepository.findOne(curriculumId);
+
+		return result;
+	}
+
 }

@@ -100,6 +100,7 @@ public class ApplicationService {
 			Assert.isTrue(application.getPosition().getProblems().contains(application.getProblem()));
 			Assert.isTrue(!(this.hackerService.originalCurricula().isEmpty()));
 			Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
+			Assert.isTrue(application.getCurriculum().getIsOriginal());
 			Curriculum curriculumCopy;
 			curriculumCopy = this.curriculumService.saveCopy(application.getCurriculum());
 			application.setCurriculum(curriculumCopy);
@@ -350,6 +351,10 @@ public class ApplicationService {
 			result = true;
 
 		return result;
+	}
+
+	protected void flush() {
+		this.applicationRepository.flush();
 	}
 
 }

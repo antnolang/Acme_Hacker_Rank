@@ -23,6 +23,7 @@
 
 <form:form action="answer/hacker/edit.do" modelAttribute="answer">
 	<form:hidden path="id" />
+	<form:hidden path="version" />
 	<input type="hidden" name="applicationId" value="${applicationId}"/>
 	
 	<acme:textarea code="answer.text" path="text" />

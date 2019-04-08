@@ -2,6 +2,7 @@
 package controllers.hacker;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -79,7 +80,7 @@ public class AnswerHackerController extends AbstractController {
 
 	//Save
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Answer answer, final BindingResult binding, final HttpServletRequest request) {
+	public ModelAndView save(@Valid final Answer answer, final BindingResult binding, final HttpServletRequest request) {
 		ModelAndView result;
 		Integer applicationId;
 		String paramApplicationId;

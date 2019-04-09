@@ -9,6 +9,7 @@
 
 
 <form:form action="miscellaneousData/hacker/edit.do" modelAttribute="miscellaneousData">
+	<input type="hidden" name="curriculumId" value="${curriculumId}"/>
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 

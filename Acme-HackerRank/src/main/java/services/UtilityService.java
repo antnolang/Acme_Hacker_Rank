@@ -76,13 +76,13 @@ public class UtilityService {
 		return result;
 	}
 
-	public void checkPicture(final String pictures) {
-		final List<String> pictureList;
+	public void checkURLS(final String urls) {
+		final List<String> urlList;
 
-		Assert.notNull(pictures);
-		pictureList = this.getSplittedString(pictures);
+		Assert.notNull(urls);
+		urlList = this.getSplittedString(urls);
 
-		for (final String at : pictureList)
+		for (final String at : urlList)
 			try {
 				new URL(at);
 			} catch (final MalformedURLException e) {

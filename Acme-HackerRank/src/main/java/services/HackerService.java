@@ -297,4 +297,40 @@ public class HackerService {
 		return originalCurricula;
 	}
 
+	protected Hacker findByPersonalDataId(final int personalDataId) {
+		Hacker result;
+
+		result = this.hackerRepository.findByPersonalDataId(personalDataId);
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	protected Hacker findByPositionDataId(final int positionDataId) {
+		Hacker result;
+
+		result = this.hackerRepository.findByPositionDataId(positionDataId);
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	protected Hacker findByEducationDataId(final int educationDataId) {
+		Hacker result;
+
+		result = this.hackerRepository.findByEducationDataId(educationDataId);
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	protected Hacker findByMiscellaneousDataId(final int miscellaneousDataId) {
+		Hacker result;
+
+		result = this.hackerRepository.findByMiscellaneousDataId(miscellaneousDataId);
+		Assert.notNull(result);
+
+		return result;
+	}
+
 }

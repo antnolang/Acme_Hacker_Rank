@@ -8,8 +8,11 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.PositionDataRepository;
+import domain.Curriculum;
+import domain.Hacker;
 import domain.PositionData;
 
 @Service
@@ -21,8 +24,14 @@ public class PositionDataService {
 	@Autowired
 	private PositionDataRepository	positionDataRepository;
 
-
 	// Other supporting services -----------------------------------------
+
+	@Autowired
+	private HackerService			hackerService;
+
+	@Autowired
+	private CurriculumService		curriculumService;
+
 
 	// Constructors ------------------------------------------------------
 
@@ -32,7 +41,81 @@ public class PositionDataService {
 
 	// Simple CRUD methods -----------------------------------------------
 
+	public PositionData create() {
+		PositionData result;
+
+		result = new PositionData();
+
+		return result;
+	}
+
+	private PositionData saveInternal(final PositionData positionData) {
+		this.checkDates(positionData);
+
+		PositionData saved;
+
+		saved = this.positionDataRepository.save(positionData);
+
+		return saved;
+	}
+
+	// Editing an existing PositionData
+	public PositionData save(final PositionData positionData) {
+		Assert.notNull(positionData);
+		Assert.isTrue(this.positionDataRepository.exists(positionData.getId()));
+		this.checkOwner(positionData.getId());
+
+		final PositionData saved = this.saveInternal(positionData);
+
+		return saved;
+	}
+
+	// Creating new PositionData
+	public PositionData save(final PositionData positionData, final int curriculumId) {
+		Assert.notNull(positionData);
+		Assert.isTrue(!this.positionDataRepository.exists(positionData.getId()));
+
+		final PositionData saved = this.saveInternal(positionData);
+		final Curriculum curriculum = this.curriculumService.findOneToEdit(curriculumId);
+
+		this.curriculumService.addPositionData(curriculum, saved);
+
+		return saved;
+	}
+
+	public void delete(final PositionData positionData) {
+		Assert.notNull(positionData);
+		Assert.isTrue(this.positionDataRepository.exists(positionData.getId()));
+		this.checkOwner(positionData.getId());
+
+		int curriculumId;
+		Curriculum curriculum;
+
+		curriculumId = this.curriculumService.findIdByPositionDataId(positionData.getId());
+		curriculum = this.curriculumService.findOneToEdit(curriculumId);
+		this.curriculumService.removePositionData(curriculum, positionData);
+		this.positionDataRepository.delete(positionData);
+	}
+
+	public PositionData findOne(final int positionDataId) {
+		PositionData result;
+
+		result = this.positionDataRepository.findOne(positionDataId);
+		Assert.notNull(result);
+
+		return result;
+	}
+
 	// Other business methods --------------------------------------------
+
+	public PositionData findOneToEdit(final int positionDataId) {
+		PositionData result;
+
+		result = this.findOne(positionDataId);
+		this.checkOwner(positionDataId);
+
+		return result;
+	}
 
 	// Ancillary methods -------------------------------------------------
 
@@ -51,5 +134,18 @@ public class PositionDataService {
 		}
 
 		return result;
+	}
+
+	private void checkOwner(final int positionDataId) {
+		Hacker principal, owner;
+
+		principal = this.hackerService.findByPrincipal();
+		owner = this.hackerService.findByPersonalDataId(positionDataId);
+
+		Assert.isTrue(principal.equals(owner));
+	}
+
+	private void checkDates(final PositionData positionData) {
+		Assert.isTrue(positionData.getStartDate().before(positionData.getEndDate()), "Incorrect dates");
 	}
 }

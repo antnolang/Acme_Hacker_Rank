@@ -9,6 +9,7 @@
 
 
 <form:form action="positionData/hacker/edit.do" modelAttribute="positionData">
+	<input type="hidden" name="curriculumId" value="${curriculumId}"/>
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 

@@ -22,4 +22,16 @@ public interface HackerRepository extends JpaRepository<Hacker, Integer> {
 
 	@Query("select c from Curriculum c join c.hacker h where h.id=?1 and c.isOriginal=true")
 	Collection<Curriculum> originalCurricula(int id);
+
+	@Query("select c.hacker from Curriculum c where c.personalData.id = ?1")
+	Hacker findByPersonalDataId(int personalDataId);
+
+	@Query("select c.hacker from Curriculum c where c.positionData.id = ?1")
+	Hacker findByPositionDataId(int positionDataId);
+
+	@Query("select c.hacker from Curriculum c where c.educationData.id = ?1")
+	Hacker findByEducationDataId(int educationDataId);
+
+	@Query("select c.hacker from Curriculum c where c.miscellaneousData.id = ?1")
+	Hacker findByMiscellaneousDataId(int miscellaneousDataId);
 }

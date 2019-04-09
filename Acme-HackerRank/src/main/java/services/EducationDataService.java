@@ -8,9 +8,12 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.EducationDataRepository;
+import domain.Curriculum;
 import domain.EducationData;
+import domain.Hacker;
 
 @Service
 @Transactional
@@ -21,8 +24,14 @@ public class EducationDataService {
 	@Autowired
 	private EducationDataRepository	educationDataRepository;
 
-
 	// Other supporting services -----------------------------------------
+
+	@Autowired
+	private CurriculumService		curriculumService;
+
+	@Autowired
+	private HackerService			hackerService;
+
 
 	// Constructors ------------------------------------------------------
 
@@ -32,7 +41,81 @@ public class EducationDataService {
 
 	// Simple CRUD methods -----------------------------------------------
 
+	public EducationData create() {
+		EducationData result;
+
+		result = new EducationData();
+
+		return result;
+	}
+
+	private EducationData saveInternal(final EducationData educationData) {
+		this.checkDates(educationData);
+
+		EducationData saved;
+
+		saved = this.educationDataRepository.save(educationData);
+
+		return saved;
+	}
+
+	// Editing an existing EducationData
+	public EducationData save(final EducationData educationData) {
+		Assert.notNull(educationData);
+		Assert.isTrue(this.educationDataRepository.exists(educationData.getId()));
+		this.checkOwner(educationData.getId());
+
+		final EducationData saved = this.saveInternal(educationData);
+
+		return saved;
+	}
+
+	// Creating new EducationData
+	public EducationData save(final EducationData educationData, final int curriculumId) {
+		Assert.notNull(educationData);
+		Assert.isTrue(!this.educationDataRepository.exists(educationData.getId()));
+
+		final EducationData saved = this.saveInternal(educationData);
+		final Curriculum curriculum = this.curriculumService.findOneToEdit(curriculumId);
+
+		this.curriculumService.addEducationData(curriculum, saved);
+
+		return saved;
+	}
+
+	public void delete(final EducationData educationData) {
+		Assert.notNull(educationData);
+		Assert.isTrue(this.educationDataRepository.exists(educationData.getId()));
+		this.checkOwner(educationData.getId());
+
+		int curriculumId;
+		Curriculum curriculum;
+
+		curriculumId = this.curriculumService.findIdByEducationDataId(educationData.getId());
+		curriculum = this.curriculumService.findOneToEdit(curriculumId);
+		this.curriculumService.removeEducationData(curriculum, educationData);
+		this.educationDataRepository.delete(educationData);
+	}
+
+	public EducationData findOne(final int educationDataId) {
+		EducationData result;
+
+		result = this.educationDataRepository.findOne(educationDataId);
+		Assert.notNull(result);
+
+		return result;
+	}
+
 	// Other business methods --------------------------------------------
+
+	public EducationData findOneToEdit(final int educationDataId) {
+		EducationData result;
+
+		result = this.findOne(educationDataId);
+		this.checkOwner(educationDataId);
+
+		return result;
+	}
 
 	// Ancillary methods -------------------------------------------------
 
@@ -52,5 +135,18 @@ public class EducationDataService {
 		}
 
 		return result;
+	}
+
+	private void checkOwner(final int educationDataId) {
+		Hacker principal, owner;
+
+		principal = this.hackerService.findByPrincipal();
+		owner = this.hackerService.findByPersonalDataId(educationDataId);
+
+		Assert.isTrue(principal.equals(owner));
+	}
+
+	private void checkDates(final EducationData educationData) {
+		Assert.isTrue(educationData.getStartDate().before(educationData.getEndDate()), "Incorrect dates");
 	}
 }

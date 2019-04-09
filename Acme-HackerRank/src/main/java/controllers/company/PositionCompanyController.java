@@ -4,7 +4,6 @@ package controllers.company;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -81,20 +80,17 @@ public class PositionCompanyController extends AbstractController {
 		ModelAndView result;
 		Position positionRec;
 		final Company principal;
-
 		positionRec = this.positionService.reconstruct(position, binding);
+
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(position);
 		else
 			try {
+
 				principal = this.companyService.findByPrincipal();
 				this.positionService.save(positionRec);
 				result = new ModelAndView("redirect:../list.do?companyId=" + principal.getId());
-			} catch (final DataIntegrityViolationException invalidDeadline) {
-				if (invalidDeadline.getMessage().equals("Invalid date"))
-					result = this.createEditModelAndView(position, "position.commit.deadline");
-				else
-					result = this.createEditModelAndView(position, "position.commit.error");
+
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(position, "position.commit.error");
 			}

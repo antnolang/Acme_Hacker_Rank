@@ -231,6 +231,7 @@ public class ActorService {
 	}
 
 	public void updateCreditCard(final CreditCard creditCard) {
+		Assert.isTrue(!this.checkIsExpired(creditCard), "Expired credit card");
 		Assert.notNull(creditCard);
 		Actor actor;
 
@@ -239,7 +240,6 @@ public class ActorService {
 		actor.setCreditCard(creditCard);
 
 	}
-
 	public CreditCardForm createCreditCardForm(final CreditCard creditCard) {
 		CreditCardForm creditCardForm;
 
@@ -257,11 +257,7 @@ public class ActorService {
 
 	public CreditCard reconstructCreditCard(final CreditCardForm creditCardForm, final BindingResult binding) {
 		CreditCard result;
-		final CreditCard creditCardStored;
-		Actor actor;
 
-		actor = this.findPrincipal();
-		creditCardStored = actor.getCreditCard();
 		result = new CreditCard();
 
 		result.setHolder(creditCardForm.getHolder());
@@ -271,20 +267,9 @@ public class ActorService {
 		result.setExpirationYear(creditCardForm.getExpirationYear());
 		result.setCvvCode(creditCardForm.getCvvCode());
 
-		this.validateCreditCard(result, creditCardStored, creditCardForm, binding);
-
 		this.validator.validate(result, binding);
 
 		return result;
-	}
-
-	private void validateCreditCard(final CreditCard creditCard, final CreditCard creditCardStored, final CreditCardForm creditCardForm, final BindingResult binding) {
-
-		if (creditCard.getNumber().equals(creditCardStored.getNumber()))
-			binding.rejectValue("number", "creditCard.number.error", "The number can't be equal to the previous credit card");
-		if (creditCard.getCvvCode() == creditCardStored.getCvvCode())
-			binding.rejectValue("cvvCode", "creditCard.cvvCode.error", "The cvv code can't be equal to the previous credit card");
-
 	}
 
 }

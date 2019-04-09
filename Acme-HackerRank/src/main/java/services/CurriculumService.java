@@ -211,7 +211,6 @@ public class CurriculumService {
 		}
 
 		this.validator.validate(result, binding);
-		// TODO: se valida el personalData cuando se crea?
 
 		return result;
 	}

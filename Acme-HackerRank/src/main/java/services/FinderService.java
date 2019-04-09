@@ -153,7 +153,7 @@ public class FinderService {
 		boolean result;
 
 		if (finder.getDeadline() != null && finder.getMaximumDeadline() != null)
-			result = finder.getMaximumDeadline().before(finder.getDeadline());
+			result = finder.getDeadline().before(finder.getMaximumDeadline());
 		else
 			result = true;
 

@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,9 @@ public class CurriculumService {
 
 	@Autowired
 	private MiscellaneousDataService	miscellaneousDataService;
+
+	@Autowired
+	private HackerService				hackerService;
 
 
 	// Constructors ------------------------------------------------------
@@ -109,6 +114,25 @@ public class CurriculumService {
 		result.setPositionDatas(positionDatas);
 
 		return result;
+	}
+
+	public List<Curriculum> originalCurriculaByPrincipal() {
+		List<Curriculum> results;
+		Hacker principal;
+
+		principal = this.hackerService.findByPrincipal();
+
+		results = new ArrayList<>(this.curriculumRepository.originalCurricula(principal.getId()));
+
+		return results;
+	}
+
+	protected List<Curriculum> originalCurricula(final int hackerId) {
+		List<Curriculum> results;
+
+		results = new ArrayList<>(this.curriculumRepository.originalCurricula(hackerId));
+
+		return results;
 	}
 
 	public Curriculum findOne(final int curriculumId) {

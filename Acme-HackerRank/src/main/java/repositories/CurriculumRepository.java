@@ -19,4 +19,6 @@ public interface CurriculumRepository extends JpaRepository<Curriculum, Integer>
 	@Query("select c from Curriculum c where c.hacker.id = ?1")
 	Collection<Curriculum> findAllByHacker(int hackerId);
 
+	@Query("select c from Curriculum c where c.hacker.id=?1 and c.isOriginal=true")
+	Collection<Curriculum> originalCurricula(int hackerId);
 }

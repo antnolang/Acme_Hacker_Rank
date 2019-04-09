@@ -38,5 +38,4 @@
 		<acme:submit name="delete" code="problem.delete"/>	
 	</jstl:if>
 	<acme:cancel url="problem/company/list.do" code="problem.cancel"/>
-	<br />
 </form:form>

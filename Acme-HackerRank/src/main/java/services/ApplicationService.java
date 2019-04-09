@@ -58,19 +58,23 @@ public class ApplicationService {
 	public Application create(final Position position) {
 		Assert.isTrue(position.getIsFinalMode());
 		Assert.isTrue(!(position.getIsCancelled()));
-		Assert.isTrue(!(this.hackerService.originalCurricula().isEmpty()));
+
 		Application result;
 		Hacker hacker;
 		Date moment;
 		final Curriculum curriculum;
+		List<Curriculum> curricula;
 		final Problem problem;
 
 		hacker = this.hackerService.findByPrincipal();
 
+		curricula = new ArrayList<>(this.curriculumService.originalCurricula(hacker.getId()));
+
+		Assert.isTrue(!curricula.isEmpty());
 		Assert.isTrue(this.isApplied(position, hacker));
 
 		moment = this.utilityService.current_moment();
-		curriculum = this.hackerService.originalCurricula().get(0);
+		curriculum = curricula.get(0);
 		problem = this.getRandomProblem(position.getProblems());
 
 		result = new Application();
@@ -89,16 +93,16 @@ public class ApplicationService {
 		Assert.isTrue(!(application.getPosition().getIsCancelled()));
 		Assert.isTrue(this.hackerService.findByPrincipal().equals(application.getHacker()));
 		Assert.isTrue(application.getStatus().equals("PENDING"));
+
 		Application result;
 		Application applicationSaved;
 
 		applicationSaved = this.applicationRepository.findOne(application.getId());
 
 		if (application.getId() == 0) {
-
 			Assert.isTrue(this.applicationRepository.findApplicationsByPositionByHacker(application.getPosition().getId(), application.getHacker().getId()).isEmpty());
 			Assert.isTrue(application.getPosition().getProblems().contains(application.getProblem()));
-			Assert.isTrue(!(this.hackerService.originalCurricula().isEmpty()));
+			Assert.isTrue(!(this.curriculumService.originalCurriculaByPrincipal().isEmpty()));
 			Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
 			Assert.isTrue(application.getCurriculum().getIsOriginal());
 			Curriculum curriculumCopy;
@@ -246,12 +250,12 @@ public class ApplicationService {
 
 	public Problem getRandomProblem(final Collection<Problem> problems) {
 		List<Problem> problemList;
+		Problem result;
 
-		problemList = new ArrayList<>();
+		problemList = new ArrayList<>(problems);
+		result = problemList.get(new Random().nextInt(problems.size()));
 
-		problemList.addAll(problems);
-
-		return problemList.get(new Random().nextInt(problems.size()));
+		return result;
 	}
 
 	public Double[] findDataNumberApplicationPerHacker() {
@@ -345,10 +349,10 @@ public class ApplicationService {
 
 	public boolean isApplied(final Position position, final Hacker hacker) {
 		boolean result;
+		Collection<Application> applications;
 
-		result = false;
-		if ((this.applicationRepository.findApplicationsByPositionByHacker(position.getId(), hacker.getId()).isEmpty()))
-			result = true;
+		applications = this.applicationRepository.findApplicationsByPositionByHacker(position.getId(), hacker.getId());
+		result = applications.isEmpty();
 
 		return result;
 	}

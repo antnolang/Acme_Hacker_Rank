@@ -357,6 +357,23 @@ public class ApplicationService {
 		return result;
 	}
 
+	protected Collection<Application> findSubmittedPendingByPosition(final int positionId) {
+		Collection<Application> result;
+
+		result = this.applicationRepository.findSubmittedPendingByPosition(positionId);
+
+		return result;
+	}
+
+	protected void rejectedCancelPosition(final Application application) {
+		Assert.isTrue(this.companyService.findByPrincipal().equals(application.getPosition().getCompany()));
+		Assert.isTrue(application.getStatus().equals("SUBMITTED") || application.getStatus().equals("PENDING"));
+		Assert.isTrue(!(application.getAnswer().equals(null)));
+		Assert.isTrue(!(application.getSubmittedMoment().equals(null)));
+		application.setStatus("REJECTED");
+		this.messageService.notification_applicationStatusChanges(application);
+	}
+
 	protected void flush() {
 		this.applicationRepository.flush();
 	}

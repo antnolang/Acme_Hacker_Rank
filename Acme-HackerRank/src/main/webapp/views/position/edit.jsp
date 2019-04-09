@@ -25,11 +25,8 @@
 	<acme:textbox code="position.title" path="title"/>
 	
 	<acme:textarea code="position.description" path="description" />
-	
-	<form:label path="deadline" >
-		<spring:message code="position.deadline" />:
-	</form:label>
-	<form:input path="deadline" placeholder="dd/MM/yyyy"/>
+
+	<acme:textbox code="position.deadline" placeholder="dd/MM/yyyy" path="deadline"/>
 	
 	<acme:textbox code="position.profile" path="profile"/>
 	

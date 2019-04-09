@@ -39,7 +39,7 @@ public class ProblemServiceTest extends AbstractTest {
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
-				"company1", "titleNuevoProblem1", "statementNuevoProblem1", "hintNuevoProblem1", "attachmentsNuevoProblem1", null
+				"company1", "titleNuevoProblem1", "statementNuevoProblem1", "hintNuevoProblem1", "http://attachmentsNuevoProblem1.com", null
 			},
 
 			/*
@@ -48,7 +48,7 @@ public class ProblemServiceTest extends AbstractTest {
 			 * D: 6.25% ((1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
-				"company1", "titleNuevoProblem2", "statementNuevoProblem2", "", "attachmentsNuevoProblem2", null
+				"company1", "titleNuevoProblem2", "statementNuevoProblem2", "", "http://attachmentsNuevoProblem1.com", null
 			},
 			/*
 			 * A: Req 9.2 Create a problem
@@ -57,7 +57,7 @@ public class ProblemServiceTest extends AbstractTest {
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
-				"company1", "", "statementNuevoProblem3", "hintNuevoProblem3", "attachmentsNuevoProblem3", ConstraintViolationException.class
+				"company1", "", "statementNuevoProblem3", "hintNuevoProblem3", "http://attachmentsNuevoProblem1.com", ConstraintViolationException.class
 			},
 			/*
 			 * A: Req 9.2 Create a problem
@@ -66,7 +66,7 @@ public class ProblemServiceTest extends AbstractTest {
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
-				"company1", "titleNuevoProblem4", "", "hintNuevoProblem4", "attachmentsNuevoProblem4", ConstraintViolationException.class
+				"company1", "titleNuevoProblem4", "", "hintNuevoProblem4", "http://attachmentsNuevoProblem1.com", ConstraintViolationException.class
 			},
 
 		};
@@ -119,7 +119,7 @@ public class ProblemServiceTest extends AbstractTest {
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
-				"company1", "problem4", "titleEditado", "statementEditado", "hintEditado", "attachmentsEditado", null
+				"company1", "problem4", "titleEditado", "statementEditado", "hintEditado", "http://attachmentsNuevoProblem1.com", null
 			},
 
 			/*
@@ -128,7 +128,7 @@ public class ProblemServiceTest extends AbstractTest {
 			 * D: 6.25% ((1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
-				"company1", "problem4", "titleEditado", "statementEditado", "", "attachmentsEditado", null
+				"company1", "problem4", "titleEditado", "statementEditado", "", "http://attachmentsNuevoProblem1.com", null
 			},
 			/*
 			 * A: Req 9.2 Edit a problem
@@ -137,7 +137,7 @@ public class ProblemServiceTest extends AbstractTest {
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
-				"company1", "problem4", "", "statementEditado", "hintEditado", "attachmentsEditado", ConstraintViolationException.class
+				"company1", "problem4", "", "statementEditado", "hintEditado", "http://attachmentsNuevoProblem1.com", ConstraintViolationException.class
 			},
 			/*
 			 * A: Req 9.2 Edit a problem
@@ -146,7 +146,7 @@ public class ProblemServiceTest extends AbstractTest {
 			 * D: 6.25% (1/16) we test 1 of the 16 possible combinations that can take in total.
 			 */
 			{
-				"company1", "problem4", "titleEditado", "", "hintEditado", "attachmentsEditado", ConstraintViolationException.class
+				"company1", "problem4", "titleEditado", "", "hintEditado", "http://attachmentsNuevoProblem1.com", ConstraintViolationException.class
 			},
 			/*
 			 * A: Req 9.2 Edit a problem
@@ -155,7 +155,7 @@ public class ProblemServiceTest extends AbstractTest {
 			 * D:intentionally blank.there's nothing to check
 			 */
 			{
-				"company1", "problem1", "titleEditado", "statementEditado", "hintEditado", "attachmentsEditado", IllegalArgumentException.class
+				"company1", "problem1", "titleEditado", "statementEditado", "hintEditado", "http://attachmentsNuevoProblem1.com", IllegalArgumentException.class
 			},
 			/*
 			 * A: Req 9.2 Edit a problem
@@ -164,7 +164,7 @@ public class ProblemServiceTest extends AbstractTest {
 			 * D:intentionally blank.there's nothing to check
 			 */
 			{
-				"company2", "problem4", "titleEditado", "statementEditado", "hintNuevoProblem4", "attachmentsEditado", IllegalArgumentException.class
+				"company2", "problem4", "titleEditado", "statementEditado", "hintNuevoProblem4", "http://attachmentsNuevoProblem1.com", IllegalArgumentException.class
 			},
 
 		};

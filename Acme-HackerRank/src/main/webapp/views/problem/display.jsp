@@ -37,11 +37,7 @@
 	<strong><spring:message code="problem.hint"/>:</strong>
 		<jstl:out value="${problem.hint}"/>
 	<br/>
-	
-	<strong><spring:message code="problem.attachments"/>:</strong>
-		<jstl:out value="${problem.attachments}"/>
-	<br/>
-	
+
 	<jstl:if test="${not empty attachments}">
 		<strong><spring:message code="problem.attachments"/>:</strong>
 		<br>

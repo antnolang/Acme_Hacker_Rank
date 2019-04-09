@@ -9,7 +9,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.PositionRepository;
+import domain.Application;
 import domain.Company;
 import domain.Finder;
 import domain.Position;
@@ -36,9 +36,6 @@ public class PositionService {
 	private CompanyService		companyService;
 
 	@Autowired
-	private ProblemService		problemService;
-
-	@Autowired
 	private UtilityService		utilityService;
 
 	@Autowired
@@ -50,6 +47,8 @@ public class PositionService {
 	@Autowired
 	private FinderService		finderService;
 
+	@Autowired
+	private ApplicationService	applicationService;
 
 
 	// Other supporting services -------------------
@@ -71,8 +70,6 @@ public class PositionService {
 
 		result.setTicker("XXXX-0000");
 		result.setCompany(company);
-		result.setIsFinalMode(false);
-		result.setIsCancelled(false);
 		result.setProblems(Collections.<Problem> emptySet());
 
 		return result;
@@ -81,7 +78,8 @@ public class PositionService {
 	public Position save(final Position position) {
 		Assert.notNull(position);
 		this.checkByPrincipal(position);
-		this.checkDeadline(position);
+		position.getDeadline().before(this.utilityService.current_moment());
+		Assert.isTrue(!position.getIsFinalMode());
 
 		final Position result;
 
@@ -94,6 +92,7 @@ public class PositionService {
 		Assert.notNull(position);
 		Assert.isTrue(this.positionRepository.exists(position.getId()));
 		this.checkByPrincipal(position);
+		Assert.isTrue(!position.getIsFinalMode());
 
 		this.positionRepository.delete(position);
 	}
@@ -159,10 +158,17 @@ public class PositionService {
 	}
 
 	public void cancel(final Position position) {
+		Collection<Application> applications;
+
 		this.checkByPrincipal(position);
 		Assert.isTrue(position.getIsFinalMode());
-
 		position.setIsCancelled(true);
+
+		applications = this.applicationService.findSubmittedPendingByPosition(position.getId());
+
+		for (final Application a : applications)
+			this.applicationService.rejectedCancelPosition(a);
+
 	}
 	//Other public methods  -----------------------------------------------
 
@@ -304,12 +310,7 @@ public class PositionService {
 
 		Assert.isTrue(owner.equals(principal));
 	}
-	private void checkDeadline(final Position position) {
-		if (position.getDeadline() == null)
-			throw new DataIntegrityViolationException("Invalid date");
-		else if (position.getDeadline().before(this.utilityService.current_moment()))
-			throw new DataIntegrityViolationException("Invalid date");
-	}
+
 	// Reconstruct ----------------------------------------------
 	public Position reconstruct(final Position position, final BindingResult binding) {
 		Position result, positionStored;
@@ -330,19 +331,29 @@ public class PositionService {
 		}
 
 		result.setDeadline(position.getDeadline());
-		result.setDescription(position.getDescription());
-		result.setProfile(position.getProfile());
+		result.setDescription(position.getDescription().trim());
+		result.setProfile(position.getProfile().trim());
 		result.setSalary(position.getSalary());
-		result.setSkills(position.getSkills());
-		result.setTechnologies(position.getTechnologies());
-		result.setTitle(position.getTitle());
+		result.setSkills(position.getSkills().trim());
+		result.setTechnologies(position.getTechnologies().trim());
+		result.setTitle(position.getTitle().trim());
 
-		if (position.getProblems() != null)
+		if (position.getProblems() == null)
+			result.setProblems(Collections.<Problem> emptySet());
+		else
 			result.setProblems(position.getProblems());
 
+		this.checkDeadline(position, binding);
 		this.validator.validate(result, binding);
 
 		return result;
+	}
+
+	private void checkDeadline(final Position position, final BindingResult binding) {
+		if (position.getDeadline() != null)
+			if (position.getDeadline().before(this.utilityService.current_moment()))
+				binding.rejectValue("deadline", "position.commit.deadline");
+
 	}
 
 }

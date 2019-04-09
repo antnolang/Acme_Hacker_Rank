@@ -59,7 +59,6 @@ public class ProblemService {
 		result = new Problem();
 		company = this.companyService.findByPrincipal();
 		result.setCompany(company);
-		result.setIsFinalMode(false);
 
 		return result;
 	}
@@ -81,6 +80,7 @@ public class ProblemService {
 		Assert.notNull(problem);
 		Assert.isTrue(this.problemRepository.exists(problem.getId()));
 		this.checkByPrincipal(problem);
+		Assert.isTrue(!problem.getIsFinalMode());
 
 		this.problemRepository.delete(problem);
 	}
@@ -193,16 +193,17 @@ public class ProblemService {
 		if (problem.getId() != 0) {
 			result = new Problem();
 			problemStored = this.findOne(problem.getId());
+			result.setId(problemStored.getId());
 			result.setCompany(problemStored.getCompany());
+			result.setVersion(problemStored.getVersion());
 			result.setIsFinalMode(problemStored.getIsFinalMode());
 
 		} else
 			result = this.create();
-		result.setId(problem.getId());
-		result.setAttachments(problem.getAttachments());
-		result.setHint(problem.getHint());
-		result.setStatement(problem.getStatement());
-		result.setTitle(problem.getTitle());
+		result.setAttachments(problem.getAttachments().trim());
+		result.setHint(problem.getHint().trim());
+		result.setStatement(problem.getStatement().trim());
+		result.setTitle(problem.getTitle().trim());
 
 		this.validator.validate(result, binding);
 

@@ -132,7 +132,7 @@ public class RegistrationForm {
 		this.userAccount = userAccount;
 	}
 
-	public boolean isCheckBoxDataProcessesAccepted() {
+	public boolean getCheckBoxDataProcessesAccepted() {
 		return this.checkBoxDataProcessesAccepted;
 	}
 

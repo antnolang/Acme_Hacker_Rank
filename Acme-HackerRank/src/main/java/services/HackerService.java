@@ -264,7 +264,7 @@ public class HackerService {
 		confirmPassword = registrationForm.getUserAccount().getConfirmPassword();
 		username = registrationForm.getUserAccount().getUsername();
 		checkBox = registrationForm.getCheckBoxAccepted();
-		checkBoxData = registrationForm.getCheckBoxAccepted();
+		checkBoxData = registrationForm.getCheckBoxDataProcessesAccepted();
 
 		this.utilityService.validateEmail(hacker.getEmail(), binding);
 		if (username.trim().equals(""))

@@ -12,7 +12,6 @@
 
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
-<%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div>
 	<a href="#"><img src="${banner}" alt="Acme-HackerRank, Inc." /></a>
@@ -52,18 +51,13 @@
 			</li>
 			<li><a href="curriculum/hacker/list.do" class="fNiv"><spring:message code="master.page.curriculum.list"/></a>
 			</li>
-			
-			<jstl:set var="isHacker" value="${true}"/>
 		</security:authorize>
 		
 		<!-- ALL USERS START -->
 		<li><a  href="position/availableList.do" class="fNiv"><spring:message	code="master.page.availableposition" /></a>
 		</li>
-		
-		<jstl:if test="${!isHacker}">
-			<li><a href="position/search.do" class="fNiv"><spring:message code="master.page.searchposition"/></a>
-			</li>
-		</jstl:if>
+		<li><a href="position/search.do" class="fNiv"><spring:message code="master.page.searchposition"/></a>
+		</li>
 		<!-- ALL USERS END -->
 		
 		<security:authorize access="isAnonymous()">

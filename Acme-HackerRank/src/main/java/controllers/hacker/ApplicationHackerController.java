@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ApplicationService;
-import services.HackerService;
+import services.CurriculumService;
 import services.PositionService;
 import controllers.AbstractController;
 import domain.Application;
@@ -33,7 +33,7 @@ public class ApplicationHackerController extends AbstractController {
 	private PositionService		positionService;
 
 	@Autowired
-	private HackerService		hackerService;
+	private CurriculumService	curriculumService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -146,7 +146,7 @@ public class ApplicationHackerController extends AbstractController {
 		ModelAndView result;
 		List<Curriculum> curricula;
 
-		curricula = this.hackerService.originalCurricula();
+		curricula = this.curriculumService.originalCurriculaByPrincipal();
 
 		result = new ModelAndView("application/edit");
 		result.addObject("application", application);

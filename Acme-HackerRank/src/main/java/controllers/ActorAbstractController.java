@@ -1,17 +1,13 @@
 
 package controllers;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
-import services.PositionService;
 import domain.Actor;
 import domain.Administrator;
-import domain.Position;
 
 @Controller
 public class ActorAbstractController extends AbstractController {
@@ -21,9 +17,6 @@ public class ActorAbstractController extends AbstractController {
 	@Autowired
 	private ActorService	actorService;
 
-	@Autowired
-	private PositionService	positionService;
-
 
 	// Main methods -----------------------------------------------------------
 
@@ -32,7 +25,6 @@ public class ActorAbstractController extends AbstractController {
 	public ModelAndView display(final Integer actorId) {
 		ModelAndView result;
 		Actor actor, principal;
-		final Collection<Position> positions;
 
 		actor = null;
 		principal = null;

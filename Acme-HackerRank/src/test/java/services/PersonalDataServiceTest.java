@@ -3,10 +3,12 @@ package services;
 
 import javax.transaction.Transactional;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import repositories.PersonalDataRepository;
 import utilities.AbstractTest;
@@ -32,74 +34,73 @@ public class PersonalDataServiceTest extends AbstractTest {
 
 	// Tests ------------------------------------------------------------------
 
-	//		 TODO: Tests funcionales PersonalData			
-	//			/*
-	//			 * A: An actor who is authenticated as a hacker must be able to: Manage his
-	//			 * or her curricula, which includes listing, showing, creating, UPDATING, 
-	//			 * and deleting them.
-	//			 * 
-	//			 * B: Positive test
-	//			 * 
-	//			 * C: TODO: Sentence coverage
-	//			 * 
-	//			 * D: TODO: Data coverage
-	//			 */
-	//			@Test
-	//			public void curriculumEditTest() {
-	//				PersonalData personalData, saved;
-	//				int personalDataId;
-	//				String fullname;
-	//				
-	//				// Data
-	//				fullname = "Fullname test";
-	//				
-	//				super.authenticate("hacker8");
-	//				
-	//				personalDataId = super.getEntityId("personalData81");
-	//				personalData = this.personalDataRepository.findOne(personalDataId);
-	//				personalData = this.clonePersonalData(personalData);
-	//				
-	//				personalData.setFullname(fullname);
-	//				saved = this.personalDataService.save(personalData);
-	//				
-	//				super.unauthenticate();
-	//				
-	//				Assert.isTrue(saved.getFullname() == fullname);
-	//			}
-	//			
-	//			/*
-	//			 * A: An actor who is authenticated as a hacker must be able to: Manage his
-	//			 * or her curricula, which includes listing, showing, creating, UPDATING, 
-	//			 * and deleting them.
-	//			 * 
-	//			 * B: The curriculum can only be updated by its owner.
-	//			 * 
-	//			 * C: TODO: Sentence coverage
-	//			 * 
-	//			 * D: TODO: Data coverage
-	//			 */
-	//			@Test(expected = IllegalArgumentException.class)
-	//			public void curriculumEditNegativeTest() {
-	//				PersonalData personalData, saved;
-	//				int personalDataId;
-	//				String fullname;
-	//				
-	//				// Data
-	//				fullname = "Fullname test";
-	//				
-	//				super.authenticate("hacker9");
-	//				
-	//				personalDataId = super.getEntityId("personalData81");
-	//				personalData = this.personalDataRepository.findOne(personalDataId);
-	//				personalData = this.clonePersonalData(personalData);
-	//				
-	//				personalData.setFullname(fullname);
-	//				saved = this.personalDataService.save(personalData);
-	//				
-	//				super.unauthenticate();
-	//				
-	//				Assert.isTrue(saved.getFullname() == fullname);
-	//			}
+	/*
+	 * A: An actor who is authenticated as a hacker must be able to: Manage his
+	 * or her curricula, which includes listing, showing, creating, UPDATING,
+	 * and deleting them.
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: TODO: Sentence coverage
+	 * 
+	 * D: TODO: Data coverage
+	 */
+	@Test
+	public void curriculumEditTest() {
+		PersonalData personalData, saved;
+		int personalDataId;
+		String fullname;
+
+		// Data
+		fullname = "Hacker8 Moreno";
+
+		super.authenticate("hacker8");
+
+		personalDataId = super.getEntityId("personalData81");
+		personalData = this.personalDataRepository.findOne(personalDataId);
+		personalData = this.clonePersonalData(personalData);
+
+		personalData.setFullname(fullname);
+		saved = this.personalDataService.save(personalData);
+
+		super.unauthenticate();
+
+		Assert.isTrue(saved.getFullname() == fullname);
+	}
+
+	/*
+	 * A: An actor who is authenticated as a hacker must be able to: Manage his
+	 * or her curricula, which includes listing, showing, creating, UPDATING,
+	 * and deleting them.
+	 * 
+	 * B: The curriculum can only be updated by its owner.
+	 * 
+	 * C: TODO: Sentence coverage
+	 * 
+	 * D: TODO: Data coverage
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void curriculumEditNegativeTest() {
+		PersonalData personalData, saved;
+		int personalDataId;
+		String fullname;
+
+		// Data
+		fullname = "Hacker9 Rubio";
+
+		super.authenticate("hacker9");
+
+		personalDataId = super.getEntityId("personalData81");
+		personalData = this.personalDataRepository.findOne(personalDataId);
+		personalData = this.clonePersonalData(personalData);
+
+		personalData.setFullname(fullname);
+		saved = this.personalDataService.save(personalData);
+
+		super.unauthenticate();
+
+		Assert.isTrue(saved.getFullname() == fullname);
+	}
 
 	// Ancillary methods --------------------------------------------------
 

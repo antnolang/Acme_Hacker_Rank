@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -158,6 +159,10 @@ public class PositionDataService {
 	}
 
 	private void checkDates(final PositionData positionData) {
-		Assert.isTrue(positionData.getStartDate().before(positionData.getEndDate()), "Incorrect dates");
+		Date startDate, endDate;
+
+		startDate = positionData.getStartDate();
+		endDate = positionData.getEndDate();
+		Assert.isTrue(startDate == null || endDate == null || startDate.before(endDate), "Incorrect dates");
 	}
 }

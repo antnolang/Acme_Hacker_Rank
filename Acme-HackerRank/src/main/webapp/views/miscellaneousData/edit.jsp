@@ -24,8 +24,10 @@
 	
 	<!-- Buttons -->
 	<acme:submit name="save" code="miscellaneousData.save"/>
-	&nbsp;
-	<acme:submit name="delete" code="miscellaneousData.delete"/>
+	<jstl:if test="${miscellaneousData.id != 0}">
+		&nbsp;
+		<acme:submit name="delete" code="miscellaneousData.delete"/>
+	</jstl:if>
 	&nbsp;
 	<acme:cancel code="miscellaneousData.cancel" url="miscellaneousData/hacker/backCurriculum.do?miscellaneousDataId=${miscellaneousData.id}"/>
 </form:form>

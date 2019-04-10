@@ -24,8 +24,10 @@
 	
 	<!-- Buttons -->
 	<acme:submit name="save" code="positionData.save"/>
-	&nbsp;
-	<acme:submit name="delete" code="positionData.delete"/>
+	<jstl:if test="${positionData.id != 0}">
+		&nbsp;
+		<acme:submit name="delete" code="positionData.delete"/>
+	</jstl:if>
 	&nbsp;
 	<jstl:choose>
 		<jstl:when test="${curriculumId ne null}">

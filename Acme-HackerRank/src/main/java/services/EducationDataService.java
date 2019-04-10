@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,7 +52,6 @@ public class EducationDataService {
 
 	private EducationData saveInternal(final EducationData educationData) {
 		this.checkDates(educationData);
-		this.checkCurriculumIsOriginal(educationData);
 
 		EducationData saved;
 
@@ -65,6 +65,7 @@ public class EducationDataService {
 		Assert.notNull(educationData);
 		Assert.isTrue(this.educationDataRepository.exists(educationData.getId()));
 		this.checkOwner(educationData.getId());
+		this.checkCurriculumIsOriginal(educationData);
 
 		final EducationData saved = this.saveInternal(educationData);
 
@@ -159,6 +160,10 @@ public class EducationDataService {
 	}
 
 	private void checkDates(final EducationData educationData) {
-		Assert.isTrue(educationData.getStartDate().before(educationData.getEndDate()), "Incorrect dates");
+		Date startDate, endDate;
+
+		startDate = educationData.getStartDate();
+		endDate = educationData.getEndDate();
+		Assert.isTrue(startDate == null || endDate == null || startDate.before(endDate), "Incorrect dates");
 	}
 }

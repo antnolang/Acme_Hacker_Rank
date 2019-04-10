@@ -54,7 +54,6 @@ public class MiscellaneousDataService {
 
 	private MiscellaneousData saveInternal(final MiscellaneousData miscellaneousData) {
 		this.utilityService.checkURLS(miscellaneousData.getAttachments());
-		this.checkCurriculumIsOriginal(miscellaneousData);
 
 		MiscellaneousData saved;
 
@@ -68,6 +67,7 @@ public class MiscellaneousDataService {
 		Assert.notNull(miscellaneousData);
 		Assert.isTrue(this.miscellaneousDataRepository.exists(miscellaneousData.getId()));
 		this.checkOwner(miscellaneousData.getId());
+		this.checkCurriculumIsOriginal(miscellaneousData);
 
 		final MiscellaneousData saved = this.saveInternal(miscellaneousData);
 

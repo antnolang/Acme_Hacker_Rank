@@ -98,12 +98,12 @@ public class PersonalDataService {
 	}
 
 	protected void checkFullname(final Hacker hacker, final PersonalData personalData) {
-		Assert.isTrue(hacker.getFullname() == personalData.getFullname(), "Fullname does not match");
+		Assert.isTrue(hacker.getFullname().equals(personalData.getFullname()), "Fullname does not match");
 	}
 
 	protected void checkProfileURL(final PersonalData personalData) {
 		Assert.isTrue(personalData.getGithubProfile().startsWith("https://www.github.com/"), "Not in github");
-		Assert.isTrue(personalData.getGithubProfile().startsWith("https://www.linkedin.com/"), "Not in linkedin");
+		Assert.isTrue(personalData.getLinkedInProfile().startsWith("https://www.linkedin.com/"), "Not in linkedin");
 	}
 
 	private void checkCurriculumIsOriginal(final PersonalData personalData) {

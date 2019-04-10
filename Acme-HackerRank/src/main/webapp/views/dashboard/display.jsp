@@ -8,6 +8,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 
 <p> <strong> <spring:message code="dashboard.one" />: </strong> </p>
@@ -19,10 +20,10 @@
 		<th> <spring:message code="dashboard.deviation" /> </th>
 	</tr>
 	<tr>
-		<td> <jstl:out value="${findDataNumberPositionsPerCompany[0]}" /> </td>
-		<td> <jstl:out value="${findDataNumberPositionsPerCompany[1]}" /> </td>
-		<td> <jstl:out value="${findDataNumberPositionsPerCompany[2]}" /> </td>
-		<td> <jstl:out value="${findDataNumberPositionsPerCompany[3]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberPositionsPerCompany[0]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberPositionsPerCompany[1]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberPositionsPerCompany[2]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberPositionsPerCompany[3]}" /> </td>
 	</tr>
 </table>
 
@@ -35,10 +36,10 @@
 		<th> <spring:message code="dashboard.deviation" /> </th>
 	</tr>
 	<tr>
-		<td> <jstl:out value="${findDataNumberApplicationPerHacker[0]}" /> </td>
-		<td> <jstl:out value="${findDataNumberApplicationPerHacker[1]}" /> </td>
-		<td> <jstl:out value="${findDataNumberApplicationPerHacker[2]}" /> </td>
-		<td> <jstl:out value="${findDataNumberApplicationPerHacker[3]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberApplicationPerHacker[0]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberApplicationPerHacker[1]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberApplicationPerHacker[2]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberApplicationPerHacker[3]}" /> </td>
 	</tr>
 </table>
 
@@ -68,10 +69,10 @@
 		<th> <spring:message code="dashboard.deviation" /> </th>
 	</tr>
 	<tr>
-		<td> <jstl:out value="${dataSalaryOffered[0]}" /> </td>
-		<td> <jstl:out value="${dataSalaryOffered[1]}" /> </td>
-		<td> <jstl:out value="${dataSalaryOffered[2]}" /> </td>
-		<td> <jstl:out value="${dataSalaryOffered[3]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${dataSalaryOffered[0]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${dataSalaryOffered[1]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${dataSalaryOffered[2]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${dataSalaryOffered[3]}" /> </td>
 	</tr>
 </table>
 
@@ -95,10 +96,10 @@
 		<th> <spring:message code="dashboard.deviation" /> </th>
 	</tr>
 	<tr>
-		<td> <jstl:out value="${findDataNumberCurriculumPerHacker[0]}" /> </td>
-		<td> <jstl:out value="${findDataNumberCurriculumPerHacker[1]}" /> </td>
-		<td> <jstl:out value="${findDataNumberCurriculumPerHacker[2]}" /> </td>
-		<td> <jstl:out value="${findDataNumberCurriculumPerHacker[3]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberCurriculumPerHacker[0]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberCurriculumPerHacker[1]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberCurriculumPerHacker[2]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberCurriculumPerHacker[3]}" /> </td>
 	</tr>
 </table>
 
@@ -111,10 +112,10 @@
 		<th> <spring:message code="dashboard.deviation" /> </th>
 	</tr>
 	<tr>
-		<td> <jstl:out value="${findDataNumberResultsFinder[0]}" /> </td>
-		<td> <jstl:out value="${findDataNumberResultsFinder[1]}" /> </td>
-		<td> <jstl:out value="${findDataNumberResultsFinder[2]}" /> </td>
-		<td> <jstl:out value="${findDataNumberResultsFinder[3]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberResultsFinder[0]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberResultsFinder[1]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberResultsFinder[2]}" /> </td>
+		<td> <fmt:formatNumber type = "number" maxFractionDigits = "3" minFractionDigits="3" value = "${findDataNumberResultsFinder[3]}" /> </td>
 	</tr>
 </table>
 

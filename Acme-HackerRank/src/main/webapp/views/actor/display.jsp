@@ -29,7 +29,7 @@
 	
 	<p> <strong> <spring:message code="actor.fullname" />  </strong>  <jstl:out value="${actor.fullname}" /></p>
 
-	<p> <strong> <spring:message code="actor.VATnumber" />  </strong>  <jstl:out value="${actor.VATnumber}" /></p>
+	<p> <strong> <spring:message code="actor.VATnumber" />  </strong>  <jstl:out value="${actor.VATnumber}" />%</p>
 
 	<p> <strong> <spring:message code="actor.email" />  </strong>  <jstl:out value="${actor.email}" /></p>
 

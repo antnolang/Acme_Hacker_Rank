@@ -106,11 +106,11 @@ public class MiscellaneousDataHackerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/backCurriculum", method = RequestMethod.GET)
-	public ModelAndView back(@RequestParam final int personalDataId) {
+	public ModelAndView back(@RequestParam final int miscellaneousDataId) {
 		ModelAndView result;
 		int curriculumId;
 
-		curriculumId = this.curriculumService.findIdByMiscellaneousDataId(personalDataId);
+		curriculumId = this.curriculumService.findIdByMiscellaneousDataId(miscellaneousDataId);
 		result = new ModelAndView("redirect:/curriculum/display.do?curriculumId=" + curriculumId);
 
 		return result;

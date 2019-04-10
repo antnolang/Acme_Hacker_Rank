@@ -111,11 +111,11 @@ public class EducationDataHackerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/backCurriculum", method = RequestMethod.GET)
-	public ModelAndView back(@RequestParam final int personalDataId) {
+	public ModelAndView back(@RequestParam final int educationDataId) {
 		ModelAndView result;
 		int curriculumId;
 
-		curriculumId = this.curriculumService.findIdByEducationDataId(personalDataId);
+		curriculumId = this.curriculumService.findIdByEducationDataId(educationDataId);
 		result = new ModelAndView("redirect:/curriculum/display.do?curriculumId=" + curriculumId);
 
 		return result;

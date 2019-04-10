@@ -81,6 +81,7 @@ public class CurriculumService {
 
 	public Curriculum save(final Curriculum curriculum) {
 		Assert.notNull(curriculum);
+		Assert.isTrue(curriculum.getIsOriginal());
 
 		Hacker principal;
 
@@ -100,6 +101,7 @@ public class CurriculumService {
 	public void delete(final Curriculum curriculum) {
 		Assert.notNull(curriculum);
 		Assert.isTrue(this.curriculumRepository.exists(curriculum.getId()));
+		Assert.isTrue(curriculum.getIsOriginal());
 		this.checkOwner(curriculum);
 
 		this.curriculumRepository.delete(curriculum);

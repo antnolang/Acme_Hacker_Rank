@@ -51,6 +51,7 @@ public class EducationDataService {
 
 	private EducationData saveInternal(final EducationData educationData) {
 		this.checkDates(educationData);
+		this.checkCurriculumIsOriginal(educationData);
 
 		EducationData saved;
 
@@ -87,6 +88,7 @@ public class EducationDataService {
 		Assert.notNull(educationData);
 		Assert.isTrue(this.educationDataRepository.exists(educationData.getId()));
 		this.checkOwner(educationData.getId());
+		this.checkCurriculumIsOriginal(educationData);
 
 		int curriculumId;
 		Curriculum curriculum;
@@ -144,6 +146,16 @@ public class EducationDataService {
 		owner = this.hackerService.findByEducationDataId(educationDataId);
 
 		Assert.isTrue(principal.equals(owner));
+	}
+
+	private void checkCurriculumIsOriginal(final EducationData educationData) {
+		int curriculumId;
+		Curriculum curriculum;
+
+		curriculumId = this.curriculumService.findIdByEducationDataId(educationData.getId());
+		curriculum = this.curriculumService.findOne(curriculumId);
+
+		Assert.isTrue(curriculum.getIsOriginal());
 	}
 
 	private void checkDates(final EducationData educationData) {

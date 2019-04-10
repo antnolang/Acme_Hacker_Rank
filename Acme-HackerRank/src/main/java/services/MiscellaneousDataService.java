@@ -54,6 +54,7 @@ public class MiscellaneousDataService {
 
 	private MiscellaneousData saveInternal(final MiscellaneousData miscellaneousData) {
 		this.utilityService.checkURLS(miscellaneousData.getAttachments());
+		this.checkCurriculumIsOriginal(miscellaneousData);
 
 		MiscellaneousData saved;
 
@@ -90,6 +91,7 @@ public class MiscellaneousDataService {
 		Assert.notNull(miscellaneousData);
 		Assert.isTrue(this.miscellaneousDataRepository.exists(miscellaneousData.getId()));
 		this.checkOwner(miscellaneousData.getId());
+		this.checkCurriculumIsOriginal(miscellaneousData);
 
 		int curriculumId;
 		Curriculum curriculum;
@@ -144,5 +146,15 @@ public class MiscellaneousDataService {
 		owner = this.hackerService.findByMiscellaneousDataId(miscellaneousDataId);
 
 		Assert.isTrue(principal.equals(owner));
+	}
+
+	private void checkCurriculumIsOriginal(final MiscellaneousData miscellaneousData) {
+		int curriculumId;
+		Curriculum curriculum;
+
+		curriculumId = this.curriculumService.findIdByMiscellaneousDataId(miscellaneousData.getId());
+		curriculum = this.curriculumService.findOne(curriculumId);
+
+		Assert.isTrue(curriculum.getIsOriginal());
 	}
 }

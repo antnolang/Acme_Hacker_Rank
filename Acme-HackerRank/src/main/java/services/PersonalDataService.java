@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.PersonalDataRepository;
+import domain.Curriculum;
 import domain.Hacker;
 import domain.PersonalData;
 
@@ -23,6 +24,9 @@ public class PersonalDataService {
 
 	@Autowired
 	private HackerService			hackerService;
+
+	@Autowired
+	private CurriculumService		curriculumService;
 
 
 	// Constructors ------------------------------------------------------
@@ -46,6 +50,7 @@ public class PersonalDataService {
 		Assert.notNull(personalData);
 		Assert.isTrue(this.personalDataRepository.exists(personalData.getId()));
 		this.checkProfileURL(personalData);
+		this.checkCurriculumIsOriginal(personalData);
 
 		final Hacker principal = this.hackerService.findByPrincipal();
 		PersonalData saved;
@@ -99,6 +104,16 @@ public class PersonalDataService {
 	protected void checkProfileURL(final PersonalData personalData) {
 		Assert.isTrue(personalData.getGithubProfile().startsWith("https://www.github.com/"), "Not in github");
 		Assert.isTrue(personalData.getGithubProfile().startsWith("https://www.linkedin.com/"), "Not in linkedin");
+	}
+
+	private void checkCurriculumIsOriginal(final PersonalData personalData) {
+		int curriculumId;
+		Curriculum curriculum;
+
+		curriculumId = this.curriculumService.findIdByPersonalDataId(personalData.getId());
+		curriculum = this.curriculumService.findOne(curriculumId);
+
+		Assert.isTrue(curriculum.getIsOriginal());
 	}
 
 	private void checkOwner(final int personalDataId) {

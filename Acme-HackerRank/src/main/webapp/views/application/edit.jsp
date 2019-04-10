@@ -24,13 +24,6 @@
 <form:form action="application/hacker/edit.do"
 	modelAttribute="application">
 	<form:hidden path="id" />
-	<form:hidden path="hacker" />
-	<form:hidden path="applicationMoment" />
-	<form:hidden path="submittedMoment" />
-	<form:hidden path="status" />
-	<form:hidden path="position" />
-	<form:hidden path="problem" />
-	<form:hidden path="answer" />
 
 		<acme:selectMandatory items="${curricula}" multiple="false" 
 		 itemLabel="title" code="application.curriculum" path="curriculum"/>

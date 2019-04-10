@@ -62,24 +62,17 @@ public class ApplicationService {
 		Application result;
 		Hacker hacker;
 		Date moment;
-		final Curriculum curriculum;
-		List<Curriculum> curricula;
 		final Problem problem;
 
 		hacker = this.hackerService.findByPrincipal();
 
-		curricula = new ArrayList<>(this.curriculumService.originalCurricula(hacker.getId()));
-
-		Assert.isTrue(!curricula.isEmpty());
 		Assert.isTrue(this.isApplied(position, hacker));
 
 		moment = this.utilityService.current_moment();
-		curriculum = curricula.get(0);
 		problem = this.getRandomProblem(position.getProblems());
 
 		result = new Application();
 		result.setHacker(hacker);
-		result.setCurriculum(curriculum);
 		result.setProblem(problem);
 		result.setPosition(position);
 		result.setStatus("PENDING");
@@ -156,7 +149,7 @@ public class ApplicationService {
 		this.save(application);
 	}
 
-	public Application findOne(final int applicationId) {
+	protected Application findOne(final int applicationId) {
 		Application result;
 
 		result = this.applicationRepository.findOne(applicationId);
@@ -204,7 +197,7 @@ public class ApplicationService {
 		return results;
 	}
 
-	public void deleteApplicationByCompany(final Company company) {
+	protected void deleteApplicationByCompany(final Company company) {
 		Collection<Application> applications;
 
 		applications = this.applicationRepository.findApplicationByCompany(company.getId());
@@ -214,7 +207,7 @@ public class ApplicationService {
 		this.applicationRepository.deleteInBatch(applications);
 	}
 
-	public void deleteApplicationByHacker(final Hacker hacker) {
+	protected void deleteApplicationByHacker(final Hacker hacker) {
 		Collection<Application> applications;
 
 		applications = this.applicationRepository.findApplicationByHacker(hacker.getId());
@@ -229,6 +222,7 @@ public class ApplicationService {
 			result = new Application();
 			applicationStored = this.findOne(application.getId());
 			result.setId(applicationStored.getId());
+			result.setVersion(applicationStored.getVersion());
 			result.setApplicationMoment(applicationStored.getApplicationMoment());
 			result.setStatus(applicationStored.getStatus());
 			result.setCurriculum(applicationStored.getCurriculum());
@@ -248,7 +242,7 @@ public class ApplicationService {
 
 	// Other business methods ---------------------
 
-	public Problem getRandomProblem(final Collection<Problem> problems) {
+	private Problem getRandomProblem(final Collection<Problem> problems) {
 		List<Problem> problemList;
 		Problem result;
 
@@ -270,7 +264,7 @@ public class ApplicationService {
 	protected Collection<Application> findApplicationsByProblemHacker(final int idProblem, final int idHacker) {
 		Collection<Application> result;
 
-		result = this.findApplicationsByProblemHacker(idProblem, idHacker);
+		result = this.applicationRepository.findApplicationsByProblemHacker(idProblem, idHacker);
 
 		return result;
 	}

@@ -50,6 +50,9 @@ public class PositionService {
 	@Autowired
 	private ApplicationService	applicationService;
 
+	@Autowired
+	private ProblemService		problemService;
+
 
 	// Other supporting services -------------------
 
@@ -80,12 +83,17 @@ public class PositionService {
 		this.checkByPrincipal(position);
 		position.getDeadline().before(this.utilityService.current_moment());
 		Assert.isTrue(!position.getIsFinalMode());
+		this.checkOwnerProblems(position);
 
 		final Position result;
 
 		result = this.positionRepository.save(position);
 
 		return result;
+	}
+	private void checkOwnerProblems(final Position position) {
+		for (final Problem p : position.getProblems())
+			this.problemService.checkProblemFinalByPrincipal(p);
 	}
 
 	public void delete(final Position position) {

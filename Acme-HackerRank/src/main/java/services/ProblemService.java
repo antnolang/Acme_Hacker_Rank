@@ -169,7 +169,6 @@ public class ProblemService {
 		this.problemRepository.delete(problems);
 
 	}
-
 	private void checkByPrincipal(final Problem problem) {
 		Company owner;
 		Company principal;
@@ -184,6 +183,16 @@ public class ProblemService {
 
 	protected void flush() {
 		this.problemRepository.flush();
+	}
+	protected void checkProblemFinalByPrincipal(final Problem problem) {
+		Company owner;
+		Company principal;
+
+		owner = problem.getCompany();
+		principal = this.companyService.findByPrincipal();
+
+		Assert.isTrue(owner.equals(principal));
+		Assert.isTrue(problem.getIsFinalMode());
 	}
 
 	// Reconstruct ----------------------------------------------

@@ -11,7 +11,6 @@ import services.ActorService;
 import services.PositionService;
 import domain.Actor;
 import domain.Administrator;
-import domain.Company;
 import domain.Position;
 
 @Controller
@@ -48,13 +47,6 @@ public class ActorAbstractController extends AbstractController {
 			actor = this.actorService.findPrincipal();
 			result.addObject("isAuthorized", true);
 			result.addObject("isActorLogged", true);
-			if (actor instanceof Company) {
-				positions = this.positionService.findFinalModePositionsByCompany(actor.getId());
-				if (positions.isEmpty())
-					result.addObject("emptyPositions", true);
-				else
-					result.addObject("emptyPositions", false);
-			}
 		} else {
 			actor = this.actorService.findOne(actorId);
 			result.addObject("isAuthorized", false);
@@ -62,13 +54,6 @@ public class ActorAbstractController extends AbstractController {
 				actor = this.actorService.findOneToDisplayEdit(actorId);
 			else if (actor instanceof Administrator && actorId != principal.getId())
 				throw new IllegalArgumentException();
-			if (actor instanceof Company) {
-				positions = this.positionService.findFinalModePositionsByCompany(actor.getId());
-				if (positions.isEmpty())
-					result.addObject("emptyPositions", true);
-				else
-					result.addObject("emptyPositions", false);
-			}
 
 		}
 

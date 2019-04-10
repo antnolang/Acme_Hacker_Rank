@@ -99,7 +99,9 @@ public class HackerService {
 		Hacker result;
 
 		result = (Hacker) this.actorService.save(hacker);
-		this.finderService.assignNewFinder(result);
+
+		if (hacker.getId() == 0)
+			this.finderService.assignNewFinder(result);
 
 		return result;
 	}

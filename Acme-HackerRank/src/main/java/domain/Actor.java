@@ -107,7 +107,6 @@ public abstract class Actor extends DomainEntity {
 
 	@NotBlank
 	@Column(unique = true)
-	@SafeHtml(whitelistType = SafeHtml.WhiteListType.NONE)
 	public String getEmail() {
 		return this.email;
 	}

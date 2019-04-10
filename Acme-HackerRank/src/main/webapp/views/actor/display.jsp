@@ -111,16 +111,14 @@
 			</strong>
 			<jstl:out value="${actor.commercialName}" />
 		</p>
-		
-		<jstl:if test="${emptyPositions == false }">
-			<p>
-				<strong> <spring:message
-						code="actor.company.positions" />
-				</strong>
-				<a href="position/list.do?companyId=${actor.id}"><spring:message
-				code="table.positions" /></a>
-			</p>
-		</jstl:if>
+
+
+		<p>
+			<strong> <spring:message code="actor.company.positions" />
+			</strong> <a href="position/list.do?companyId=${actor.id}"><spring:message
+					code="table.positions" /></a>
+		</p>
+
 
 
 	</fieldset>

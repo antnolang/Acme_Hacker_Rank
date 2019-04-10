@@ -85,6 +85,7 @@
 	<display:column property="profile" titleKey="position.profile" />
 	<display:column property="skills" titleKey="position.skills" />
 	<display:column property="technologies" titleKey="position.technologies" />
+	<display:column property="salary" titleKey="position.salary" />
 </display:table>
 	
 <p> <strong> <spring:message code="dashboard.seven" />: </strong> </p>

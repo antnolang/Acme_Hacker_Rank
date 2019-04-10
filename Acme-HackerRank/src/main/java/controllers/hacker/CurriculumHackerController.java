@@ -93,11 +93,11 @@ public class CurriculumHackerController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(final Curriculum curriculum, final BindingResult binding) {
 		ModelAndView result;
-		Curriculum curriculumRec;
+		Curriculum curriculumStored;
 
-		curriculumRec = this.curriculumService.reconstruct(curriculum, binding);
+		curriculumStored = this.curriculumService.findOne(curriculum.getId());
 		try {
-			this.curriculumService.delete(curriculumRec);
+			this.curriculumService.delete(curriculumStored);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final Throwable oops) {
 			result = this.editModelAndView(curriculum, "curriculum.commit.error");

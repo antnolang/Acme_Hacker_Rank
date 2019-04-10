@@ -75,7 +75,7 @@ public class EducationDataHackerController extends AbstractController {
 		paramCurriculumId = request.getParameter("curriculumId");
 		curriculumId = paramCurriculumId.isEmpty() ? null : Integer.parseInt(paramCurriculumId);
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(educationData);
+			result = this.createEditModelAndView(educationData, curriculumId);
 		else
 			try {
 				if (curriculumId == null)

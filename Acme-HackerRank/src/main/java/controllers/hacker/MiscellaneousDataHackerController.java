@@ -74,7 +74,7 @@ public class MiscellaneousDataHackerController extends AbstractController {
 		paramCurriculumId = request.getParameter("curriculumId");
 		curriculumId = paramCurriculumId.isEmpty() ? null : Integer.parseInt(paramCurriculumId);
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(miscellaneousData);
+			result = this.createEditModelAndView(miscellaneousData, curriculumId);
 		else
 			try {
 				if (curriculumId == null)

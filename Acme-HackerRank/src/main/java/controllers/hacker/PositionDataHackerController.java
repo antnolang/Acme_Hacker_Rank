@@ -75,7 +75,7 @@ public class PositionDataHackerController extends AbstractController {
 		paramCurriculumId = request.getParameter("curriculumId");
 		curriculumId = paramCurriculumId.isEmpty() ? null : Integer.parseInt(paramCurriculumId);
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(positionData);
+			result = this.createEditModelAndView(positionData, curriculumId);
 		else
 			try {
 				if (curriculumId == null)

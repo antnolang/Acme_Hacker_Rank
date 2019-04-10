@@ -127,12 +127,12 @@ public class CurriculumService {
 		return result;
 	}
 
-	public Collection<Curriculum> findByHackerPrincipal() {
+	public Collection<Curriculum> findOriginalByHackerPrincipal() {
 		Collection<Curriculum> result;
 		Hacker principal;
 
 		principal = this.hackerService.findByPrincipal();
-		result = this.curriculumRepository.findAllByHacker(principal.getId());
+		result = this.curriculumRepository.originalCurricula(principal.getId());
 		Assert.notNull(result);
 
 		return result;

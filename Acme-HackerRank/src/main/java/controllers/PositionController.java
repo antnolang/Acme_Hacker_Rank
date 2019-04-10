@@ -12,9 +12,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ApplicationService;
 import services.CompanyService;
+import services.CurriculumService;
 import services.HackerService;
 import services.PositionService;
 import domain.Company;
+import domain.Curriculum;
 import domain.Hacker;
 import domain.Position;
 import domain.Problem;
@@ -36,6 +38,9 @@ public class PositionController extends AbstractController {
 
 	@Autowired
 	private HackerService		hackerService;
+
+	@Autowired
+	private CurriculumService	curriculumService;
 
 
 	// Constructor ------------------------------------
@@ -149,6 +154,10 @@ public class PositionController extends AbstractController {
 
 			try {
 				hackerPrincipal = this.hackerService.findByPrincipal();
+				result.addObject("noCurriculum", false);
+				final Collection<Curriculum> curriculum = this.curriculumService.findOriginalByHackerPrincipal();
+				if (curriculum.isEmpty())
+					result.addObject("noCurriculum", true);
 			} catch (final Exception e1) {
 				hackerPrincipal = null;
 			}

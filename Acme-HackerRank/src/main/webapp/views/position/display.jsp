@@ -35,9 +35,14 @@
 	
 	<security:authorize access="hasRole('HACKER')">
 	<jstl:if test="${!position.isCancelled && position.isFinalMode && isApplied}">
+	<jstl:if test="${noCurriculum}">
+		<p style="color:blue;"><spring:message code="problem.info.curriculum"/></p>
+	</jstl:if>
+	<jstl:if test="${noCurriculum == false}">
 		<h2>
 			<a href="application/hacker/create.do?positionId=${position.id}"><spring:message code="position.apply" /></a>
 		</h2>
+	</jstl:if>
 	</jstl:if>
 	</security:authorize>
 	

@@ -20,7 +20,7 @@
 	<fieldset>
 		<legend><spring:message code="curriculum.fieldset.personalData"/></legend>
 		
-		<acme:textbox code="curriculum.personalData.fullname" path="personalData.fullname"/>
+		<acme:textbox code="curriculum.personalData.fullname" path="personalData.fullname" readonly="true"/>
 		<acme:textbox code="curriculum.personalData.statement" path="personalData.statement"/>
 		<acme:textbox code="curriculum.personalData.phoneNumber" path="personalData.phoneNumber" id="phoneNumber"/>
 		<acme:textbox code="curriculum.personalData.githubProfile" path="personalData.githubProfile"/>

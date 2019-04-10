@@ -45,9 +45,14 @@ public class PersonalDataService {
 	public PersonalData save(final PersonalData personalData) {
 		Assert.notNull(personalData);
 		Assert.isTrue(this.personalDataRepository.exists(personalData.getId()));
-		this.checkOwner(personalData.getId());
 
-		final PersonalData saved = this.personalDataRepository.save(personalData);
+		final Hacker principal = this.hackerService.findByPrincipal();
+		PersonalData saved;
+
+		this.checkOwner(principal, personalData.getId());
+		this.checkFullname(principal, personalData);
+
+		saved = this.personalDataRepository.save(personalData);
 
 		return saved;
 	}
@@ -86,12 +91,22 @@ public class PersonalDataService {
 		return res;
 	}
 
+	protected void checkFullname(final Hacker hacker, final PersonalData personalData) {
+		Assert.isTrue(hacker.getFullname() == personalData.getFullname(), "Fullname does not match");
+	}
+
 	private void checkOwner(final int personalDataId) {
-		Hacker principal, owner;
+		Hacker principal;
 
 		principal = this.hackerService.findByPrincipal();
+		this.checkOwner(principal, personalDataId);
+	}
+
+	private void checkOwner(final Hacker hacker, final int personalDataId) {
+		Hacker owner;
+
 		owner = this.hackerService.findByPersonalDataId(personalDataId);
 
-		Assert.isTrue(principal.equals(owner));
+		Assert.isTrue(hacker.equals(owner));
 	}
 }

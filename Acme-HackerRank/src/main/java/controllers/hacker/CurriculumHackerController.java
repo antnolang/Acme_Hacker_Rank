@@ -74,6 +74,9 @@ public class CurriculumHackerController extends AbstractController {
 				saved = this.curriculumService.save(curriculumRec);
 				result = new ModelAndView("redirect:/curriculum/display.do?curriculumId=" + saved.getId());
 			} catch (final Throwable oops) {
+				if (oops.getMessage().contains("Fullname does not match"))
+					binding.rejectValue("personalData.fullname", "curriculum.fullname.error", "Must match with the full name of your profile.");
+
 				if (curriculum.getId() == 0)
 					result = this.createModelAndView(curriculum, "curriculum.commit.error");
 				else

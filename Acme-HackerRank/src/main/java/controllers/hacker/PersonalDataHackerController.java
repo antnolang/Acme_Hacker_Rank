@@ -64,6 +64,9 @@ public class PersonalDataHackerController extends AbstractController {
 				saved = this.personalDataService.save(personalData);
 				result = new ModelAndView("redirect:backCurriculum.do?personalDataId=" + saved.getId());
 			} catch (final Throwable oops) {
+				if (oops.getMessage().contains("Fullname does not match"))
+					binding.rejectValue("fullname", "curriculum.fullname.error", "Must match with the full name of your profile.");
+
 				result = this.editModelAndView(personalData, "personalData.commit.error");
 			}
 

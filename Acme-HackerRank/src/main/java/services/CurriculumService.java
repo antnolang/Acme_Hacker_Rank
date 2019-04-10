@@ -81,7 +81,15 @@ public class CurriculumService {
 
 	public Curriculum save(final Curriculum curriculum) {
 		Assert.notNull(curriculum);
-		this.checkOwner(curriculum);
+
+		Hacker principal;
+
+		if (!this.curriculumRepository.exists(curriculum.getId())) {
+			principal = this.hackerService.findByPrincipal();
+			this.checkOwner(principal, curriculum);
+			this.personalDataService.checkFullname(principal, curriculum.getPersonalData());
+		} else
+			this.checkOwner(curriculum);
 
 		final Curriculum saved = this.curriculumRepository.save(curriculum);
 
@@ -311,6 +319,9 @@ public class CurriculumService {
 
 	private void checkOwner(final Curriculum curriculum) {
 		Assert.isTrue(this.checkIsOwner(curriculum));
+	}
 
+	private void checkOwner(final Hacker hacker, final Curriculum curriculum) {
+		Assert.isTrue(hacker.equals(curriculum.getHacker()));
 	}
 }

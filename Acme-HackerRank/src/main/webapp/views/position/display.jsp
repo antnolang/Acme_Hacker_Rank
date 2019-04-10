@@ -91,12 +91,14 @@
 	
 
 <security:authorize access="hasRole('COMPANY')">
-<jstl:if test="${principal == position.company}">	
+<jstl:if test="${principal == position.company}">
+	<jstl:if test="${position.isFinalMode}">
 
 	<p>
 		<strong><spring:message code="position.applications" />:</strong>
 			<a href="application/company/list.do?positionId=${position.id}"><spring:message code="position.applications" /></a>
 	</p>
+	</jstl:if>
 
 <fieldset>
 	<legend>

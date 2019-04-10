@@ -51,7 +51,6 @@ public class PositionDataService {
 
 	private PositionData saveInternal(final PositionData positionData) {
 		this.checkDates(positionData);
-		this.checkCurriculumIsOriginal(positionData);
 
 		PositionData saved;
 
@@ -65,6 +64,7 @@ public class PositionDataService {
 		Assert.notNull(positionData);
 		Assert.isTrue(this.positionDataRepository.exists(positionData.getId()));
 		this.checkOwner(positionData.getId());
+		this.checkCurriculumIsOriginal(positionData);
 
 		final PositionData saved = this.saveInternal(positionData);
 

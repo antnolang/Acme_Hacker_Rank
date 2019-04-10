@@ -51,7 +51,6 @@ public class EducationDataService {
 
 	private EducationData saveInternal(final EducationData educationData) {
 		this.checkDates(educationData);
-		this.checkCurriculumIsOriginal(educationData);
 
 		EducationData saved;
 
@@ -65,6 +64,7 @@ public class EducationDataService {
 		Assert.notNull(educationData);
 		Assert.isTrue(this.educationDataRepository.exists(educationData.getId()));
 		this.checkOwner(educationData.getId());
+		this.checkCurriculumIsOriginal(educationData);
 
 		final EducationData saved = this.saveInternal(educationData);
 

@@ -133,6 +133,7 @@ public class CurriculumService {
 		Curriculum result;
 
 		result = this.findOne(curriculumId);
+		Assert.isTrue(result.getIsOriginal());
 		this.checkOwner(result);
 
 		return result;

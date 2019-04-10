@@ -74,7 +74,7 @@ public class MiscellaneousDataHackerController extends AbstractController {
 		paramCurriculumId = request.getParameter("curriculumId");
 		curriculumId = paramCurriculumId.isEmpty() ? null : Integer.parseInt(paramCurriculumId);
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(miscellaneousData);
+			result = this.createEditModelAndView(miscellaneousData, curriculumId);
 		else
 			try {
 				if (curriculumId == null)
@@ -106,11 +106,11 @@ public class MiscellaneousDataHackerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/backCurriculum", method = RequestMethod.GET)
-	public ModelAndView back(@RequestParam final int personalDataId) {
+	public ModelAndView back(@RequestParam final int miscellaneousDataId) {
 		ModelAndView result;
 		int curriculumId;
 
-		curriculumId = this.curriculumService.findIdByMiscellaneousDataId(personalDataId);
+		curriculumId = this.curriculumService.findIdByMiscellaneousDataId(miscellaneousDataId);
 		result = new ModelAndView("redirect:/curriculum/display.do?curriculumId=" + curriculumId);
 
 		return result;

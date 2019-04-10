@@ -75,7 +75,7 @@ public class PositionDataHackerController extends AbstractController {
 		paramCurriculumId = request.getParameter("curriculumId");
 		curriculumId = paramCurriculumId.isEmpty() ? null : Integer.parseInt(paramCurriculumId);
 		if (binding.hasErrors())
-			result = this.createEditModelAndView(positionData);
+			result = this.createEditModelAndView(positionData, curriculumId);
 		else
 			try {
 				if (curriculumId == null)
@@ -111,11 +111,11 @@ public class PositionDataHackerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/backCurriculum", method = RequestMethod.GET)
-	public ModelAndView back(@RequestParam final int personalDataId) {
+	public ModelAndView back(@RequestParam final int positionDataId) {
 		ModelAndView result;
 		int curriculumId;
 
-		curriculumId = this.curriculumService.findIdByPositionDataId(personalDataId);
+		curriculumId = this.curriculumService.findIdByPositionDataId(positionDataId);
 		result = new ModelAndView("redirect:/curriculum/display.do?curriculumId=" + curriculumId);
 
 		return result;

@@ -141,7 +141,7 @@ public class EducationDataService {
 		Hacker principal, owner;
 
 		principal = this.hackerService.findByPrincipal();
-		owner = this.hackerService.findByPersonalDataId(educationDataId);
+		owner = this.hackerService.findByEducationDataId(educationDataId);
 
 		Assert.isTrue(principal.equals(owner));
 	}

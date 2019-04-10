@@ -140,7 +140,7 @@ public class PositionDataService {
 		Hacker principal, owner;
 
 		principal = this.hackerService.findByPrincipal();
-		owner = this.hackerService.findByPersonalDataId(positionDataId);
+		owner = this.hackerService.findByPositionDataId(positionDataId);
 
 		Assert.isTrue(principal.equals(owner));
 	}

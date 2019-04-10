@@ -141,7 +141,7 @@ public class MiscellaneousDataService {
 		Hacker principal, owner;
 
 		principal = this.hackerService.findByPrincipal();
-		owner = this.hackerService.findByPersonalDataId(miscellaneousDataId);
+		owner = this.hackerService.findByMiscellaneousDataId(miscellaneousDataId);
 
 		Assert.isTrue(principal.equals(owner));
 	}

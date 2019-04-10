@@ -17,7 +17,7 @@
 		<legend><spring:message code="positionData.fieldset"/></legend>
 		
 		<acme:textbox code="positionData.title" path="title"/>
-		<acme:textbox code="positionData.description" path="description"/>
+		<acme:textarea code="positionData.description" path="description"/>
 		<acme:textbox code="positionData.startDate" path="startDate" placeholder="dd/mm/yyyy"/>
 		<acme:textbox code="positionData.endDate" path="endDate" placeholder="dd/mm/yyyy"/>
 	</fieldset>
@@ -27,5 +27,12 @@
 	&nbsp;
 	<acme:submit name="delete" code="positionData.delete"/>
 	&nbsp;
-	<acme:cancel code="positionData.cancel" url="positionData/hacker/backCurriculum.do?positionDataId=${positionData.id}"/>
+	<jstl:choose>
+		<jstl:when test="${curriculumId ne null}">
+			<acme:cancel code="positionData.cancel" url="curriculum/display.do?curriculumId=${curriculumId}"/>
+		</jstl:when>
+		<jstl:otherwise>
+			<acme:cancel code="positionData.cancel" url="positionData/hacker/backCurriculum.do?positionDataId=${positionData.id}"/>
+		</jstl:otherwise>
+	</jstl:choose>
 </form:form>

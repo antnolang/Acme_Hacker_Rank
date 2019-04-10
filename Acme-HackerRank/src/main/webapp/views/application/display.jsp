@@ -39,16 +39,15 @@
 <a
 	href="curriculum/display.do?curriculumId=${application.curriculum.id}"><spring:message
 		code="application.display.curriculum" /></a>
-<br />
-
+<br />		
 
 <strong><spring:message code="application.position" />:</strong>
-<jstl:out value="${application.position.title}" />
-<br />
+<a href="position/display.do?positionId=${application.position.id}"><jstl:out value="${application.position.title}"/></a>
+	<br/>
 
 <strong><spring:message code="application.problem" />:</strong>
-<jstl:out value="${application.problem.title}" />
-<br />
+<a href="problem/company,hacker/display.do?problemId=${application.problem.id}"><jstl:out value="${application.problem.title}"/></a>
+	<br/>
 <br />
 
 <jstl:if test="${application.status=='PENDING'}">

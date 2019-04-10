@@ -36,7 +36,6 @@ public class CurriculumServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	/*
-	 * TODO
 	 * A: An actor who is authenticated as an administrator must be able to
 	 * display a dashboard with the following information:
 	 * The minimum, the maximum, the average and the standard deviation of the

@@ -47,16 +47,16 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('HACKER')">
-			<li><a href="finder/hacker/display.do" class="fNiv"><spring:message code="master.page.finder"/></a>
-			</li>
 			<li><a href="curriculum/hacker/list.do" class="fNiv"><spring:message code="master.page.curriculum.list"/></a>
+			</li>
+			<li><a href="finder/hacker/display.do" class="fNiv"><spring:message code="master.page.finder"/></a>
 			</li>
 		</security:authorize>
 		
 		<!-- ALL USERS START -->
-		<li><a  href="position/availableList.do" class="fNiv"><spring:message	code="master.page.availableposition" /></a>
-		</li>
 		<li><a href="position/search.do" class="fNiv"><spring:message code="master.page.searchposition"/></a>
+		</li>
+		<li><a  href="position/availableList.do" class="fNiv"><spring:message	code="master.page.availableposition" /></a>
 		</li>
 		<!-- ALL USERS END -->
 		

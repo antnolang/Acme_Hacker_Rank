@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolationException;
@@ -39,6 +40,35 @@ public class HackerServiceTest extends AbstractTest {
 
 
 	// Tests ------------------------------------------------------------------
+
+	/*
+	 * A: An actor who is authenticated as an administrator must be able to
+	 * display a dashboard with the following information:
+	 * The average, the minimum, the maximum and the standard deviation of the
+	 * number of application per hacker.
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: 100% of sentence coverage.
+	 * 
+	 * D: 100% of data coverage.
+	 */
+	@Test
+	public void testFindHackerWithMoreApplications() {
+		Collection<Hacker> hackers;
+		Hacker hacker2, hacker4;
+		int hacker2Id, hacker4Id;
+
+		hacker2Id = super.getEntityId("hacker2");
+		hacker4Id = super.getEntityId("hacker4");
+		hacker2 = this.hackerRepository.findOne(hacker2Id);
+		hacker4 = this.hackerRepository.findOne(hacker4Id);
+
+		hackers = this.hackerService.findHackersWithMoreApplications();
+
+		Assert.isTrue(hackers.size() == 2);
+		Assert.isTrue(hackers.contains(hacker2) && hackers.contains(hacker4));
+	}
 
 	/*
 	 * A: An actor who is not authenticated must be able to:

@@ -128,21 +128,23 @@ public class UtilityService {
 		String result;
 		Integer counter;
 		Integer size;
+		String titleWithoutSpace;
 
 		counter = 0;
 
-		size = title.length();
+		titleWithoutSpace = title.replace(" ", "");
+		size = titleWithoutSpace.length();
 
 		if (size == 0)
 			letters = "XXXX-";
 		else if (size == 1)
-			letters = title + "XXX-";
+			letters = titleWithoutSpace + "XXX-";
 		else if (size == 2)
-			letters = title + "XX-";
+			letters = titleWithoutSpace + "XX-";
 		else if (size == 3)
-			letters = title + "X-";
+			letters = titleWithoutSpace + "X-";
 		else
-			letters = title.substring(0, 4) + "-";
+			letters = titleWithoutSpace.substring(0, 4) + "-";
 
 		do {
 			result = letters + this.createRandomNumbers();

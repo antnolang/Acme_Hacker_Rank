@@ -38,7 +38,7 @@ public class CurriculumHackerController extends AbstractController {
 		ModelAndView result;
 		Collection<Curriculum> curriculums;
 
-		curriculums = this.curriculumService.findByHackerPrincipal();
+		curriculums = this.curriculumService.findOriginalByHackerPrincipal();
 
 		result = new ModelAndView("curriculum/list");
 		result.addObject("requestURI", "curriculum/hacker/list.do");
@@ -79,6 +79,22 @@ public class CurriculumHackerController extends AbstractController {
 				else
 					result = this.editModelAndView(curriculum, "curriculum.commit.error");
 			}
+
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(final Curriculum curriculum, final BindingResult binding) {
+		ModelAndView result;
+		Curriculum curriculumRec;
+
+		curriculumRec = this.curriculumService.reconstruct(curriculum, binding);
+		try {
+			this.curriculumService.delete(curriculumRec);
+			result = new ModelAndView("redirect:list.do");
+		} catch (final Throwable oops) {
+			result = this.editModelAndView(curriculum, "curriculum.commit.error");
+		}
 
 		return result;
 	}

@@ -22,5 +22,5 @@
 	&nbsp;
 	<acme:submit name="delete" code="curriculum.delete"/>
 	&nbsp;
-	<acme:cancel code="curriculum.cancel" url="curriculum/hacker/display.do?curriculumId=${curriculum.id}"/>
+	<acme:cancel code="curriculum.cancel" url="curriculum/display.do?curriculumId=${curriculum.id}"/>
 </form:form>

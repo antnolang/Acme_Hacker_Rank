@@ -43,6 +43,7 @@
 
 
 <!------------ FINDER ------------>
+<spring:message code="position.formatDeadline1" var="dateFormat"/>
 <jstl:if test="${finder ne null}">
 	<fieldset>
 		<legend><spring:message code="position.finder.legend"/></legend>
@@ -58,11 +59,11 @@
 			</li>
 			<li>
 				<strong><spring:message code="position.finder.deadline"/>:</strong>
-				<jstl:out value="${finder.deadline}"/>
+				<fmt:formatDate value="${finder.deadline}" pattern="${dateFormat}"/>
 			</li>
 			<li>
 				<strong><spring:message code="position.finder.maximum.deadline"/>:</strong>
-				<jstl:out value="${finder.maximumDeadline}"/>
+				<fmt:formatDate value="${finder.maximumDeadline}" pattern="${dateFormat}"/>
 			</li>
 			<li>
 				<strong><spring:message code="position.finder.minimum.salary"/>:</strong>

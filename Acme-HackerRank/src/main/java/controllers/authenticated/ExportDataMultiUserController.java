@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import services.ActorService;
-import services.CompanyService;
 import services.CurriculumService;
-import services.EducationDataService;
 import services.MessageService;
-import services.MiscellaneousDataService;
-import services.PersonalDataService;
-import services.PositionDataService;
 import services.PositionService;
 import services.ProblemService;
 import services.SocialProfileService;
 import controllers.AbstractController;
 import domain.Actor;
+import domain.Curriculum;
+import domain.EducationData;
 import domain.Message;
+import domain.MiscellaneousData;
+import domain.PersonalData;
 import domain.Position;
+import domain.PositionData;
 import domain.Problem;
 import domain.SocialProfile;
 
@@ -36,37 +36,22 @@ import domain.SocialProfile;
 public class ExportDataMultiUserController extends AbstractController {
 
 	@Autowired
-	private ActorService				actorService;
+	private ActorService			actorService;
 
 	@Autowired
-	private SocialProfileService		socialProfileService;
+	private SocialProfileService	socialProfileService;
 
 	@Autowired
-	private MessageService				messageService;
+	private MessageService			messageService;
 
 	@Autowired
-	private CompanyService				companyService;
+	private ProblemService			problemService;
 
 	@Autowired
-	private ProblemService				problemService;
+	private PositionService			positionService;
 
 	@Autowired
-	private PositionService				positionService;
-
-	@Autowired
-	private CurriculumService			curriculumService;
-
-	@Autowired
-	private MiscellaneousDataService	miscellaneousDataService;
-
-	@Autowired
-	private EducationDataService		educationDataService;
-
-	@Autowired
-	private PositionDataService			positionDataService;
-
-	@Autowired
-	private PersonalDataService			personalDataService;
+	private CurriculumService		curriculumService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -175,6 +160,52 @@ public class ExportDataMultiUserController extends AbstractController {
 				if (ss1 < problems.size())
 					data += "\r\n" + "......................." + "\r\n\r\n";
 
+			}
+
+		}
+
+		if (actor.getUserAccount().getAuthorities().toString().equals("[HACKER]")) {
+			Collection<Curriculum> curricula;
+
+			curricula = this.curriculumService.originalCurriculaByPrincipal();
+
+			data += "\r\n";
+			data += "-------------------------------------------------------------";
+			data += "\r\n\r\n";
+
+			data += "Curricula:\r\n\r\n";
+			Integer ss = 0;
+			for (final Curriculum curriculum : curricula) {
+				PersonalData personalData;
+				Collection<MiscellaneousData> miscellaneousDatas;
+				Collection<EducationData> educationDatas;
+				Collection<PositionData> positionDatas;
+
+				personalData = curriculum.getPersonalData();
+				miscellaneousDatas = curriculum.getMiscellaneousDatas();
+				educationDatas = curriculum.getEducationDatas();
+				positionDatas = curriculum.getPositionDatas();
+
+				data += "Title: " + curriculum.getTitle() + " \r\n" + "Full name: " + personalData.getFullname() + " \r\n" + "LinkedIn profile: " + personalData.getLinkedInProfile() + " \r\n" + "Phone number: " + personalData.getPhoneNumber() + " \r\n"
+					+ "Statement: " + personalData.getStatement() + " \r\n" + "Github profile: " + personalData.getGithubProfile() + " \r\n" + "\r\n" + "\r\n";
+				data += "Full name: " + personalData.getFullname() + " \r\n";
+
+				data += "Miscelleneous datas:\r\n\r\n";
+				for (final MiscellaneousData miscellaneousData : miscellaneousDatas)
+					data += "Text: " + miscellaneousData.getText() + " \r\n" + "Attachments: " + miscellaneousData.getAttachments() + "\r\n" + "\r\n" + "\r\n";
+
+				data += "Education datas:\r\n\r\n";
+				for (final EducationData educationData : educationDatas)
+					data += "Degree: " + educationData.getDegree() + " \r\n" + "Institution: " + educationData.getInstitution() + "\r\n" + "Mark: " + educationData.getMark() + "\r\n" + "Start date: " + educationData.getStartDate() + "\r\n" + "End date: "
+						+ educationData.getEndDate() + "\r\n" + "\r\n" + "\r\n";
+
+				data += "Position datas:\r\n\r\n";
+				for (final PositionData positionData : positionDatas)
+					data += "Tite: " + positionData.getTitle() + " \r\n" + "Description: " + positionData.getDescription() + "\r\n" + "End date: " + positionData.getStartDate() + "\r\n" + "End date: " + positionData.getEndDate() + "\r\n" + "\r\n" + "\r\n";
+
+				ss++;
+				if (ss < curricula.size())
+					data += "\r\n" + "......................." + "\r\n\r\n";
 			}
 
 		}

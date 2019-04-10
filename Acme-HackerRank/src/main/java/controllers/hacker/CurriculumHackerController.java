@@ -76,6 +76,10 @@ public class CurriculumHackerController extends AbstractController {
 			} catch (final Throwable oops) {
 				if (oops.getMessage().contains("Fullname does not match"))
 					binding.rejectValue("personalData.fullname", "curriculum.fullname.error", "Must match with the full name of your profile.");
+				else if (oops.getMessage().contains("Not in github"))
+					binding.rejectValue("personalData.githubProfile", "curriculum.githubProfile.error", "The url does not belong to the domain of GitHub");
+				else if (oops.getMessage().contains("Not in linkedin"))
+					binding.rejectValue("personalData.linkedInProfile", "curriculum.linkedInProfile.error", "The url does not belong to the domain of LinkedIn");
 
 				if (curriculum.getId() == 0)
 					result = this.createModelAndView(curriculum, "curriculum.commit.error");

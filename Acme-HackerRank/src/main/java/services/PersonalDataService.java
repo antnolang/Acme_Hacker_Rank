@@ -45,6 +45,7 @@ public class PersonalDataService {
 	public PersonalData save(final PersonalData personalData) {
 		Assert.notNull(personalData);
 		Assert.isTrue(this.personalDataRepository.exists(personalData.getId()));
+		this.checkProfileURL(personalData);
 
 		final Hacker principal = this.hackerService.findByPrincipal();
 		PersonalData saved;
@@ -93,6 +94,11 @@ public class PersonalDataService {
 
 	protected void checkFullname(final Hacker hacker, final PersonalData personalData) {
 		Assert.isTrue(hacker.getFullname() == personalData.getFullname(), "Fullname does not match");
+	}
+
+	protected void checkProfileURL(final PersonalData personalData) {
+		Assert.isTrue(personalData.getGithubProfile().startsWith("https://www.github.com/"), "Not in github");
+		Assert.isTrue(personalData.getGithubProfile().startsWith("https://www.linkedin.com/"), "Not in linkedin");
 	}
 
 	private void checkOwner(final int personalDataId) {

@@ -85,6 +85,7 @@ public class CurriculumService {
 		Hacker principal;
 
 		if (!this.curriculumRepository.exists(curriculum.getId())) {
+			this.personalDataService.checkProfileURL(curriculum.getPersonalData());
 			principal = this.hackerService.findByPrincipal();
 			this.checkOwner(principal, curriculum);
 			this.personalDataService.checkFullname(principal, curriculum.getPersonalData());

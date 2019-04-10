@@ -65,7 +65,11 @@ public class PersonalDataHackerController extends AbstractController {
 				result = new ModelAndView("redirect:backCurriculum.do?personalDataId=" + saved.getId());
 			} catch (final Throwable oops) {
 				if (oops.getMessage().contains("Fullname does not match"))
-					binding.rejectValue("fullname", "curriculum.fullname.error", "Must match with the full name of your profile.");
+					binding.rejectValue("fullname", "personalData.fullname.error", "Must match with the full name of your profile.");
+				else if (oops.getMessage().contains("Not in github"))
+					binding.rejectValue("githubProfile", "personalData.githubProfile.error", "The url does not belong to the domain of GitHub");
+				else if (oops.getMessage().contains("Not in linkedin"))
+					binding.rejectValue("linkedInProfile", "personalData.linkedInProfile.error", "The url does not belong to the domain of LinkedIn");
 
 				result = this.editModelAndView(personalData, "personalData.commit.error");
 			}

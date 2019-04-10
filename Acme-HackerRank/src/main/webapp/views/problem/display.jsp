@@ -21,7 +21,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 	<security:authorize access="hasRole('HACKER')">
-		<strong><spring:message code="problem.company"/>:</strong>
+		<strong><spring:message code="problem.company.commercialName"/>:</strong>
 			<a href="actor/display.do?actorId=${problem.company.id}"><jstl:out value="${problem.company.commercialName}"/></a>
 		<br/>
 	</security:authorize>

@@ -11,7 +11,9 @@
 
 <p> <strong> <spring:message code="answer.text" />  </strong>  <jstl:out value="${answer.text}" /></p>
 
-	<p> <strong> <spring:message code="answer.codeLink" />  </strong>  <jstl:out value="${answer.codeLink}" /></p>
+<strong><spring:message code="answer.codeLink" />:</strong>
+<a href="${answer.codeLink}"><jstl:out value="${answer.codeLink}"/></a>
+	<br/>
 
 
 <br />

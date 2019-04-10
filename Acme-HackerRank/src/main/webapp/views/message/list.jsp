@@ -76,7 +76,7 @@
 		<spring:message code="message.broadcast" />
 	</a>
 	<br />
-	<a href="message/administrator/breachNotification.do" onclick="return confirm('<spring:message code="message.confirm.delete"/>')">
+	<a href="message/administrator/breachNotification.do" onclick="return confirm('<spring:message code="message.confirm.breach"/>')">
 		<spring:message code="message.breach" />
 	</a>
 </security:authorize>

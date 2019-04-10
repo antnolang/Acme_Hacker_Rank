@@ -11,7 +11,6 @@ import javax.validation.ConstraintViolationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -233,7 +232,7 @@ public class PositionServiceTest extends AbstractTest {
 			 * D: 1/128 we test 1 of the 128 possible combinations that can take in total.
 			 */
 			{
-				"company1", "titleNuevo", "descriptionNuevo", "2018/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, DataIntegrityViolationException.class
+				"company1", "titleNuevo", "descriptionNuevo", "2018/02/02", "profileNuevo", "skillsNuevo", "technologiesNuevo", 22.3, IllegalArgumentException.class
 			},
 
 		};

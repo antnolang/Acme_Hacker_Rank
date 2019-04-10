@@ -81,7 +81,7 @@ public class PositionService {
 	public Position save(final Position position) {
 		Assert.notNull(position);
 		this.checkByPrincipal(position);
-		position.getDeadline().before(this.utilityService.current_moment());
+		Assert.isTrue(this.utilityService.current_moment().before(position.getDeadline()));
 		Assert.isTrue(!position.getIsFinalMode());
 		this.checkOwnerProblems(position);
 

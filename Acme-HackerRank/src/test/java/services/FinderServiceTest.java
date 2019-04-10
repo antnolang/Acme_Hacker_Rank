@@ -40,6 +40,50 @@ public class FinderServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	/*
+	 * A: An actor who is authenticated as an administrator must be able to
+	 * display a dashboard with the following information:
+	 * The minimum, the maximum, the average and the standard deviation of the
+	 * number of results in the finders.
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: 100% of sentence coverage.
+	 * 
+	 * D: 100% of data coverage.
+	 */
+	@Test
+	public void testDataNumberResultsFinder() {
+		Double[] data;
+
+		data = this.finderService.findDataNumberResultsFinder();
+
+		Assert.isTrue(data[0] == 0.0);
+		Assert.isTrue(data[1] == 3.0);
+		Assert.isTrue(data[2] == 1.2222);
+		Assert.isTrue(data[3] == 1.3147);
+	}
+
+	/*
+	 * A: An actor who is authenticated as an administrator must be able to
+	 * display a dashboard with the following information:
+	 * The ratio of empty versus non-empty finders.
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: 100% of sentence coverage.
+	 * 
+	 * D: 100% of data coverage.
+	 */
+	@Test
+	public void testRatioEmptyVsNonEmpty() {
+		Double data;
+
+		data = this.finderService.findRatioEmptyVsNonEmpty();
+
+		Assert.isTrue(data == 0.28571);
+	}
+
+	/*
 	 * A: An actor who is authenticated as a hacker must be able to: Manage
 	 * his or her finder, which involves UPDATING THE SEARCH CRITERIA,
 	 * listing its contents, and clearing it

@@ -33,6 +33,30 @@ public class ApplicationServiceTest extends AbstractTest {
 
 	//Test ------------------------------------------------
 
+	/*
+	 * A: An actor who is authenticated as an administrator must be able to
+	 * display a dashboard with the following information:
+	 * The average, the minimum, the maximum and the standard deviation of the
+	 * number of application per hacker.
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: 100% of sentence coverage.
+	 * 
+	 * D: 100% of data coverage.
+	 */
+	@Test
+	public void testDataNumerApplicationPerHacker() {
+		Double[] data;
+
+		data = this.applicationService.findDataNumberApplicationPerHacker();
+
+		Assert.isTrue(data[0] == 1.5556);
+		Assert.isTrue(data[1] == 0.0);
+		Assert.isTrue(data[2] == 3.0);
+		Assert.isTrue(data[3] == 1.0657);
+	}
+
 	@Test
 	public void driverCreate() {
 		final Object testingData[][] = {

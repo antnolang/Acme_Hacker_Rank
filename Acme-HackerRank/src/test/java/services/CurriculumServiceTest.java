@@ -36,6 +36,30 @@ public class CurriculumServiceTest extends AbstractTest {
 	// Tests ------------------------------------------------------------------
 
 	/*
+	 * A: An actor who is authenticated as an administrator must be able to
+	 * display a dashboard with the following information:
+	 * The minimum, the maximum, the average and the standard deviation of the
+	 * number of curricula per hacker.
+	 * 
+	 * B: Positive test
+	 * 
+	 * C: 100% of sentence coverage.
+	 * 
+	 * D: 100% of data coverage.
+	 */
+	@Test
+	public void testDataNumberCurriculumPerHacker() {
+		Double[] data;
+
+		data = this.curriculumService.findDataNumberCurriculumPerHacker();
+
+		Assert.isTrue(data[0] == 0.0);
+		Assert.isTrue(data[1] == 1.0);
+		Assert.isTrue(data[2] == 0.8889);
+		Assert.isTrue(data[3] == 0.3143);
+	}
+
+	/*
 	 * A: An actor who is authenticated as a hacker must be able to: Manage his
 	 * or her curricula, which includes listing, showing, CREATING, updating,
 	 * and deleting them.

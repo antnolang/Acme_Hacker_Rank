@@ -90,9 +90,11 @@ public class FinderServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 88.2% of sentence coverage, since it has been covered
+	 * 30 lines of code of 34 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 26.7% of data coverage, since it has been used 4
+	 * values in the data of 15 different possible values.
 	 */
 	@Test()
 	public void finderSearchTest() {
@@ -126,9 +128,11 @@ public class FinderServiceTest extends AbstractTest {
 	 * 
 	 * B: The finder can only be used by its owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 52.9% of sentence coverage, since it has been covered
+	 * 18 lines of code of 34 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 26.7% of data coverage, since it has been used 4
+	 * values in the data of 15 different possible values.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void finderSearchNegativeTest() {
@@ -162,9 +166,10 @@ public class FinderServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 16 lines of code of 16 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: 100% of data coverage
 	 */
 	@Test()
 	public void finderClearTest() {
@@ -195,9 +200,10 @@ public class FinderServiceTest extends AbstractTest {
 	 * 
 	 * B: The finder can only be used by its owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 68.8% of sentence coverage, since it has been covered
+	 * 11 lines of code of 16 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: 100% of data coverage
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void finderClearNegativeTest() {

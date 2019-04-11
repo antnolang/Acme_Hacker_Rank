@@ -48,9 +48,11 @@ public class PositionServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 4 lines of code of 4 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 33% of data coverage, since it has been used 1
+	 * values in the data of 3 different possible values.
 	 */
 	@Test
 	public void searchByKeywordTest() {
@@ -75,9 +77,11 @@ public class PositionServiceTest extends AbstractTest {
 	 * B: The positions are not available publicly until they are saved in `
 	 * final mode.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 4 lines of code of 4 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 33% of data coverage, since it has been used 1
+	 * values in the data of 3 different possible values.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void searchByKeywordNegativeTest() {

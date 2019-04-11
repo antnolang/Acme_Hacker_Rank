@@ -66,9 +66,11 @@ public class CurriculumServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 92.5% of sentence coverage, since it has been covered
+	 * 37 lines of code of 40 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 37.5% of data coverage, since it has been used 6
+	 * values in the data of 16 different possible values. (See Possible values below.)
 	 */
 	@Test
 	public void curriculumCreateTest() {
@@ -77,12 +79,12 @@ public class CurriculumServiceTest extends AbstractTest {
 		String fullname, githubProf, linkedinProf, phone, statement, title;
 
 		// Data
-		title = "Curriculum test";
-		fullname = "Hacker9 Rubio";
-		githubProf = "https://www.github.com/antonio";
-		linkedinProf = "https://www.linkedin.com/antonio";
-		phone = "789654123";
-		statement = "Statement test";
+		title = "Curriculum test"; // Possible values: string, blank string, null
+		fullname = "Hacker9 Rubio"; // Possible values: string, blank string, null, string that doesn't match with fullname's actor principal
+		githubProf = "https://github.com/antonio"; // Possible values: string, blank string, null, string that doesn't start with https://github.com/
+		linkedinProf = "https://www.linkedin.com/antonio"; // Possible values: string, blank string, null, string that doesn't start with https://www.linkedin.com/
+		phone = "789654123"; // Possible values: string, blank string, null
+		statement = "Statement test"; // Possible values: string, blank string, null
 
 		super.authenticate("hacker9");
 
@@ -117,9 +119,11 @@ public class CurriculumServiceTest extends AbstractTest {
 	 * 
 	 * B: Github profile must be a valid URL
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 65% of sentence coverage, since it has been covered
+	 * 26 lines of code of 40 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 37.5% of data coverage, since it has been used 6
+	 * values in the data of 16 different possible values.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void curriculumCreateNegativeTest() {
@@ -168,9 +172,11 @@ public class CurriculumServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 47.4% of sentence coverage, since it has been covered
+	 * 9 lines of code of 19 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 33.3% of data coverage, since it has been used 1
+	 * values in the data of 3 different possible values.
 	 */
 	@Test
 	public void curriculumEditTest() {
@@ -202,9 +208,11 @@ public class CurriculumServiceTest extends AbstractTest {
 	 * 
 	 * B: The curriculum can only be updated by its owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 36.8% of sentence coverage, since it has been covered
+	 * 7 lines of code of 19 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 33.3% of data coverage, since it has been used 1
+	 * values in the data of 3 different possible values.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void curriculumEditNegativeTest() {
@@ -236,9 +244,10 @@ public class CurriculumServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 6 lines of code of 6 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: 100% of data coverage.
 	 */
 	@Test
 	public void curriculumDeleteTest() {
@@ -265,9 +274,10 @@ public class CurriculumServiceTest extends AbstractTest {
 	 * 
 	 * B: The curriculum can only be deleted by its owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 83.3% of sentence coverage, since it has been covered
+	 * 5 lines of code of 6 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: 100% of data coverage.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void curriculumDeleteNegativeTest() {

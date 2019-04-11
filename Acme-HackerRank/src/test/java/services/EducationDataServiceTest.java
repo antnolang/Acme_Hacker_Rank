@@ -49,9 +49,11 @@ public class EducationDataServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 23 lines of code of 23 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 25% of data coverage, since it has been used 5
+	 * values in the data of 20 different possible values.
 	 */
 	@Test
 	public void educationDataCreateTest() {
@@ -98,9 +100,11 @@ public class EducationDataServiceTest extends AbstractTest {
 	 * B: The education data can only be created in one of the curriculum in
 	 * which the hacker principal is owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 87% of sentence coverage, since it has been covered
+	 * 20 lines of code of 23 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 25% of data coverage, since it has been used 5
+	 * values in the data of 20 different possible values.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void educationDataCreateNegativeTest() {
@@ -146,9 +150,11 @@ public class EducationDataServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 33 lines of code of 33 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 25% of data coverage, since it has been used 5
+	 * values in the data of 20 different possible values.
 	 */
 	@Test
 	public void educationDataEditTest() {
@@ -180,9 +186,11 @@ public class EducationDataServiceTest extends AbstractTest {
 	 * 
 	 * B: The Education Data can only be updated by its owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 18.2% of sentence coverage, since it has been covered
+	 * 6 lines of code of 33 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 25% of data coverage, since it has been used 5
+	 * values in the data of 20 different possible values.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void educationDataEditNegativeTest() {
@@ -214,9 +222,10 @@ public class EducationDataServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 40 lines of code of 40 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: 100% of data coverage
 	 */
 	@Test
 	public void educationDataDeleteTest() {
@@ -243,9 +252,10 @@ public class EducationDataServiceTest extends AbstractTest {
 	 * 
 	 * B: The Education Data can only be deleted by its owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 15% of sentence coverage, since it has been covered
+	 * 6 lines of code of 40 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: 100% of data coverage
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void educationDataDeleteNegativeTest() {

@@ -41,12 +41,14 @@ public class PersonalDataServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 33 lines of code of 33 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 38.5% of data coverage, since it has been used 5
+	 * values in the data of 13 different possible values.
 	 */
 	@Test
-	public void curriculumEditTest() {
+	public void personalDataEditTest() {
 		PersonalData personalData, saved;
 		int personalDataId;
 		String fullname;
@@ -75,12 +77,14 @@ public class PersonalDataServiceTest extends AbstractTest {
 	 * 
 	 * B: The curriculum can only be updated by its owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 90.9% of sentence coverage, since it has been covered
+	 * 30 lines of code of 33 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 38.5% of data coverage, since it has been used 5
+	 * values in the data of 13 different possible values.
 	 */
 	@Test(expected = IllegalArgumentException.class)
-	public void curriculumEditNegativeTest() {
+	public void personalDataEditNegativeTest() {
 		PersonalData personalData, saved;
 		int personalDataId;
 		String fullname;

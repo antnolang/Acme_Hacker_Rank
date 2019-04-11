@@ -46,9 +46,11 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 23 lines of code of 23 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 33% of data coverage, since it has been used 2
+	 * values in the data of 6 different possible values.
 	 */
 	@Test
 	public void miscellaneousDataCreateTest() {
@@ -87,9 +89,11 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 * B: The miscellaneous data can only be created in one of the curriculum in
 	 * which the hacker principal is owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 87% of sentence coverage, since it has been covered
+	 * 20 lines of code of 23 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 33% of data coverage, since it has been used 2
+	 * values in the data of 6 different possible values.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void miscellaneousDataCreateNegativeTest() {
@@ -127,9 +131,11 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 33 lines of code of 33 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 33% of data coverage, since it has been used 2
+	 * values in the data of 6 different possible values.
 	 */
 	@Test
 	public void miscellaneousDataEditTest() {
@@ -161,9 +167,11 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 * 
 	 * B: The Miscellaneous Data can only be updated by its owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 18.2% of sentence coverage, since it has been covered
+	 * 6 lines of code of 33 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: Approximately 33% of data coverage, since it has been used 2
+	 * values in the data of 6 different possible values.
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void miscellaneousDataEditNegativeTest() {
@@ -195,9 +203,10 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 * 
 	 * B: Positive test
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 100% of sentence coverage, since it has been covered
+	 * 40 lines of code of 40 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: 100% of data coverage
 	 */
 	@Test
 	public void miscellaneousDataDeleteTest() {
@@ -224,9 +233,10 @@ public class MiscellaneousDataServiceTest extends AbstractTest {
 	 * 
 	 * B: The Miscellaneous Data can only be deleted by its owner.
 	 * 
-	 * C: TODO: Sentence coverage
+	 * C: Approximately 15% of sentence coverage, since it has been covered
+	 * 6 lines of code of 40 possible.
 	 * 
-	 * D: TODO: Data coverage
+	 * D: 100% of data coverage
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void miscellaneousDataDeleteNegativeTest() {

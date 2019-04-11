@@ -1,6 +1,7 @@
 <%@page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -15,7 +16,8 @@
 
 
 <strong><spring:message code="application.applicationMoment" />:</strong>
-<jstl:out value="${application.applicationMoment}" />
+<spring:message code="application.formatMoment1" var="formatApplicationMoment"/>
+		<fmt:formatDate value="${application.applicationMoment}" pattern="${formatApplicationMoment}"/>
 <br />
 
 <strong><spring:message code="application.status" />:</strong>
@@ -24,7 +26,8 @@
 
 <jstl:if test="${application.status!='PENDING'}">
 	<strong><spring:message code="application.submittedMoment" />:</strong>
-	<jstl:out value="${application.submittedMoment}" />
+	<spring:message code="application.formatMoment1" var="formatSubmitedMoment"/>
+		<fmt:formatDate value="${application.submittedMoment}" pattern="${formatSubmitedMoment}"/>
 	<br />
 
 <strong><spring:message code="application.answer" />:</strong>

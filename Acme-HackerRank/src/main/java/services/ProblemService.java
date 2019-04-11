@@ -194,6 +194,15 @@ public class ProblemService {
 		Assert.isTrue(owner.equals(principal));
 		Assert.isTrue(problem.getIsFinalMode());
 	}
+	protected Boolean notExistProblemInPosition(final int idProblem, final int idPosition) {
+		Boolean res;
+		Collection<Problem> problems;
+
+		problems = this.problemRepository.existProblemInPosition(idProblem, idPosition);
+		res = problems.isEmpty();
+
+		return res;
+	}
 
 	// Reconstruct ----------------------------------------------
 	public Problem reconstruct(final Problem problem, final BindingResult binding) {

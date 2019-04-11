@@ -48,6 +48,9 @@ public class ApplicationService {
 	@Autowired
 	private MessageService			messageService;
 
+	@Autowired
+	private ProblemService			problemService;
+
 
 	//Constructor ----------------------------------------------------
 	public ApplicationService() {
@@ -101,7 +104,7 @@ public class ApplicationService {
 
 		if (application.getId() == 0) {
 			Assert.isTrue(this.applicationRepository.findApplicationsByPositionByHacker(application.getPosition().getId(), application.getHacker().getId()).isEmpty());
-			Assert.isTrue(application.getPosition().getProblems().contains(application.getProblem()));
+			Assert.isTrue(!this.problemService.notExistProblemInPosition(application.getProblem().getId(), application.getPosition().getId()));
 			Assert.isTrue(!(this.curriculumService.originalCurriculaByPrincipal().isEmpty()));
 			Assert.isTrue(application.getCurriculum().getHacker().equals(this.hackerService.findByPrincipal()));
 			Assert.isTrue(application.getCurriculum().getIsOriginal());

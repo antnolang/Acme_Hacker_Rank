@@ -1782,7 +1782,7 @@
 		<property name="fullname" value="Hacker1 Alvarez" />
 		<property name="statement" value="statement personal data 1 del hacker 1" />
 		<property name="phoneNumber" value="631047853" />
-		<property name="githubProfile" value="https://www.github.com/personal1" />
+		<property name="githubProfile" value="https://github.com/personal1" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal1" />
 	</bean>
 
@@ -1790,7 +1790,7 @@
 		<property name="fullname" value="Hacker1 Alvarez" />
 		<property name="statement" value="statement personal data 2 del hacker 1" />
 		<property name="phoneNumber" value="631047853" />
-		<property name="githubProfile" value="https://www.github.com/personal1" />
+		<property name="githubProfile" value="https://github.com/personal1" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal1" />
 	</bean>
 
@@ -1798,7 +1798,7 @@
 		<property name="fullname" value="Hacker1 Alvarez" />
 		<property name="statement" value="statement personal data 2 del hacker 1" />
 		<property name="phoneNumber" value="631047853" />
-		<property name="githubProfile" value="https://www.github.com/personal1" />
+		<property name="githubProfile" value="https://github.com/personal1" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal1" />
 	</bean>
 
@@ -1806,7 +1806,7 @@
 		<property name="fullname" value="Hacker2 Munoz" />
 		<property name="statement" value="statement personal data 1 del hacker 2" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal3" />
+		<property name="githubProfile" value="https://github.com/personal3" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal3" />
 	</bean>
 
@@ -1814,7 +1814,7 @@
 		<property name="fullname" value="Hacker2 Munoz" />
 		<property name="statement" value="statement personal data 2 del hacker 2" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal3" />
+		<property name="githubProfile" value="https://github.com/personal3" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal3" />
 	</bean>
 
@@ -1822,7 +1822,7 @@
 		<property name="fullname" value="Hacker3 Esteban" />
 		<property name="statement" value="statement personal data 1 del hacker 3" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal4" />
+		<property name="githubProfile" value="https://github.com/personal4" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal4" />
 	</bean>
 
@@ -1830,7 +1830,7 @@
 		<property name="fullname" value="Hacker3 Esteban" />
 		<property name="statement" value="statement personal data 1 del hacker 3" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal4" />
+		<property name="githubProfile" value="https://github.com/personal4" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal4" />
 	</bean>
 
@@ -1838,7 +1838,7 @@
 		<property name="fullname" value="Hacker3 Esteban" />
 		<property name="statement" value="statement personal data 1 del hacker 3" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal4" />
+		<property name="githubProfile" value="https://github.com/personal4" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal4" />
 	</bean>
 
@@ -1846,7 +1846,7 @@
 		<property name="fullname" value="Hacker3 Esteban" />
 		<property name="statement" value="statement personal data 1 del hacker 3" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal4" />
+		<property name="githubProfile" value="https://github.com/personal4" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal4" />
 	</bean>
 
@@ -1854,7 +1854,7 @@
 		<property name="fullname" value="Hacker4 Rodriguez" />
 		<property name="statement" value="statement personal data 1 del hacker 4" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1862,7 +1862,7 @@
 		<property name="fullname" value="Hacker4 Rodriguez" />
 		<property name="statement" value="statement personal data 5" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1870,7 +1870,7 @@
 		<property name="fullname" value="Hacker4 Rodriguez" />
 		<property name="statement" value="statement personal data 5" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1878,7 +1878,7 @@
 		<property name="fullname" value="Hacker5 Lopez" />
 		<property name="statement" value="statement personal data 5" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1886,7 +1886,7 @@
 		<property name="fullname" value="Hacker5 Lopez" />
 		<property name="statement" value="statement personal data 5" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1894,7 +1894,7 @@
 		<property name="fullname" value="Hacker6 Barrera" />
 		<property name="statement" value="statement personal data 5" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1902,7 +1902,7 @@
 		<property name="fullname" value="Hacker6 Barrera" />
 		<property name="statement" value="statement personal data 5" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1910,7 +1910,7 @@
 		<property name="fullname" value="Hacker6 Barrera" />
 		<property name="statement" value="statement personal data" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1918,7 +1918,7 @@
 		<property name="fullname" value="Hacker7 Navarro" />
 		<property name="statement" value="statement personal data 5" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1926,7 +1926,7 @@
 		<property name="fullname" value="Hacker7 Navarro" />
 		<property name="statement" value="statement personal data 5" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1934,7 +1934,7 @@
 		<property name="fullname" value="Hacker7 Navarro" />
 		<property name="statement" value="statement personal data" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1942,7 +1942,7 @@
 		<property name="fullname" value="Hacker7 Navarro" />
 		<property name="statement" value="statement personal data" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 
@@ -1950,7 +1950,7 @@
 		<property name="fullname" value="Hacker8 Moreno" />
 		<property name="statement" value="statement personal data 5" />
 		<property name="phoneNumber" value="632587412" />
-		<property name="githubProfile" value="https://www.github.com/personal5" />
+		<property name="githubProfile" value="https://github.com/personal5" />
 		<property name="linkedInProfile" value="https://www.linkedin.com/personal5" />
 	</bean>
 

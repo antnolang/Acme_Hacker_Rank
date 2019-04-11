@@ -23,31 +23,30 @@
 
 
 <security:authorize access="hasRole('HACKER')">
-<fieldset>
-	<legend>
-		<spring:message code="application.pending" />
-	</legend>
+	<fieldset>
+		<legend>
+			<spring:message code="application.pending" />
+		</legend>
 
-	<display:table name="pendingApplications" id="row"
-		requestURI="${requestURI}" class="displaytag" pagesize="5">
+		<display:table name="pendingApplications" id="row"
+			requestURI="${requestURI}" class="displaytag" pagesize="5">
 
-		<jstl:set var="colorValue" value="grey" />
+			<display:column>
+				<a
+					href="application/company,hacker/display.do?applicationId=${row.id}"><spring:message
+						code="application.display" /></a>
+			</display:column>
 
-		<display:column style="background-color:${colorValue }">
-			<a href="application/company,hacker/display.do?applicationId=${row.id}"><spring:message
-					code="application.display" /></a>
-		</display:column>
+			<display:column property="problem.title"
+				titleKey="application.problem" />
 
-		<display:column style="background-color:${colorValue }"
-			property="problem.title" titleKey="application.problem" />
-			
-		<security:authorize access="hasRole('HACKER')">
-		<display:column style="background-color:${colorValue }"
-			property="position.title" titleKey="application.position" />
-		</security:authorize>
+			<security:authorize access="hasRole('HACKER')">
+				<display:column property="position.title"
+					titleKey="application.position" />
+			</security:authorize>
 
-	</display:table>
-</fieldset>
+		</display:table>
+	</fieldset>
 </security:authorize>
 
 <fieldset>
@@ -58,37 +57,36 @@
 	<display:table name="submittedApplications" id="row1"
 		requestURI="${requestURI}" class="displaytag" pagesize="5">
 
-		<jstl:set var="colorValue" value="grey" />
-
-		<display:column style="background-color:${colorValue }">
-			<a href="application/company,hacker/display.do?applicationId=${row1.id}"><spring:message
+		<display:column>
+			<a
+				href="application/company,hacker/display.do?applicationId=${row1.id}"><spring:message
 					code="application.display" /></a>
 		</display:column>
-		
+
 		<security:authorize access="hasRole('COMPANY')">
-			<display:column style="background-color:${colorValue }">
-			<a href="application/company/reject.do?applicationId=${row1.id}"><spring:message
-					code="application.reject" /></a>
-		</display:column>
-		</security:authorize>
-		
-		<security:authorize access="hasRole('COMPANY')">
-			<display:column style="background-color:${colorValue }">
-			<a href="application/company/accept.do?applicationId=${row1.id}"><spring:message
-					code="application.accept" /></a>
-		</display:column>
+			<display:column>
+				<a href="application/company/reject.do?applicationId=${row1.id}"><spring:message
+						code="application.reject" /></a>
+			</display:column>
 		</security:authorize>
 
-		<display:column style="background-color:${colorValue }"
-			property="problem.title" titleKey="application.problem" />
-			
+		<security:authorize access="hasRole('COMPANY')">
+			<display:column>
+				<a href="application/company/accept.do?applicationId=${row1.id}"><spring:message
+						code="application.accept" /></a>
+			</display:column>
+		</security:authorize>
+
+		<display:column
+					property="problem.title" titleKey="application.problem" />
+
 		<security:authorize access="hasRole('HACKER')">
-		<display:column style="background-color:${colorValue }"
-			property="position.title" titleKey="application.position" />
+			<display:column 
+				property="position.title" titleKey="application.position" />
 		</security:authorize>
 
 		<security:authorize access="hasRole('COMPANY')">
-			<display:column style="background-color:${colorValue }"
+			<display:column 
 				property="hacker.fullname" titleKey="application.hacker" />
 		</security:authorize>
 
@@ -103,23 +101,22 @@
 	<display:table name="rejectedApplications" id="row2"
 		requestURI="${requestURI}" class="displaytag" pagesize="5">
 
-		<jstl:set var="colorValue" value="grey" />
-
-		<display:column style="background-color:${colorValue }">
-			<a href="application/company,hacker/display.do?applicationId=${row2.id}"><spring:message
+		<display:column >
+			<a
+				href="application/company,hacker/display.do?applicationId=${row2.id}"><spring:message
 					code="application.display" /></a>
 		</display:column>
 
-		<display:column style="background-color:${colorValue }"
+		<display:column 
 			property="problem.title" titleKey="application.problem" />
-			
+
 		<security:authorize access="hasRole('HACKER')">
-		<display:column style="background-color:${colorValue }"
-			property="position.title" titleKey="application.position" />
+			<display:column 
+				property="position.title" titleKey="application.position" />
 		</security:authorize>
 
 		<security:authorize access="hasRole('COMPANY')">
-			<display:column style="background-color:${colorValue }"
+			<display:column 
 				property="hacker.fullname" titleKey="application.hacker" />
 		</security:authorize>
 
@@ -135,23 +132,22 @@
 	<display:table name="acceptedApplications" id="row3"
 		requestURI="${requestURI}" class="displaytag" pagesize="5">
 
-		<jstl:set var="colorValue" value="grey" />
-
-		<display:column style="background-color:${colorValue }">
-			<a href="application/company,hacker/display.do?applicationId=${row3.id}"><spring:message
+		<display:column>
+			<a
+				href="application/company,hacker/display.do?applicationId=${row3.id}"><spring:message
 					code="application.display" /></a>
 		</display:column>
 
-		<display:column style="background-color:${colorValue }"
+		<display:column 
 			property="problem.title" titleKey="application.problem" />
-			
+
 		<security:authorize access="hasRole('HACKER')">
-		<display:column style="background-color:${colorValue }"
-			property="position.title" titleKey="application.position" />
+			<display:column 
+				property="position.title" titleKey="application.position" />
 		</security:authorize>
 
 		<security:authorize access="hasRole('COMPANY')">
-			<display:column style="background-color:${colorValue }"
+			<display:column 
 				property="hacker.fullname" titleKey="application.hacker" />
 		</security:authorize>
 

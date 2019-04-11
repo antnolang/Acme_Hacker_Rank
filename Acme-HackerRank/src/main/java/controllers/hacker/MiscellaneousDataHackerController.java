@@ -96,8 +96,8 @@ public class MiscellaneousDataHackerController extends AbstractController {
 
 		miscellaneousDataId = miscellaneousData.getId();
 		try {
+			result = this.back(miscellaneousDataId);
 			this.miscellaneousDataService.delete(miscellaneousData);
-			result = new ModelAndView("redirect:backCurriculum.do?miscellaneousDataId=" + miscellaneousDataId);
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(miscellaneousData, null, "miscellaneousData.commit.error");
 		}

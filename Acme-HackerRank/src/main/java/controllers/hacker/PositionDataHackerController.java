@@ -101,8 +101,8 @@ public class PositionDataHackerController extends AbstractController {
 
 		positionDataId = positionData.getId();
 		try {
+			result = this.back(positionDataId);
 			this.positionDataService.delete(positionData);
-			result = new ModelAndView("redirect:backCurriculum.do?positionDataId=" + positionDataId);
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(positionData, null, "positionData.commit.error");
 		}

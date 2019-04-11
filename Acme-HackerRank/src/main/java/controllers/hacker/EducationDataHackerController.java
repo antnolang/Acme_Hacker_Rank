@@ -101,8 +101,8 @@ public class EducationDataHackerController extends AbstractController {
 
 		educationDataId = educationData.getId();
 		try {
+			result = this.back(educationDataId);
 			this.educationDataService.delete(educationData);
-			result = new ModelAndView("redirect:backCurriculum.do?educationDataId=" + educationDataId);
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(educationData, null, "educationData.commit.error");
 		}

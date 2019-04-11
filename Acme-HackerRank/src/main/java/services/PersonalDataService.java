@@ -102,7 +102,7 @@ public class PersonalDataService {
 	}
 
 	protected void checkProfileURL(final PersonalData personalData) {
-		Assert.isTrue(personalData.getGithubProfile().startsWith("https://www.github.com/"), "Not in github");
+		Assert.isTrue(personalData.getGithubProfile().startsWith("https://github.com/"), "Not in github");
 		Assert.isTrue(personalData.getLinkedInProfile().startsWith("https://www.linkedin.com/"), "Not in linkedin");
 	}
 

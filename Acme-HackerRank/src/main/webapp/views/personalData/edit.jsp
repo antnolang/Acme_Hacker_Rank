@@ -18,7 +18,7 @@
 		<acme:textbox code="personalData.fullname" path="fullname"/>
 		<acme:textbox code="personalData.statement" path="statement"/>
 		<acme:textbox code="personalData.phoneNumber" path="phoneNumber"/>
-		<acme:textbox code="personalData.githubProfile" path="githubProfile" placeholder="https://www.github.com/..."/>
+		<acme:textbox code="personalData.githubProfile" path="githubProfile" placeholder="https://github.com/..."/>
 		<acme:textbox code="personalData.linkedInProfile" path="linkedInProfile" placeholder="https://www.linkedin.com/..."/>
 	</fieldset>
 	

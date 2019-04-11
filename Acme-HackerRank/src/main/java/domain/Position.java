@@ -8,8 +8,10 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -24,6 +26,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
+@Table(indexes = {
+	@Index(columnList = "salary"), @Index(columnList = "company, isFinalMode, isCancelled"), @Index(columnList = "isFinalMode, isCancelled"), @Index(columnList = "company, isFinalMode"),
+	@Index(columnList = "isFinalMode, isCancelled, title, description, profile, skills, technologies, company"), @Index(columnList = "isFinalMode, isCancelled, ticker, title, description, profile, skills, technologies, deadline, salary")
+})
 public class Position extends DomainEntity {
 
 	// Constructor

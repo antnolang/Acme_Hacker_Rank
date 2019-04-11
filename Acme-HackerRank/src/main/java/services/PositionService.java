@@ -230,8 +230,10 @@ public class PositionService {
 		final List<Position> positions = new ArrayList<>(this.positionRepository.findPositionsBestWorstSalary());
 		result = new ArrayList<>();
 
-		result.add(positions.get(0));
-		result.add(positions.get(positions.size() - 1));
+		if (!positions.isEmpty()) {
+			result.add(positions.get(0));
+			result.add(positions.get(positions.size() - 1));
+		}
 
 		return result;
 

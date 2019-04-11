@@ -30,5 +30,12 @@
 		<acme:submit name="delete" code="educationData.delete"/>
 	</jstl:if>
 	&nbsp;
-	<acme:cancel code="educationData.cancel" url="educationData/hacker/backCurriculum.do?educationDataId=${educationData.id}"/>
+	<jstl:choose>
+		<jstl:when test="${curriculumId ne null}">
+			<acme:cancel code="educationData.cancel" url="curriculum/display.do?curriculumId=${curriculumId}"/>
+		</jstl:when>
+		<jstl:otherwise>
+			<acme:cancel code="educationData.cancel" url="educationData/hacker/backCurriculum.do?educationDataId=${educationData.id}"/>
+		</jstl:otherwise>
+	</jstl:choose>
 </form:form>

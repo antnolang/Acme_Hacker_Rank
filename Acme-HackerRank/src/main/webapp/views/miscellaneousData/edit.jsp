@@ -29,5 +29,12 @@
 		<acme:submit name="delete" code="miscellaneousData.delete"/>
 	</jstl:if>
 	&nbsp;
-	<acme:cancel code="miscellaneousData.cancel" url="miscellaneousData/hacker/backCurriculum.do?miscellaneousDataId=${miscellaneousData.id}"/>
+	<jstl:choose>
+		<jstl:when test="${curriculumId ne null}">
+			<acme:cancel code="miscellaneousData.cancel" url="curriculum/display.do?curriculumId=${curriculumId}"/>
+		</jstl:when>
+		<jstl:otherwise>
+			<acme:cancel code="miscellaneousData.cancel" url="miscellaneousData/hacker/backCurriculum.do?miscellaneousDataId=${miscellaneousData.id}"/>
+		</jstl:otherwise>
+	</jstl:choose>
 </form:form>

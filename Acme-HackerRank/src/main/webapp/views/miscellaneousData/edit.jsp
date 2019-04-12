@@ -16,7 +16,7 @@
 	<fieldset>
 		<legend><spring:message code="miscellaneousData.fieldset"/></legend>
 		
-		<acme:textbox code="miscellaneousData.text" path="text"/>
+		<acme:textarea code="miscellaneousData.text" path="text"/>
 		
 		<p style="color:blue;"><spring:message code="miscellaneousData.info.attachments"/></p>
 		<acme:textarea code="miscellaneousData.attachments" path="attachments"/>

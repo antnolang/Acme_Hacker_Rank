@@ -28,8 +28,9 @@
 	<jstl:if test="${requestURI == 'company/list.do' }">
 		<display:column property="commercialName" titleKey="table.commercialName"/>
 	</jstl:if>
-	
-	<display:column property="isSpammer" titleKey="table.isSpammer" />
+	<security:authorize access="hasRole('ADMIN')">
+		<display:column property="isSpammer" titleKey="table.isSpammer" />
+	</security:authorize>
 </display:table>
 
 <security:authorize access="hasRole('ADMIN')">

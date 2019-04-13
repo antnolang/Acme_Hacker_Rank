@@ -29,7 +29,7 @@
 	<acme:textarea code="answer.text" path="text" />
 	<br />
 	
-	<acme:textarea code="answer.codeLink" path="codeLink" />
+	<acme:textbox code="answer.codeLink" path="codeLink" />
 	<br />
 
 	<div>

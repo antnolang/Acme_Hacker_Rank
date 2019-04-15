@@ -189,17 +189,16 @@ public class ActorService {
 
 	private void launchSpammerProcess(final Actor actor) {
 		Double percentage, numberMessages, numberSpamMessages;
+		Boolean value;
 
 		numberMessages = this.messageService.numberMessagesSentByActor(actor.getId());
 		numberSpamMessages = this.messageService.numberSpamMessagesSentByActor(actor.getId());
 
 		percentage = numberSpamMessages / numberMessages;
 
-		if (percentage >= 0.1)
-			this.markAsSpammer(actor, true);
-		else
-			this.markAsSpammer(actor, false);
+		value = percentage >= 0.1;
 
+		this.markAsSpammer(actor, value);
 	}
 
 	public boolean existEmail(final String email) {

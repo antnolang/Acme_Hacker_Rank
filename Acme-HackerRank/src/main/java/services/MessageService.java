@@ -439,7 +439,7 @@ public class MessageService {
 		String spam_words;
 		List<String> spamWords;
 		Customisation customisation;
-		String text;
+		String text, tags;
 		boolean result;
 
 		customisation = this.customisationService.find();
@@ -447,7 +447,12 @@ public class MessageService {
 		spam_words = customisation.getSpamWords();
 		spamWords = this.utilityService.ListByString(spam_words);
 
-		text = message.getSubject() + " " + message.getBody();
+		if (message.getTags() != null && message.getTags() != "")
+			tags = message.getTags();
+		else
+			tags = "";
+
+		text = message.getSubject() + " " + message.getBody() + " " + tags;
 
 		result = false;
 		for (final String s : spamWords)

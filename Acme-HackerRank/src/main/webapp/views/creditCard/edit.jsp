@@ -12,8 +12,6 @@
 
 <form:form action="creditCard/administrator,company,hacker/edit.do" modelAttribute="creditCardForm">
 
-	<p><spring:message code="form.note"/></p>
-	<p style="color:blue;"><spring:message code="creditCard.info"/></p>
 	<fieldset>
 		<legend><spring:message code="creditCard.legend"/></legend>
 		

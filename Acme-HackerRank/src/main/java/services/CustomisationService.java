@@ -32,6 +32,10 @@ public class CustomisationService {
 		Assert.isTrue(this.customisationRepository.exists(customisation.getId()) && customisation.equals(this.find()));
 
 		Customisation result;
+		String spamWords;
+
+		spamWords = customisation.getSpamWords().toLowerCase();
+		customisation.setSpamWords(spamWords);
 
 		result = this.customisationRepository.save(customisation);
 

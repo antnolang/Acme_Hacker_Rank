@@ -22,7 +22,9 @@
 <form:form action="position/company/edit.do" modelAttribute="position">
 	<form:hidden path="id" />
 	
-	<acme:textbox code="position.title" path="title"/>
+	<spring:message code="position.title"/>
+	<input type="text" name="title" pattern="[A-Za-z ]+" title="Only letters"/>
+
 	
 	<acme:textarea code="position.description" path="description" />
 

@@ -330,8 +330,8 @@ public class PositionService {
 			positionStored = this.findOne(position.getId());
 			result.setId(positionStored.getId());
 			result.setCompany(positionStored.getCompany());
-			result.setIsFinalMode(false);
-			result.setIsCancelled(false);
+			result.setIsFinalMode(positionStored.getIsFinalMode());
+			result.setIsCancelled(positionStored.getIsCancelled());
 			result.setTicker(positionStored.getTicker());
 			result.setVersion(positionStored.getVersion());
 

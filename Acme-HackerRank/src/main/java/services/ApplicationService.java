@@ -372,8 +372,6 @@ public class ApplicationService {
 	protected void rejectedCancelPosition(final Application application) {
 		Assert.isTrue(this.companyService.findByPrincipal().equals(application.getPosition().getCompany()));
 		Assert.isTrue(application.getStatus().equals("SUBMITTED") || application.getStatus().equals("PENDING"));
-		Assert.isTrue(!(application.getAnswer().equals(null)));
-		Assert.isTrue(!(application.getSubmittedMoment().equals(null)));
 		application.setStatus("REJECTED");
 		this.messageService.notification_applicationStatusChanges(application);
 	}

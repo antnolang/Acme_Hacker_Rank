@@ -323,7 +323,7 @@ public class MessageService {
 		Message notification, result;
 		Actor hacker, company;
 		List<Actor> recipients;
-		String subject, body;
+		String subject, body, ticker, status;
 
 		hacker = application.getHacker();
 		company = application.getPosition().getCompany();
@@ -332,8 +332,11 @@ public class MessageService {
 		recipients.add(hacker);
 		recipients.add(company);
 
+		ticker = application.getPosition().getTicker();
+		status = application.getStatus();
+
 		subject = "Application notification / Notificación de solicitud";
-		body = "The application has been " + application.getStatus() + ". / La solicitud has sido " + application.getStatus() + ".";
+		body = "The application related to position whose ticker is " + ticker + " has been " + status + ". / La solicitud relacionada con el cargo cuyo ticker es " + ticker + " has sido " + status + ".";
 
 		notification = this.createNotification(recipients, subject, body);
 

@@ -50,7 +50,7 @@ public class SocialProfileController extends AbstractController {
 			result = new ModelAndView("socialProfile/list");
 			result.addObject("socialProfiles", socialProfiles);
 			result.addObject("actorId", actorId);
-			result.addObject("requestURI", "socialProfile/list.do?actorId=" + actorId);
+			result.addObject("requestURI", "socialProfile/list.do");
 			result.addObject("isAuthorized", isAuthorized);
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:../error.do");

@@ -27,8 +27,10 @@
 </p>	
 
 <p>
-	<strong><spring:message code="socialProfile.linkProfile"/>:</strong>
-	<jstl:out value="${socialProfile.linkProfile}"/>
+	<strong> <spring:message code="socialProfile.linkProfile"/>: </strong>
+	<a href="${socialProfile.linkProfile}" target="_blank">
+		<spring:message code="socialProfile.linkProfile"/>
+	</a>
 </p>
 	
 <a href="socialProfile/list.do?actorId=${actorId}">

@@ -73,7 +73,7 @@ public class ProblemCompanyHackerController extends AbstractController {
 				result.addObject("positionsList", positionsList);
 			}
 		} catch (final Throwable oops) {
-			result = new ModelAndView("redirect:../error.do");
+			result = new ModelAndView("redirect:../../error.do");
 		}
 
 		return result;

@@ -22,7 +22,7 @@
 <form:form action="position/company/edit.do" modelAttribute="position">
 	<form:hidden path="id" />
 	
-	<acme:textbox code="position.title" path="title"/>
+	<acme:textarea code="position.title" path="title" />
 	
 	<acme:textarea code="position.description" path="description" />
 

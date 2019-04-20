@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import security.UserAccountService;
 import domain.Actor;
 import domain.Administrator;
+import domain.Position;
 import forms.RegistrationForm;
 
 @Service
@@ -37,6 +38,9 @@ public class UtilityService {
 
 	@Autowired
 	private UserAccountService		userAccountService;
+
+	@Autowired
+	private CompanyService			companyService;
 
 
 	// Constructors ------------------------
@@ -123,28 +127,35 @@ public class UtilityService {
 		return result;
 	}
 
-	public String generateValidTicker(final String title) {
+	public String generateValidTicker(final Position position) {
 		final String letters;
 		String result;
 		Integer counter;
 		Integer size;
-		String titleWithoutSpace;
+		final String commercialNameWithoutSpace;
+		String commercialNameWithoutCharacter, commercialNameWithoutNumber;
+		String commercialName;
 
 		counter = 0;
 
-		titleWithoutSpace = title.replace(" ", "");
-		size = titleWithoutSpace.length();
+		commercialName = this.companyService.findByPrincipal().getCommercialName();
+
+		commercialNameWithoutSpace = commercialName.replaceAll("\\s", "");
+		commercialNameWithoutCharacter = commercialNameWithoutSpace.replaceAll("\\W", "");
+		commercialNameWithoutNumber = commercialNameWithoutCharacter.replaceAll("\\d", "");
+
+		size = commercialNameWithoutNumber.length();
 
 		if (size == 0)
 			letters = "XXXX-";
 		else if (size == 1)
-			letters = titleWithoutSpace + "XXX-";
+			letters = commercialNameWithoutNumber + "XXX-";
 		else if (size == 2)
-			letters = titleWithoutSpace + "XX-";
+			letters = commercialNameWithoutNumber + "XX-";
 		else if (size == 3)
-			letters = titleWithoutSpace + "X-";
+			letters = commercialNameWithoutNumber + "X-";
 		else
-			letters = titleWithoutSpace.substring(0, 4) + "-";
+			letters = commercialNameWithoutNumber.substring(0, 4) + "-";
 
 		do {
 			result = letters + this.createRandomNumbers();

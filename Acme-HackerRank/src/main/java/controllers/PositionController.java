@@ -76,7 +76,7 @@ public class PositionController extends AbstractController {
 			result.addObject("principal", principal);
 			result.addObject("owner", owner);
 			result.addObject("positions", positions);
-			result.addObject("requestURI", "position/list.do?companyId=" + companyId);
+			result.addObject("requestURI", "position/list.do");
 
 		} catch (final Throwable oops) {
 			result = new ModelAndView("redirect:../error.do");

@@ -93,9 +93,18 @@
 	
 	<!-- Links -->
 		
+	
+	<security:authorize access="hasRole('COMPANY')">
+		<a href="problem/company/list.do">
+			<spring:message	code="position.back" />			
+		</a>
+	</security:authorize>
+	
+	<security:authorize access="hasRole('HACKER')">
 		<a href="position/list.do?companyId=${problem.company.id}">
 			<spring:message	code="position.back" />			
 		</a>
+	</security:authorize>
 	
 
 

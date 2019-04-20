@@ -84,6 +84,7 @@ public class PositionService {
 		Assert.isTrue(this.utilityService.current_moment().before(position.getDeadline()));
 		Assert.isTrue(!position.getIsFinalMode());
 		this.checkOwnerProblems(position);
+		position.setTicker(this.utilityService.generateValidTicker(position));
 
 		final Position result;
 
@@ -330,15 +331,13 @@ public class PositionService {
 			positionStored = this.findOne(position.getId());
 			result.setId(positionStored.getId());
 			result.setCompany(positionStored.getCompany());
-			result.setIsFinalMode(false);
-			result.setIsCancelled(false);
+			result.setIsFinalMode(positionStored.getIsFinalMode());
+			result.setIsCancelled(positionStored.getIsCancelled());
 			result.setTicker(positionStored.getTicker());
 			result.setVersion(positionStored.getVersion());
 
-		} else {
+		} else
 			result = this.create();
-			result.setTicker(this.utilityService.generateValidTicker(position.getTitle()));
-		}
 
 		result.setDeadline(position.getDeadline());
 		result.setDescription(position.getDescription().trim());

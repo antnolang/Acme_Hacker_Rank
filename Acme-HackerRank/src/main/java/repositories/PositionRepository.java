@@ -40,7 +40,7 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
 	Collection<Position> matchCriteria(String keyword, Date deadline, Date maximumDeadline, Double minimumSalary);
 
 	// Query dashboard 11.2.5 The average, the minimum, the maximum, and the standard deviation of the salaries offered.
-	@Query("select avg(p.salary),min(p.salary),max(p.salary),stddev(p.salary) from Position p")
+	@Query("select avg(p.salary),min(p.salary),max(p.salary),stddev(p.salary) from Position p where p.isFinalMode = true")
 	Double[] findDataSalaryOffered();
 
 	// Query dashboard 11.2.6 The best and the worst position in terms of salary

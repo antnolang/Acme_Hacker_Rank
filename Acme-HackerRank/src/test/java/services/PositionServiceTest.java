@@ -139,10 +139,10 @@ public class PositionServiceTest extends AbstractTest {
 
 		data = this.positionService.findDataSalaryOffered();
 
-		Assert.isTrue(data[0] == 2908.452222222222);
+		Assert.isTrue(data[0] == 2843.3728571428574);
 		Assert.isTrue(data[1] == 1586.23);
 		Assert.isTrue(data[2] == 3586.23);
-		Assert.isTrue(data[3] == 603.2831982443655);
+		Assert.isTrue(data[3] == 625.3162465211225);
 
 	}
 

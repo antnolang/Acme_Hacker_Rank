@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -90,6 +91,8 @@ public class PositionCompanyController extends AbstractController {
 				principal = this.companyService.findByPrincipal();
 				this.positionService.save(positionRec);
 				result = new ModelAndView("redirect:../list.do?companyId=" + principal.getId());
+			} catch (final TransactionSystemException oops) {
+				result = new ModelAndView("redirect:../../error.do");
 
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(position, "position.commit.error");

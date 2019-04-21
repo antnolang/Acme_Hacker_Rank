@@ -442,7 +442,7 @@ public class MessageService {
 		String spam_words;
 		List<String> spamWords;
 		Customisation customisation;
-		String t1, t2, t3;
+		String text;
 		boolean result;
 
 		customisation = this.customisationService.find();
@@ -450,19 +450,15 @@ public class MessageService {
 		spam_words = customisation.getSpamWords();
 		spamWords = this.utilityService.ListByString(spam_words);
 
-		t1 = message.getSubject().toLowerCase();
-		t2 = message.getBody().toLowerCase();
-		t3 = message.getTags().toLowerCase();
+		text = message.getSubject() + " " + message.getBody() + " " + message.getTags();
 
 		result = false;
-		for (final String s : spamWords) {
-			result = result || t1.contains(s) || t2.contains(s) || t3.contains(s);
-
-			if (result)
+		for (final String s : spamWords)
+			if (text.toLowerCase().contains(s)) {
+				result = true;
 				break;
-		}
+			}
 
 		return result;
 	}
-
 }

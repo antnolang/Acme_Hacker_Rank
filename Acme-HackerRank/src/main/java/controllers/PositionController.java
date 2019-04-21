@@ -2,6 +2,7 @@
 package controllers;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +16,7 @@ import services.CompanyService;
 import services.CurriculumService;
 import services.HackerService;
 import services.PositionService;
+import services.UtilityService;
 import domain.Company;
 import domain.Curriculum;
 import domain.Hacker;
@@ -41,6 +43,9 @@ public class PositionController extends AbstractController {
 
 	@Autowired
 	private CurriculumService	curriculumService;
+
+	@Autowired
+	private UtilityService		utilityService;
 
 
 	// Constructor ------------------------------------
@@ -138,14 +143,20 @@ public class PositionController extends AbstractController {
 		Position position;
 		Company principal;
 		Collection<Problem> problemList;
-		Boolean isApplied;
+		Boolean isApplied, isDeadlineFuture;
 		Hacker hackerPrincipal;
 		Boolean hasProblem;
+		Date moment;
 
 		try {
 			result = new ModelAndView("position/display");
 			position = this.positionService.findOne(positionId);
+			moment = this.utilityService.current_moment();
+			isDeadlineFuture = false;
+			if (position.getDeadline().after(moment))
+				isDeadlineFuture = true;
 
+			result.addObject("isDeadlineFuture", isDeadlineFuture);
 			try {
 				principal = this.companyService.findByPrincipal();
 			} catch (final Exception e1) {

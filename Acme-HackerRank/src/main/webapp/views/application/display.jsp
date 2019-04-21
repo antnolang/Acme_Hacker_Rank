@@ -24,7 +24,7 @@
 <jstl:out value="${application.status}" />
 <br />
 
-<jstl:if test="${application.status!='PENDING'}">
+<jstl:if test="${existAnswer == true}">
 	<strong><spring:message code="application.submittedMoment" />:</strong>
 	<spring:message code="application.formatMoment1" var="formatSubmitedMoment"/>
 		<fmt:formatDate value="${application.submittedMoment}" pattern="${formatSubmitedMoment}"/>

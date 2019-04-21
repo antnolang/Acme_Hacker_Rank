@@ -35,18 +35,26 @@ public class ApplicationCompanyHackerController extends AbstractController {
 		ModelAndView result;
 		Application application;
 		String rolActor;
+		boolean existAnswer;
+		existAnswer = true;
 
 		try {
 			result = new ModelAndView("application/display");
 			if (LoginService.getPrincipal().getAuthorities().toString().equals("[HACKER]")) {
 				application = this.applicationService.findOneToHacker(applicationId);
 				rolActor = "hacker";
+				if (application.getAnswer() == null)
+					existAnswer = false;
 			} else {
 				application = this.applicationService.findOneToCompany(applicationId);
 				rolActor = "company";
+				if (application.getAnswer() == null)
+					existAnswer = false;
 			}
 			result.addObject("application", application);
 			result.addObject("rolActor", rolActor);
+			result.addObject("existAnswer", existAnswer);
+
 		} catch (final Exception e) {
 			result = new ModelAndView("redirect:../../error.do");
 		}

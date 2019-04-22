@@ -93,15 +93,6 @@ public class SocialProfileService {
 		this.checkByPrincipal(socialProfile);
 
 		SocialProfile result;
-		String nick, socialNetwork, linkProfile;
-
-		nick = socialProfile.getNick().trim();
-		socialNetwork = socialProfile.getSocialNetwork().trim();
-		linkProfile = socialProfile.getLinkProfile().trim();
-
-		socialProfile.setNick(nick);
-		socialProfile.setSocialNetwork(socialNetwork);
-		socialProfile.setLinkProfile(linkProfile);
 
 		result = this.socialProfileRepository.save(socialProfile);
 

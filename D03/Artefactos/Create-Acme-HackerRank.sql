@@ -73,7 +73,7 @@ CREATE TABLE `administrator` (
 
 LOCK TABLES `administrator` WRITE;
 /*!40000 ALTER TABLE `administrator` DISABLE KEYS */;
-INSERT INTO `administrator` VALUES (20,0,65,'Calle Admin 1',724,'08','21','holder1','VISA','38353348140483','admin1@gmail.com',NULL,'Admin1','63018754','http://www.littlehearts.ind.in/wp-content/themes/lhs/Birthday/images/adm.png','Ruiz',14),(21,0,97,'Calle Admin 2',587,'10','22','holder2','VISA','4716895067094219','admin2@gmail.com',NULL,'System','63015521','https://image.freepik.com/free-photo/linux-kubuntu-operating-logo-system-options_121-97849.jpg','Reina',15);
+INSERT INTO `administrator` VALUES (46,0,65,'Calle Admin 1',724,'08','21','holder1','VISA','38353348140483','admin1@gmail.com',NULL,'Admin1','63018754','http://www.littlehearts.ind.in/wp-content/themes/lhs/Birthday/images/adm.png','Ruiz',40),(47,0,97,'Calle Admin 2',587,'10','22','holder2','VISA','4716895067094219','admin2@gmail.com',NULL,'System','63015521','https://image.freepik.com/free-photo/linux-kubuntu-operating-logo-system-options_121-97849.jpg','Reina',41);
 /*!40000 ALTER TABLE `administrator` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,7 +184,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (22,0,97,'Calle Company 1',587,'03','22','holder3','VISA','4389142361978458','company1@gmail.com',NULL,'Company1','63015521','http://webfeb.in/wp-content/uploads/2016/11/logo-design-for-it-company.jpg','Garcia',16,'One Commercial Name'),(23,0,97,'Calle Company 2',147,'02','21','holder4','VISA','4916210851536995','company2@gmail.com',NULL,'Company2','63015521','https://www.freelogodesign.org/Content/img/logo-ex-6.png','Lobato',17,'Two Commercial Name');
+INSERT INTO `company` VALUES (48,0,97,'Calle Company 1',587,'03','22','holder3','VISA','4389142361978458','company1@gmail.com',NULL,'Company1','63015521','http://webfeb.in/wp-content/uploads/2016/11/logo-design-for-it-company.jpg','Garcia',42,'One Commercial Name'),(49,0,97,'Calle Company 2',147,'02','21','holder4','VISA','4916210851536995','company2@gmail.com',NULL,'Company2','63015521','https://www.freelogodesign.org/Content/img/logo-ex-6.png','Lobato',43,'Two Commercial Name');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -326,7 +326,7 @@ CREATE TABLE `customisation` (
 
 LOCK TABLES `customisation` WRITE;
 /*!40000 ALTER TABLE `customisation` DISABLE KEYS */;
-INSERT INTO `customisation` VALUES (24,0,'https://i.imgur.com/7b8lu4b.png','+34',10,'Acme Hacker Rank','sex,viagra,cialis,one million,you\'ve been selected,Nigeria,sexo,un millon,ha sido seleccionado',1,'Welcome to Acme Hacker Rank! We\'re IT hacker\'s favourite job marketplace!','¡Bienvenidos a Acme Hacker Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!');
+INSERT INTO `customisation` VALUES (50,0,'https://i.imgur.com/7b8lu4b.png','+34',10,'Acme Hacker Rank','sex,viagra,cialis,one million,you\'ve been selected,Nigeria,sexo,un millon,ha sido seleccionado',1,'Welcome to Acme Hacker Rank! We\'re IT hacker\'s favourite job marketplace!','¡Bienvenidos a Acme Hacker Rank! ¡Somos el mercado de trabajo favorito de los profesionales de las TICs!');
 /*!40000 ALTER TABLE `customisation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -387,6 +387,7 @@ CREATE TABLE `finder` (
 
 LOCK TABLES `finder` WRITE;
 /*!40000 ALTER TABLE `finder` DISABLE KEYS */;
+INSERT INTO `finder` VALUES (53,0,'2020-10-05','estoEsUnaPruebaParaQueNoMeDevuelvaNada','2022-10-05',965.24,'2019-01-01 10:10:00',51),(54,0,NULL,'',NULL,NULL,'2019-01-01 10:10:00',52);
 /*!40000 ALTER TABLE `finder` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -454,7 +455,7 @@ CREATE TABLE `hacker` (
 
 LOCK TABLES `hacker` WRITE;
 /*!40000 ALTER TABLE `hacker` DISABLE KEYS */;
-INSERT INTO `hacker` VALUES (25,0,97,'Calle Hacker 1',258,'02','22','holder6','MCARD','4024007150182987','hacker1@gmail.com',NULL,'Hacker1','63015521','https://www.madmen-onlinemarketing.de/wp-content/uploads/jan-madmen-onlinemarketing-e1525337078609.jpg','Alvarez',18),(26,0,97,'Calle Hacker 2',254,'02','21','holder7','MCARD','4556001181801737','hacker2@gmail.com',NULL,'Hacker2','63015521','https://www.madmen-onlinemarketing.de/wp-content/uploads/jan-madmen-onlinemarketing-e1525337078609.jpg','Munoz',19);
+INSERT INTO `hacker` VALUES (51,0,97,'Calle Hacker 1',258,'02','22','holder6','MCARD','4024007150182987','hacker1@gmail.com',NULL,'Hacker1','63015521','https://www.madmen-onlinemarketing.de/wp-content/uploads/jan-madmen-onlinemarketing-e1525337078609.jpg','Alvarez',44),(52,0,97,'Calle Hacker 2',254,'02','21','holder7','MCARD','4556001181801737','hacker2@gmail.com',NULL,'Hacker2','63015521','https://www.madmen-onlinemarketing.de/wp-content/uploads/jan-madmen-onlinemarketing-e1525337078609.jpg','Munoz',45);
 /*!40000 ALTER TABLE `hacker` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -795,7 +796,7 @@ CREATE TABLE `user_account` (
 
 LOCK TABLES `user_account` WRITE;
 /*!40000 ALTER TABLE `user_account` DISABLE KEYS */;
-INSERT INTO `user_account` VALUES (14,0,'\0','e00cf25ad42683b3df678c61f42c6bda','admin1'),(15,0,'\0','54b53072540eeeb8f8e9343e71f28176','system'),(16,0,'\0','df655f976f7c9d3263815bd981225cd9','company1'),(17,0,'\0','d196a28097115067fefd73d25b0c0be8','company2'),(18,0,'\0','2ba2a8ac968a7a2b0a7baa7f2fef18d2','hacker1'),(19,0,'\0','91af68b69a50a98dbc0800942540342c','hacker2');
+INSERT INTO `user_account` VALUES (40,0,'\0','e00cf25ad42683b3df678c61f42c6bda','admin1'),(41,0,'\0','54b53072540eeeb8f8e9343e71f28176','system'),(42,0,'\0','df655f976f7c9d3263815bd981225cd9','company1'),(43,0,'\0','d196a28097115067fefd73d25b0c0be8','company2'),(44,0,'\0','2ba2a8ac968a7a2b0a7baa7f2fef18d2','hacker1'),(45,0,'\0','91af68b69a50a98dbc0800942540342c','hacker2');
 /*!40000 ALTER TABLE `user_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -820,7 +821,7 @@ CREATE TABLE `user_account_authorities` (
 
 LOCK TABLES `user_account_authorities` WRITE;
 /*!40000 ALTER TABLE `user_account_authorities` DISABLE KEYS */;
-INSERT INTO `user_account_authorities` VALUES (14,'ADMIN'),(15,'ADMIN'),(16,'COMPANY'),(17,'COMPANY'),(18,'HACKER'),(19,'HACKER');
+INSERT INTO `user_account_authorities` VALUES (40,'ADMIN'),(41,'ADMIN'),(42,'COMPANY'),(43,'COMPANY'),(44,'HACKER'),(45,'HACKER');
 /*!40000 ALTER TABLE `user_account_authorities` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -833,6 +834,6 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-11 17:54:15
+-- Dump completed on 2019-04-22 17:59:56
 
 commit;
